@@ -25,8 +25,8 @@
 					</ul>
 				<p><strong>Beer</strong>
 					<ul>
-						<li>beerId Binary(16), NOT NULL</li>
-						<li>beerProfileId Binary(16), NOT NULL</li>
+						<li>beerId Binary(16), NOT NULL (PRIMARY KEY)</li>
+						<li>beerProfileId Binary(16), NOT NULL (FOREIGN KEY)</li>
 						<li>beerAbv Decimal(66), NOT NULL</li>
 						<li>beerDescription VarChar(1024)</li>
 						<li>beerIbu VarChar(3)</li>
@@ -34,7 +34,8 @@
 					</ul>
 				<p><strong>Style</strong>
 					<ul>
-						<li></li>
+						<li>styleId Binary(16), NOT NULL (PRIMARY KEY)</li>
+						<li>styleType TinyInt(unsigned), NOT NULL</li>
 					</ul>
 				<p><strong>Beer Style</strong>
 					<ul>
