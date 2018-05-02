@@ -12,7 +12,7 @@
 						<li>profileId Binary(16) NOT NULL (PRIMARY KEY)</li>
 						<li>profileAbout VarChar(140)</li>
 						<li>profileAddressLine1 VarChar(96) NOT NULL</li>
-						<li>profileAddressLine2 VarChar(96) NOT NULL</li>
+						<li>profileAddressLine2 VarChar(96)</li>
 						<li>profileCity VarChar(48) NOT NULL</li>
 						<li>profileEmail VarChar(128) NOT NULL</li>
 						<li>profileHash Char(97) NOT NULL</li>
@@ -27,15 +27,15 @@
 					<ul>
 						<li>beerId Binary(16), NOT NULL (PRIMARY KEY)</li>
 						<li>beerProfileId Binary(16), NOT NULL (FOREIGN KEY)</li>
-						<li>beerAbv Decimal(66), NOT NULL</li>
+						<li>beerAbv Decimal(6,6), NOT NULL</li>
 						<li>beerDescription VarChar(1024)</li>
-						<li>beerIbu VarChar(3)</li>
+						<li>beerIbu TinyInt (unsigned)</li>
 						<li>beerName VarChar(128), NOT NULL</li>
 					</ul>
 				<p><strong>Style</strong>
 					<ul>
-						<li>styleId Binary(16), NOT NULL (PRIMARY KEY)</li>
-						<li>styleType TinyInt(unsigned), NOT NULL</li>
+						<li>styleId TinyInt (unsigned), NOT NULL (PRIMARY KEY)</li>
+						<li>styleType VarChar(48), NOT NULL</li>
 					</ul>
 				<p><strong>Beer Style</strong>
 					<ul>
