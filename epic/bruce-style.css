@@ -1,4 +1,35 @@
-.primaryInfo > img {
-	width: 400px;
+body {
+	font-family: sans-serif;
+}
+
+.primaryInfo-wrapper {
+	width: 60%;
+	margin: auto;
+}
+.primaryInfo-wrapper > img {
+	width: 40%;
 	height: auto;
+	float: left;
+	padding: 0 2.5%;
+}
+
+.clearfix {
+	width: 100%;
+	clear: both;
+}
+
+.userInfo {
+	float: left;
+	width: 50%;
+	padding: 0 2.5%;
+}
+
+.userStory {
+	width: 50%;
+	margin: auto;
+}
+
+.useCase {
+	width: 50%;
+	margin: auto;
 }
