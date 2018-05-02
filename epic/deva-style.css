@@ -1,0 +1,10 @@
+img {
+	width: 8em;
+	height: 8em;
+	float: left;
+	margin-right: 2em;
+}
+
+div {
+	display: inline-block;
+}
