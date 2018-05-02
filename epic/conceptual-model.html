@@ -9,7 +9,19 @@
 			<h3>Entities &amp; Attributes:</h3>
 				<p><strong>Profile</strong>
 					<ul>
-						<li></li>
+						<li>profileId Binary(16), NOT NULL (PRIMARY KEY)</li>
+						<li>profileUserType Char(1), NOT NULL</li>
+						<li>profileCity VarChar(48)</li>
+						<li>profileState Char(2)</li>
+						<li>profileZip VarChar(10)</li>
+						<li>profileAddressLine1 VarChar(96)</li>
+						<li>profileAddressLine2 VarChar(96)</li>
+						<li>profileUsername Varchar(48), NOT NULL</li>
+						<li>profileAbout VarChar(140)</li>
+						<li>profileImage VarChar(255)</li>
+						<li>profileName VarChar(64), NOT NULL</li>
+						<li>profileHash Char(97)</li>
+						<li>profileEmail VarChar(128)</li>
 					</ul>
 				<p><strong>Beer</strong>
 					<ul>
