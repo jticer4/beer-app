@@ -45,20 +45,20 @@ CREATE TABLE beer (
 CREATE TABLE beerstyle(
 	beerStyleBeerId BINARY(16) NOT NULL,
 	beerStyleStyleId TINYINT UNSIGNED NOT NULL,
-	UNIQUE(beerStyleBeerId),
 	INDEX(beerStyleBeerId),
 	INDEX(beerStyleStyleId),
 	FOREIGN KEY(beerStyleBeerId) REFERENCES beer(beerId),
-	FOREIGN KEY(beerStyleStyleId) REFERENCES style(styleId)
+	FOREIGN KEY(beerStyleStyleId) REFERENCES style(styleId),
+	PRIMARY KEY(beerStyleBeerId, beerStyleStyleId)
 );
 
 CREATE TABLE vote (
 	voteBeerId BINARY(16) NOT NULL,
 	voteProfileId BINARY(16) NOT NULL,
 	voteValue TINYINT NOT NULL,
-	UNIQUE(voteBeerId),
 	INDEX(voteBeerId),
 	INDEX(voteProfileId),
 	FOREIGN KEY(voteBeerId) REFERENCES beer(beerId),
-	FOREIGN KEY(voteProfileId) REFERENCES profile(profileId)
+	FOREIGN KEY(voteProfileId) REFERENCES profile(profileId),
+	PRIMARY KEY(voteBeerId, voteProfileId)
 );
