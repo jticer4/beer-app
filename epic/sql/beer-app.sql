@@ -38,7 +38,8 @@ CREATE TABLE beer (
 	beerName VARCHAR(128) NOT NULL,
 	UNIQUE(beerProfileId),
 	INDEX(beerProfileId),
-	FOREIGN KEY(beerProfileId) REFERENCES profile(profileId)
+	FOREIGN KEY(beerProfileId) REFERENCES profile(profileId),
+	PRIMARY KEY(beerId)
 );
 
 CREATE TABLE beerstyle(
