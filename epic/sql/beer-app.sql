@@ -24,7 +24,7 @@ CREATE TABLE profile (
 );
 
 CREATE TABLE style (
-	styleId TINYINT(UNSIGNED) NOT NULL,
+	styleId TINYINT UNSIGNED NOT NULL,
 	styleType VARCHAR(48) NOT NULL,
 	PRIMARY KEY(styleId)
 );
@@ -34,7 +34,7 @@ CREATE TABLE beer (
 	beerProfileId BINARY(16) NOT NULL,
 	beerAbv DECIMAL(6,6) NOT NULL,
 	beerDescription VARCHAR(1024),
-	beerIbu TINYINT(UNSIGNED),
+	beerIbu TINYINT UNSIGNED ,
 	beerName VARCHAR(128) NOT NULL,
 	UNIQUE(beerProfileId),
 	INDEX(beerProfileId),
@@ -43,12 +43,12 @@ CREATE TABLE beer (
 
 CREATE TABLE beerstyle(
 	beerStyleBeerId BINARY(16) NOT NULL,
-	beerStyleStyleId TINYINT(UNSIGNED) NOT NULL,
+	beerStyleStyleId TINYINT UNSIGNED NOT NULL,
 	UNIQUE(beerStyleBeerId),
 	INDEX(beerStyleBeerId),
 	INDEX(beerStyleStyleId),
 	FOREIGN KEY(beerStyleBeerId) REFERENCES beer(beerId),
-	FOREIGN KEY(beerStyleStyleId) REFERNCES style(styleId)
+	FOREIGN KEY(beerStyleStyleId) REFERENCES style(styleId)
 );
 
 CREATE TABLE vote (
