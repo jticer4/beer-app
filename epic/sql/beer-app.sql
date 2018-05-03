@@ -20,11 +20,41 @@ CREATE TABLE profile (
 	PRIMARY KEY(profileId)
 );
 
+CREATE TABLE style (
+	styleId TINYINT(UNSIGNED) NOT NULL,
+	styleType VARCHAR(48) NOT NULL,
+	PRIMARY KEY(styleId)
+);
+
 CREATE TABLE beer (
-	beerId Binary(16), NOT NULL (PRIMARY KEY)</li>
-beerProfileId Binary(16), NOT NULL (FOREIGN KEY)</li>
-beerAbv Decimal(6,6), NOT NULL</li>
-beerDescription VarChar(1024)</li>
-beerIbu TinyInt (unsigned)</li>
-beerName VarChar(128), NOT NULL</li>
-)
+	beerId BINARY(16) NOT NULL,
+	beerProfileId BINARY(16) NOT NULL,
+	beerAbv DECIMAL(6,6) NOT NULL,
+	beerDescription VARCHAR(1024),
+	beerIbu TINYINT(UNSIGNED),
+	beerName VARCHAR(128) NOT NULL,
+	UNIQUE(beerProfileId),
+	INDEX(beerProfileId),
+	FOREIGN KEY(beerProfileId) REFERENCES profile(profileId)
+);
+
+CREATE TABLE beerstyle(
+	beerStyleBeerId BINARY(16) NOT NULL,
+	beerStyleStyleId TINYINT(UNSIGNED) NOT NULL,
+	UNIQUE(beerStyleBeerId),
+	INDEX(beerStyleBeerId),
+	INDEX(beerStyleStyleId),
+	FOREIGN KEY(beerStyleBeerId) REFERENCES beer(beerId),
+	FOREIGN KEY(beerStyleStyleId) REFERNCES style(styleId)
+);
+
+CREATE TABLE vote (
+	voteBeerId BINARY(16) NOT NULL,
+	voteProfileId BINARY(16) NOT NULL,
+	voteValue TINYINT NOT NULL,
+	UNIQUE(voteBeerId),
+	INDEX(voteBeerId),
+	INDEX(voteProfileId),
+	FOREIGN KEY(voteBeerId) REFERENCES beer(beerId),
+	FOREIGN KEY(voteProfileId) REFERENCES profile(profileId)
+);
