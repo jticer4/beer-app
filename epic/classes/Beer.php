@@ -45,4 +45,26 @@ use Ramsey\Uuid\Uuid;
 	}
 	/**
 	 *constructor for beer
+	 *
 	**/
+	public function __construct(){
+		try {
+			$this->setBeerId($newBBeerId);
+			$this->setBeerProfile($newBeerProfile);
+			$this->setBeerIbu($newBeerIbu);
+			$this->setBeerAbv($newBeerAbv);
+			$this->setBeerName($newBeerName);
+			$this->setBeerDescription($newBeerDescription);
+		}
+			//determine the exception that was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception);
+		}
+}
+
+
+
+
+
+}
