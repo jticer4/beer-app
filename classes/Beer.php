@@ -49,7 +49,7 @@ use Ramsey\Uuid\Uuid;
 	**/
 	public function __construct(){
 		try {
-			$this->setBeerId($newBBeerId);
+			$this->setBeerId($newBeerId);
 			$this->setBeerProfile($newBeerProfile);
 			$this->setBeerIbu($newBeerIbu);
 			$this->setBeerAbv($newBeerAbv);
