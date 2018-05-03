@@ -24,14 +24,14 @@ use Ramsey\Uuid\Uuid;
 		private $beerProfile;
 		/**
 		 * ibu number for beer
-		 * @var $beerIbu
+		 * @var tinyint$beerIbu
 		**/
-		private string $beerIbu;
+		private $beerIbu;
 		/**
 		 * abv number for beer
-		 * @var $beerAbv
+		 * @var decimal $beerAbv
 		**/
-		private string $beerAbv;
+		private $beerAbv;
 		/**
 		 * name of the beer
 		 * @var$beerName
