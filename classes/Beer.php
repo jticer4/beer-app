@@ -42,7 +42,7 @@ use Ramsey\Uuid\Uuid;
 		 * @var string $beerDescription
 		**/
 		private $beerDescription;
-	}
+
 	/**
 	 *constructor for beer
 	 *
@@ -61,6 +61,8 @@ use Ramsey\Uuid\Uuid;
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception);
 		}
+}
+
 }
 
 
