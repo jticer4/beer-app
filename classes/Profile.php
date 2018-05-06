@@ -6,79 +6,79 @@ class Profile {
 	 * id for this Profile, this is the primary key
 	 * @var Uuid $profileId
 	 **/
-	protected $profileId;
+	private $profileId;
 
 	/**
 	 * about section for the profile
 	 * @var string $profileAbout
 	 **/
-	public $profileAbout;
+	private $profileAbout;
 
 	/**
 	 * address line 1 for the profile
 	 * @var string $profileAddressLine1
 	 **/
-	protected $profileAddressLine1;
+	private $profileAddressLine1;
 
 	/**
 	 * address line 2 for the profile
 	 * @var string $profileAddressLine2
 	 **/
-	protected $profileAddressLine2;
+	private $profileAddressLine2;
 
 	/**
 	 * city of the profile
 	 * @var string $profileCity
 	 **/
-	protected $profileCity;
+	private $profileCity;
 
 	/**
 	 * email address for the profile
 	 * @var string $profileEmail
 	 **/
-	protected $profileEmail;
+	private $profileEmail;
 
 	/**
 	 * hash for the profile
 	 * @var string $profileHash
 	 **/
-	protected $profileHash;
+	private $profileHash;
 
 	/**
 	 * image for the profile
 	 * @var string $profileImage
 	 **/
-	public $profileImage;
+	private $profileImage;
 
 	/**
 	 * name of the profile
 	 * @var string $profileName
 	 **/
-	public $profileName;
+	private $profileName;
 
 	/**
 	 * state of the profile
 	 * @var string $profileState
 	 **/
-	protected $profileState;
+	private $profileState;
 
 	/**
 	 * username of the profile
 	 * @var string $profileUsername
 	 **/
-	public $profileUsername;
+	private $profileUsername;
 
 	/**
 	 * user type of the profile
 	 * @var string $profileUserType
 	 **/
-	public $profileUserType;
+	private $profileUserType;
 
 	/**
 	 * zip code of the profile
 	 * @var string $profileZip
 	 **/
-	protected $profileZip;
+	private $profileZip;
 
 	/**
 	 * accessor method for profile Id
