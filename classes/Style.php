@@ -133,6 +133,22 @@ class style implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * updates this Style in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+
+		// create query template
+		$query = "UPDATE style SET styleId = :styleId, styleType = :styleType WHERE styleId = :styleId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["styleId" => $this->styleId->getBytes(), "styleType" => $this->styleType];
+		$statement->execute($parameters);
+	}
 
 
 }
