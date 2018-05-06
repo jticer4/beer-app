@@ -65,6 +65,38 @@ class style implements \JsonSerializable {
 		$this->styleId = $uuid;
 	}
 
+	/**
+	 * accessor method for style type
+	 *
+	 * @return string value of style type
+	 */
+	public function getStyleType(): string {
+		return ($this->styleType);
+	}
+
+	/**
+	 * mutator method for style type
+	 *
+	 * @param string $newStyleType
+	 * @throws \InvalidArgumentException if the type is not a string or insecure
+	 * @throws \RangeException if the type is more than 48 characters
+	 */
+	public function setStyleType(string $newStyleType): void {
+		$newStyleType = trim($newStyleType);
+		$newStyleType = filter_var($newStyleType, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		//verifies if the username is valid
+		if(empty($newStyleType) === true) {
+			throw(new \InvalidArgumentException("style type is insecure"));
+		}
+
+		//verifies if the style type is less than 48 characters
+		if(strlen($newStyleType) > 48)
+			throw(new \RangeException("style type is too long, try again"));
+
+		//store the new style type
+		$this->styleType = $newStyleType;
+	}
 
 
 
