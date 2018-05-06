@@ -53,7 +53,7 @@ class style implements \JsonSerializable {
 	 *
 	 * @param Uuid|tinyint $newStyleId
 	 */
-	public function setStyleId($newStyleId) {
+	public function setStyleId(tinyint $newStyleId) {
 		try {
 			$uuid = self::validateUuid($newStyleId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -96,6 +96,25 @@ class style implements \JsonSerializable {
 
 		//store the new style type
 		$this->styleType = $newStyleType;
+	}
+
+
+	/**
+	 * inserts this Style into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo): void {
+
+		// create query template
+		$query = "INSERT INTO style(styleId, styleType) VALUES(:styleId, :styleType)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["styleId" => $this->styleId->getBytes(), "styleType" => $this->styleType];
+		$statement->execute($parameters);
 	}
 
 
