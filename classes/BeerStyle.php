@@ -58,7 +58,7 @@ class beerstyle implements \JsonSerializable {
 	 */
 	public function setBeerStyleBeerId($newBeerStyleBeerId) {
 		try {
-				$uuid = self::validateUuid($newBeerStyleBeerId);
+			$uuid = self::validateUuid($newBeerStyleBeerId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
@@ -66,4 +66,29 @@ class beerstyle implements \JsonSerializable {
 		$this->beerStyleBeerId = $uuid;
 	}
 
+
+	/**
+	 * accessor method for BeerStyle style id
+	 *
+	 * @return Uuid of BeerStyle style id
+	 */
+	public function getBeerStyleStyleId(): Uuid {
+		return ($this->beerStyleStyleId);
+	}
+
+	/*
+	 * mutatator method for BeerStyle style id
+	 *
+	 * @param Uuid|tinyint $newBeerStyleStyleId
+	 */
+	public function setBeerStyleStyleId($newBeerStyleStyleId) {
+		try {
+			$uuid = self::validateUuid($newBeerStyleStyleId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->beerStyleStyleId = $uuid;
+	}
 }
+
