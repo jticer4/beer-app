@@ -20,6 +20,8 @@ CREATE TABLE profile (
 	profileUsername VARCHAR(48) NOT NULL,
 	profileUserType CHAR(1) NOT NULL,
 	profileZip VARCHAR(10) NOT NULL,
+	UNIQUE (profileEmail),
+	UNIQUE (profileUsername),
 	PRIMARY KEY(profileId)
 );
 
@@ -36,7 +38,6 @@ CREATE TABLE beer (
 	beerDescription VARCHAR(1024),
 	beerIbu TINYINT UNSIGNED ,
 	beerName VARCHAR(128) NOT NULL,
-	UNIQUE(beerProfileId),
 	INDEX(beerProfileId),
 	FOREIGN KEY(beerProfileId) REFERENCES profile(profileId),
 	PRIMARY KEY(beerId)
