@@ -66,6 +66,7 @@ use Ramsey\Uuid\Uuid;
 				$this->setBeerName($newBeerName);
 				$this->setBeerDescription($newBeerDescription);
 				}
+
 				//determine the exception that was thrown
 			catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 				$exceptionType = get_class($exception);
@@ -76,6 +77,7 @@ use Ramsey\Uuid\Uuid;
 
 		/**
 		 * accessor method for beer id
+		 *
 		 * @return Uuid value of beer id
 		 */
 		public function getBeerId(): Uuid {
@@ -84,6 +86,7 @@ use Ramsey\Uuid\Uuid;
 
 		/**
 		 * mutator method for beer id
+		 *
 		 * @param Uuid|string $beerId new value of beer id
 		 * @throws \RangeException if $newBeerId is null
 		 * @throws \TypeError if $newBeerId is not a uuid
@@ -101,6 +104,7 @@ use Ramsey\Uuid\Uuid;
 
 		/**
 		 * accessor method for beer profile id
+		 *
 		 * @return Uuid for beer profile id
 		 */
 		public function getBeerProfileId(): Uuid {
@@ -109,6 +113,7 @@ use Ramsey\Uuid\Uuid;
 
 		/**
 		 * mutator method for beer profile id
+		 *
 		 * @param Uuid $beerProfileId
 		 */
 		public function setBeerProfileId(Uuid $beerProfileId) : void {
@@ -123,13 +128,17 @@ use Ramsey\Uuid\Uuid;
 
 		/**
 		 * accessor method for beer ibu
+		 *
 		 * @return tinyint for beer ibu
 		**/
 		public function getBeerIbu(): tinyint {
 			return $this->beerIbu;
+
 		}
+
 		/**
 		 * mutator method for beer ibu
+		 *
 		 * @param tinyint $beerIbu
 		**/
 		public function setBeerIbu(tinyint $beerIbu) : void {
@@ -140,14 +149,16 @@ use Ramsey\Uuid\Uuid;
 				throw(new \InvalidArgumentException("new beer ibu is empty or insecure"));
 			}
 
-
 			//verify that the beer ibu will fit into the database
-			if(strlen($newBeerIbu) >)
+			if(strlen($newBeerIbu) >  ) {
+				throw(new \RangeException("beer ibu is too large"));
+			}
+			//convert and store beer ibu
 			$this->beerIbu = $beerIbu;
 		}
-
 		/**
 		 * accessor method for beer abv
+		 *
 		 * @return decimal
 		**/
 		public function getBeerAbv(): decimal {
@@ -156,14 +167,24 @@ use Ramsey\Uuid\Uuid;
 
 		/**
 		 * mutator method for beer abv
+		 *
 		 * @param decimal $beerAbv
 		**/
 		public function setBeerAbv(decimal $beerAbv) : void {
+			$newBeerAbv = trim($newBeerAbv);
+			$newBeerAbv = filter_var($newBeerAbv, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+			if(empty($newBeerAbv) === true){
+				throw(new \InvalidArgumentException("new beer abv is empty or insecure"));
+			}
+			//verify that the beer abv will fit into the database
+			if(strlen($newBeerAbv)> 3)
+			//convert and store the beer abv
 			$this->beerAbv = $beerAbv;
 		}
 
 		/**
 		 * accessor method for beer name
+		 *
 		 * @return mixed
 		**/
 		public function getBeerName() {
@@ -172,6 +193,7 @@ use Ramsey\Uuid\Uuid;
 
 		/**
 		 * mutator method for beer name
+		 *
 		 * @param mixed $beerName
 		**/
 		public function setBeerName($beerName) :void {
@@ -180,6 +202,7 @@ use Ramsey\Uuid\Uuid;
 
 		/**
 		 * accessor method for beer description
+		 *
 		 * @return string
 		**/
 		public function getBeerDescription(): string {
@@ -188,6 +211,7 @@ use Ramsey\Uuid\Uuid;
 
 		/**
 		 * mutator method for beer description
+		 *
 		 * @param string $beerDescription
 		**/
 		public function setBeerDescription(string $beerDescription) :void {
