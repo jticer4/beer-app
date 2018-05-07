@@ -88,7 +88,7 @@ use Ramsey\Uuid\Uuid;
 		 * @throws \RangeException if $newBeerId is null
 		 * @throws \TypeError if $newBeerId is not a uuid
 		 */
-		public function setBeerId(Uuid $beerId) : void {
+		public function setBeerId(Uuid $newBeerId) : void {
 			try {
 				$uuid = self::validateUuid($newBeerId);
 			} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -113,7 +113,7 @@ use Ramsey\Uuid\Uuid;
 		 *
 		 * @param Uuid $beerProfileId
 		 */
-		public function setBeerProfileId(Uuid $beerProfileId) : void {
+		public function setBeerProfileId(Uuid $newBeerProfileId) : void {
 			try {
 			$uuid = self::validateUuid($newBeerProfileId);
 	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception);
@@ -136,9 +136,10 @@ use Ramsey\Uuid\Uuid;
 		/**
 		 * mutator method for beer ibu
 		 *
-		 * @param tinyint $beerIbu
+		 * @param tinyint $beerIbu beer ibu range is from 0-120
+		 * @throws \RangeException when input is out of range
 		**/
-		public function setBeerIbu(tinyint $beerIbu) : void {
+		public function setBeerIbu(tinyint $newBeerIbu) : void {
 			if($newBeerIbu < 0 || $newBeerIbu > 120) {
 				throw(new \RangeException("ibu is out of range"));
 			}
@@ -148,7 +149,7 @@ use Ramsey\Uuid\Uuid;
 		/**
 		 * accessor method for beer abv
 		 *
-		 * @return decimal
+		 * @return decimal for beer abv
 		**/
 		public function getBeerAbv(): decimal {
 			return $this->beerAbv;
@@ -158,15 +159,11 @@ use Ramsey\Uuid\Uuid;
 		 * mutator method for beer abv
 		 *
 		 * @param decimal $beerAbv
+		 * @throws \RangeException when input is out of range
 		**/
-		public function setBeerAbv(decimal $beerAbv) : void {
-			$newBeerAbv = trim($newBeerAbv);
-			$newBeerAbv = filter_var($newBeerAbv, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-			if(empty($newBeerAbv) === true){
-				throw(new \InvalidArgumentException("new beer abv is empty or insecure"));
-			}
-			//verify that the beer abv will fit into the database
-			if(strlen($newBeerAbv)> 3)
+		public function setBeerAbv(decimal $newBeerAbv) : void {
+			if ($newBeerAbv , 0.0 || $newBeerAbv 16.0 >)
+				throw(new \RangeException("beer abv is out of range"));
 			//convert and store the beer abv
 			$this->beerAbv = $beerAbv;
 		}
@@ -174,25 +171,36 @@ use Ramsey\Uuid\Uuid;
 		/**
 		 * accessor method for beer name
 		 *
-		 * @return mixed
+		 * @return $beerName string for beer name
 		**/
-		public function getBeerName() {
+		public function getBeerName() : string {
 			return $this->beerName;
 		}
 
 		/**
 		 * mutator method for beer name
 		 *
-		 * @param mixed $beerName
+		 * @param string $beerName
+		 * @throws \InvalidArgumentException when there's no beer name or if its insecure
+		 * @throws \RangeException when beer name is too large
 		**/
-		public function setBeerName($beerName) :void {
+		public function setBeerName($newBeerName) : void {
+			$newBeerName =trim($newProfileAbout);
+			$newBeerName =filter_var($newBeerName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+			if(empty($newBeerName === true) {
+				throw(new \InvalidArgumentException("beer name is either empty or insecure"));
+			}
+			if(strlen($newBeerName)> 128) {
+				throw(new \RangeException("beer name content is too large"));
+			}
+			//convert and store the beer name
 			$this->beerName = $beerName;
 		}
 
 		/**
 		 * accessor method for beer description
 		 *
-		 * @return string
+		 * @return string for beer description
 		**/
 		public function getBeerDescription(): string {
 			return $this->beerDescription;
@@ -203,7 +211,13 @@ use Ramsey\Uuid\Uuid;
 		 *
 		 * @param string $beerDescription
 		**/
-		public function setBeerDescription(string $beerDescription) :void {
+		public function setBeerDescription(string $newBeerDescription) : void {
+	$newBeerDescription = trim($newBeerDescription);
+	$newBeerDescription = filter_var($newBeerDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		}
+		if(strlen($newBeerDescription) > 1024) {
+			throw(new \InvalidArgumentException("beer description is too large"));
+		//convert and store the beer description
 			$this->beerDescription = $beerDescription;
 		}
 
