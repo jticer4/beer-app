@@ -142,11 +142,8 @@ use Ramsey\Uuid\Uuid;
 		 * @param tinyint $beerIbu
 		**/
 		public function setBeerIbu(tinyint $beerIbu) : void {
-			//verify if the beer ibu is secure
-			$newBeerIbu = trim($newBeerIbu);
-			$newBeerIbu = filter_var($newBeerIbu, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-			if(empty($newBeerIbu) === true) {
-				throw(new \InvalidArgumentException("new beer ibu is empty or insecure"));
+			if($newBeerIbu <0 || 120
+
 			}
 
 			//verify that the beer ibu will fit into the database
