@@ -5,10 +5,7 @@ require_once("autoload.php");
 require_once(dirname(__DIR__, 2)) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
-/**
- * @author Carlos Marquez <carl.marq95@gmail.com>
- * @version 0.0.1
-**/
+
 	class Beer implements \JsonSerializable {
 		use ValidateUuid;
 
@@ -142,13 +139,8 @@ use Ramsey\Uuid\Uuid;
 		 * @param tinyint $beerIbu
 		**/
 		public function setBeerIbu(tinyint $beerIbu) : void {
-			if($newBeerIbu <0 || 120
-
-			}
-
-			//verify that the beer ibu will fit into the database
-			if(strlen($newBeerIbu) >  ) {
-				throw(new \RangeException("beer ibu is too large"));
+			if($newBeerIbu < 0 || $newBeerIbu > 120) {
+				throw(new \RangeException("ibu is out of range"));
 			}
 			//convert and store beer ibu
 			$this->beerIbu = $beerIbu;
