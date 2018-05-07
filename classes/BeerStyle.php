@@ -126,6 +126,19 @@ class beerstyle implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * formats the state variable for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 */
+	public function jsonSerialize(): array {
+		$fields = get_object_vars($this);
+
+		$fields["beerStyleBeerId"] = $this->beerStyleBeerId->toString;
+		$fields["beerStyleStyleId"] = $this->beerStyleStyleId->toString;
+		return ($fields);
+	}
+
 }
 
 
