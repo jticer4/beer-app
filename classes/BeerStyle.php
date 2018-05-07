@@ -92,7 +92,7 @@ class beerstyle implements \JsonSerializable {
 	}
 
 	/**
-	 *inserts beer style into mySQL
+	 *inserts BeerStyle into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
@@ -106,6 +106,23 @@ class beerstyle implements \JsonSerializable {
 
 		//bind the member variables to the place holders in the template
 		$parameters = ["beerStyleBeerId" => $this->beerStyleBeerId->getBytes(), "beerStyleStyleType" => $this->beerStyleStyleId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * deletes this BeerStyle from mySQL
+	 *
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo): void {
+		//create query template
+		$query = "DELETE FROM beerstyle WHERE beerStyleBeerId = :beerStyleBeerId AND beerStyleStyleId = :beerStyleStyleId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$parameters = ["beerStyleBeerId" => $this->beerStyleBeerId->getBytes(), "beerStyleStyleId" => $this->beerStyleStyleId->getBytes()];
 		$statement->execute($parameters);
 	}
 
