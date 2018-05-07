@@ -107,17 +107,51 @@ class Vote implements \JsonSerializable {
 	}
 
 	/**
+	 * accessor method for vote value
+	 *
 	 * @return int
 	 */
-	public function getVoteValue() {
+	public function getVoteValue() :int {
 		return $this->voteValue;
 	}
 
 	/**
+	 * mutator method for $voteValue
+	 *
 	 * @param int $voteValue
 	 */
-	public function setVoteValue($voteValue) {
+	public function setVoteValue(int $voteValue) :void {
+		$newVoteValue = $voteValue;
+		$newVoteValue = filter_var($newVoteValue, FILTER_VALIDATE_INT, FILTER_SANITIZE_NUMBER_INT);
+
+	//checks to see if $newVoteValue is and integer less than or equal to 1
+		if ((is_int($newVoteValue)) || $newVoteValue<=1) {
+			throw (new \TypeError("voteValue is invalid or insecure."));
+		}
+
 		$this->voteValue = $voteValue;
 	}
+
+	/**
+	 * inserts this vote into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+
+		// create query template
+		$query = "INSERT INTO vote(voteValue) VALUES(:voteValue)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["voteProfileId" => $this->voteProfileId->getBytes(),"voteBeerId" => $this->voteBeerId->getBytes(),"voteValue" => $this->voteValue,];
+		$statement->execute($parameters);
+	}
+
+
+
+
 
 }
