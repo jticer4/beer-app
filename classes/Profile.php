@@ -1,6 +1,13 @@
 <?php
 
-class Profile {
+require_once("autoload.php");
+require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
+
+use Ramsey\Uuid\Uuid;
+
+class Profile implements \JsonSerializable {
+
+	use ValidateUuid;
 
 	/**
 	 * id for this Profile, this is the primary key
@@ -9,81 +16,115 @@ class Profile {
 	private $profileId;
 
 	/**
-	 * about section for the profile
+	 * about section for the Profile
 	 * @var string $profileAbout
 	 **/
 	private $profileAbout;
 
 	/**
-	 * address line 1 for the profile
+	 * address line 1 for the Profile
 	 * @var string $profileAddressLine1
 	 **/
 	private $profileAddressLine1;
 
 	/**
-	 * address line 2 for the profile
+	 * address line 2 for the Profile
 	 * @var string $profileAddressLine2
 	 **/
 	private $profileAddressLine2;
 
 	/**
-	 * city of the profile
+	 * city of the Profile
 	 * @var string $profileCity
 	 **/
 	private $profileCity;
 
 	/**
-	 * email address for the profile
+	 * email address for the Profile
 	 * @var string $profileEmail
 	 **/
 	private $profileEmail;
 
 	/**
-	 * hash for the profile
+	 * hash for the Profile
 	 * @var string $profileHash
 	 **/
 	private $profileHash;
 
 	/**
-	 * image for the profile
+	 * image for the Profile
 	 * @var string $profileImage
 	 **/
 	private $profileImage;
 
 	/**
-	 * name of the profile
+	 * name of the Profile
 	 * @var string $profileName
 	 **/
 	private $profileName;
 
 	/**
-	 * state of the profile
+	 * state of the Profile
 	 * @var string $profileState
 	 **/
 	private $profileState;
 
 	/**
-	 * username of the profile
+	 * username of the Profile
 	 * @var string $profileUsername
 	 **/
 	private $profileUsername;
 
 	/**
-	 * user type of the profile
+	 * user type of the Profile
 	 * @var string $profileUserType
 	 **/
 	private $profileUserType;
 
 	/**
-	 * zip code of the profile
+	 * zip code of the Profile
 	 * @var string $profileZip
 	 **/
 	private $profileZip;
 
 	/**
+	 * constructor for this Profile
+	 *
+	 * @param string|Uuid $newProfileId id for this profile or null if a new profile
+	 * @param string $newProfileAbout string containing the profile about me content
+	 * @param string $newProfileAddressLine1 string containing the profile address line 1
+	 * @param string $newProfileAddressLine2 string containing the address line 2
+	 * @param string $newProfileCity string containing the city of the profile
+	 * @param string $newProfileEmail string containing the email address of the profile
+	 * @param string $newProfileHash string containing the hash of the profile
+	 * @param string $newProfileImage string containing the profile image
+	 * @param string $newProfileName string containing the name of the profile
+	 * @param string $newProfileState string containing the state of the profile
+	 * @param string $newProfileUsername string containing the username of the profile
+	 * @param string $newProfileUserType string containing the user type of the profile
+	 * @param string $newProfileZip string containing the zip code of the profile
+	 **/
+	public function __construct(Uuid $newProfileId, string $newProfileAbout, string $newProfileAddressLine1, string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
+		$this->setProfileId($newProfileId);
+		$this->setProfileAbout($newProfileAbout);
+		$this->setProfileAddressLine1($newProfileAddressLine1);
+		$this->setProfileAddressLine2($newProfileAddressLine2);
+		$this->setProfileCity($newProfileCity);
+		$this->setProfileEmail($newProfileEmail);
+		$this->setProfileHash($newProfileHash);
+		$this->setProfileImage($newProfileImage);
+		$this->setProfileName($newProfileName);
+		$this->setProfileState($newProfileState);
+		$this->setProfileUsername($newProfileUsername);
+		$this->setProfileUserType($newProfileUserType);
+		$this->setProfileZip($newProfileZip);
+	}
+
+
+	/**
 	 * accessor method for profile Id
 	 * @return Uuid value of profile Id
-	 */
+	 **/
 	public function getProfileId(): Uuid {
 		return($this->profileId);
 	}
@@ -93,7 +134,7 @@ class Profile {
 	 * @param Uuid $newProfileId
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError if $newProfileId is not a uuid or string
-	 */
+	 **/
 	public function setProfileId(Uuid $newProfileId): void {
 		try {
 			$uuid = self::validateUuid($newProfileId);
@@ -110,7 +151,7 @@ class Profile {
 	/**
 	 * accessor method for profile about section
 	 * @return string value of profile about content
-	 */
+	 **/
 	public function getProfileAbout(): string {
 		return($this->profileAbout);
 	}
@@ -121,7 +162,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileAbout is not a string or insecure
 	 * @throws \RangeException if $newProfileAbout is > 140 characters
 	 * @throws \TypeError if $newProfileAbout is not a string
-	 */
+	 **/
 	public function setProfileAbout(string $newProfileAbout): void {
 		// verify the profile about content is secure
 		$newProfileAbout = trim($newProfileAbout);
@@ -142,7 +183,7 @@ class Profile {
 	/**
 	 * accessor method for the profile address line 1
 	 * @return string value of profile address
-	 */
+	 **/
 	public function getProfileAddressLine1(): string {
 		return($this->profileAddressLine1);
 	}
@@ -153,7 +194,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileAddressLine1 is not a string or insecure
 	 * @throws \RangeException if $newProfileAddressLine1 is > 96 characters
 	 * @throws \TypeError if $newProfileAddressLine1 is not a string
-	 */
+	 **/
 	public function setProfileAddressLine1(string $newProfileAddressLine1): void {
 		// verify the profile address line 1 content is secure
 		$newProfileAddressLine1 = trim($newProfileAddressLine1);
@@ -174,7 +215,7 @@ class Profile {
 	/**
 	 * accessor method for profile address line 2
 	 * @return string value of profile address line 2
-	 */
+	 **/
 	public function getProfileAddressLine2(): string {
 		return($this->profileAddressLine2);
 	}
@@ -185,7 +226,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileAddressLine2 is not a string or insecure
 	 * @throws \RangeException if $newProfileAddressLine2 is > 96 characters
 	 * @throws \TypeError if $newProfileAddressLine2 is not a string
-	 */
+	 **/
 	public function setProfileAddressLine2(string $newProfileAddressLine2): void {
 		// verify the profile address line 2 content is secure
 		$newProfileAddressLine2 = trim($newProfileAddressLine2);
@@ -206,7 +247,7 @@ class Profile {
 	/**
 	 * accessor method for profile city
 	 * @return string value of profile city
-	 */
+	 **/
 	public function getProfileCity(): string {
 		return($this->profileCity);
 	}
@@ -217,7 +258,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileCity is not a string or insecure
 	 * @throws \RangeException if $newProfileCity is > 48 characters
 	 * @throws \TypeError if $newProfileCity is not a string
-	 */
+	 **/
 	public function setProfileCity(string $newProfileCity): void {
 		// verify the profile city content is secure
 		$newProfileCity = trim($newProfileCity);
@@ -238,7 +279,7 @@ class Profile {
 	/**
 	 * accessor method for profile email
 	 * @return string value of profile email
-	 */
+	 **/
 	public function getProfileEmail(): string {
 		return($this->profileEmail);
 	}
@@ -249,7 +290,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileEmail is not a string or insecure
 	 * @throws \RangeException if $newProfileEmail is > 128 characters
 	 * @throws \TypeError if $newProfileEmail is not a string
-	 */
+	 **/
 	public function setProfileEmail(string $newProfileEmail): void {
 		// verify the profile email content is secure
 		$newProfileEmail = trim($newProfileEmail);
@@ -270,7 +311,7 @@ class Profile {
 	/**
 	 * accessor method for profile hash
 	 * @return string value of profile hash
-	 */
+	 **/
 	public function getProfileHash(): string {
 		return($this->profileHash);
 	}
@@ -281,7 +322,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if the hash is not secure
 	 * @throws \RangeException if the hash is not 97 characters
 	 * @throws \TypeError if profile hash is not a string
-	 */
+	 **/
 	public function setProfileHash(string $newProfileHash): void {
 		//enforce that the hash is properly formatted
 		$newProfileHash = trim($newProfileHash);
@@ -307,7 +348,7 @@ class Profile {
 	/**
 	 * accessor method for profile image
 	 * @return string value of profile image
-	 */
+	 **/
 	public function getProfileImage(): string {
 		return($this->profileImage);
 	}
@@ -318,7 +359,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileImage is not a string or insecure
 	 * @throws \RangeException if $newProfileImage is > 255 characters
 	 * @throws \TypeError if $newProfileImage is not a string
-	 */
+	 **/
 	public function setProfileImage(string $newProfileImage): void {
 		// verify the profile image content is secure
 		$newProfileImage = trim($newProfileImage);
@@ -339,7 +380,7 @@ class Profile {
 	/**
 	 * accessor method for profile name
 	 * @return string value of profile name
-	 */
+	 **/
 	public function getProfileName(): string {
 		return($this->profileName);
 	}
@@ -350,7 +391,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileName is not a string or insecure
 	 * @throws \RangeException if $newProfileName is > 64 characters
 	 * @throws \TypeError if $newProfileName is not a string
-	 */
+	 **/
 	public function setProfileName(string $newProfileName): void {
 		// verify the profile name content is secure
 		$newProfileName = trim($newProfileName);
@@ -371,7 +412,7 @@ class Profile {
 	/**
 	 * accessor method for profile state
 	 * @return string value of profile state
-	 */
+	 **/
 	public function getProfileState(): string {
 		return($this->profileState);
 	}
@@ -382,7 +423,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileState is not a string or insecure
 	 * @throws \RangeException if $newProfileState is > 2 characters
 	 * @throws \TypeError if $newProfileState is not a string
-	 */
+	 **/
 	public function setProfileState(string $newProfileState): void {
 		// verify the profile state content is secure
 		$newProfileState = trim($newProfileState);
@@ -403,7 +444,7 @@ class Profile {
 	/**
 	 * accessor method for profile username
 	 * @return string value of profile username
-	 */
+	 **/
 	public function getProfileUsername(): string {
 		return($this->profileUsername);
 	}
@@ -414,7 +455,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileUsername is not a string or insecure
 	 * @throws \RangeException if $newProfileUsername is > 48 characters
 	 * @throws \TypeError if $newProfileUsername is not a string
-	 */
+	 **/
 	public function setProfileUsername(string $newProfileUsername): void {
 		// verify the profile username content is secure
 		$newProfileUsername = trim($newProfileUsername);
@@ -435,7 +476,7 @@ class Profile {
 	/**
 	 * accessor method for profile user type
 	 * @return string value of profile user type
-	 */
+	 **/
 	public function getProfileUserType(): string {
 		return($this->profileUserType);
 	}
@@ -446,7 +487,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileUserType is not a string or insecure
 	 * @throws \RangeException if $newProfileUserType is > 1 characters
 	 * @throws \TypeError if $newProfileUserType is not a string
-	 */
+	 **/
 	public function setProfileUserType(string $newProfileUserType): void {
 		// verify the profile user type content is secure
 		$newProfileUserType = trim($newProfileUserType);
@@ -467,7 +508,7 @@ class Profile {
 	/**
 	 * accessor method for profile zip
 	 * @return string value of profile zip
-	 */
+	 **/
 	public function getProfileZip(): string {
 		return($this->profileZip);
 	}
@@ -478,7 +519,7 @@ class Profile {
 	 * @throws \InvalidArgumentException if $newProfileZip is not a string or insecure
 	 * @throws \RangeException if $newProfileZip is > 10 characters
 	 * @throws \TypeError if $newProfileZip is not a string
-	 */
+	 **/
 	public function setProfileZip(string $newProfileZip): void {
 		// verify the profile zip content is secure
 		$newProfileZip = trim($newProfileZip);
@@ -494,6 +535,75 @@ class Profile {
 
 		// store the profile zip content
 		$this->profileZip = $newProfileZip;
+	}
+
+
+	/**
+	 * inserts this Profile into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+
+		// create query template
+		$query = "INSERT INTO profile(profileId, profileAbout, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip) VALUES(:profileId, :profileAbout, :profileAddressLine1, :profileAddressLine2, :profileCity, :profileEmail, :profileHash, :profileImage, :profileName, :profileState, :profileUsername, :profileUserType, :profileZip)";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileAbout" => $this->profileAbout, "profileAddressLine1" => $this->profileAddressLine1, "profileAddressLine2" => $this->profileAddressLine2, "profileCity" => $this->profileCity, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileImage" => $this->profileImage, "profileName" => $this->profileName, "profileState" => $this->profileState, "profileUsername" => $this->profileUsername, "profileUserType" => $this->profileUserType, "profileZip" => $this->profileZip];
+		$statement->execute($parameters);
+	}
+
+
+	/**
+	 * deletes this Profile from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+
+		// create query template
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holder in the template
+		$parameters = ["profileId" => $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates this Profile in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+
+		// create query template
+		$query = "UPDATE profile SET profileAbout = :profileAbout, profileAddressLine1 = :profileAddressLine1, profileAddressLine2 = :profileAddressLine2, profileCity = :profileCity, profileEmail = :profileEmail, profileHash = :profileHash, profileImage = :profileImage, profileName = :profileName, profileState = :profileState, profileUsername = :profileUsername, profileUserType = :profileUserType, profileZip = :profileZip WHERE profileId = :profileId";
+		$statement = $pdo->prepare($query);
+
+
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileAbout" => $this->profileAbout, "profileAddressLine1" => $this->profileAddressLine1, "profileAddressLine2" => $this->profileAddressLine2, "profileCity" => $this->profileCity, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileImage" => $this->profileImage, "profileName" => $this->profileName, "profileState" => $this->profileState, "profileUsername" => $this->profileUsername, "profileUserType" => $this->profileUserType, "profileZip" => $this->profileZip];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["profileId"] = $this->profileId->toString();
+
+		return($fields);
 	}
 
 }
