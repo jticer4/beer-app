@@ -119,6 +119,7 @@ class Vote implements \JsonSerializable {
 	 * mutator method for $voteValue
 	 *
 	 * @param int $voteValue
+	 * @throws \TypeError if $pdo is not correct data type
 	 */
 	public function setVoteValue(int $voteValue) :void {
 		$newVoteValue = $voteValue;
@@ -133,7 +134,7 @@ class Vote implements \JsonSerializable {
 	}
 
 	/**
-	 * inserts this vote into mySQL
+	 * Inserts this vote into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
@@ -142,7 +143,7 @@ class Vote implements \JsonSerializable {
 	public function insert(\PDO $pdo) : void {
 
 		// create query template
-		$query = "INSERT INTO vote(voteValue) VALUES(:voteValue)";
+		$query = "INSERT INTO vote(voteValue, voteProfileId, voteBeerId) VALUES(:voteValue, :voteProfileId, :voteBeerId)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
@@ -150,8 +151,23 @@ class Vote implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * deletes this this Vote from from mySQL
+	 *
+	 * @param \PDO $pdo connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo): void {
+		//create query template
+		$query = "DELETE FROM vote WHERE voteProfileId = :voteProfileId AND voteBeerId = :voteBeerId";
+		$statement = $pdo->prepare($query);
 
-
+		//bind the member variables to the place holders in the template
+		$parameters = ["voteProfileId" => $this->voteProfileId->getBytes(), "voteBeerId" =>
+			$this->voteBeerId->getBytes()];
+		$statement->execute($parameters);
+	}
 
 
 
