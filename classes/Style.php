@@ -10,7 +10,7 @@ class style implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * id for the style of beer
-	 * @var Uuid|tinyint $styleId
+	 * @var Uuid $styleId
 	 */
 	private $styleId;
 	/**
@@ -21,14 +21,14 @@ class style implements \JsonSerializable {
 
 
 	/**
-	 * @param uuid|tinyint $newStyleId id of style
+	 * @param Uuid $newStyleId id of style
 	 * @param string $newStyleType type of style
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (eg. strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
 	 * @throws \Exception if some other exception occurs
 	 */
-	public function __construct(tinyint $newStyleId, string $newStyleType) {
+	public function __construct(Uuid $newStyleId, string $newStyleType) {
 		try {
 			$this->setStyleId($newStyleId);
 			$this->setStyleType($newStyleType);
@@ -51,9 +51,9 @@ class style implements \JsonSerializable {
 	/**
 	 * mutator method for style id
 	 *
-	 * @param Uuid|tinyint $newStyleId
+	 * @param Uuid $newStyleId
 	 */
-	public function setStyleId(tinyint $newStyleId) {
+	public function setStyleId(Uuid $newStyleId) {
 		try {
 			$uuid = self::validateUuid($newStyleId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
