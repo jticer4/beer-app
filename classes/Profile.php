@@ -160,7 +160,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile about section
 	 * @param string $newProfileAbout
-	 * @throws \InvalidArgumentException if $newProfileAbout is not a string or insecure
 	 * @throws \RangeException if $newProfileAbout is > 140 characters
 	 * @throws \TypeError if $newProfileAbout is not a string
 	 **/
@@ -168,9 +167,6 @@ class Profile implements \JsonSerializable {
 		// verify the profile about content is secure
 		$newProfileAbout = trim($newProfileAbout);
 		$newProfileAbout = filter_var($newProfileAbout, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileAbout) === true) {
-			throw(new \InvalidArgumentException("profile about content is empty or insecure"));
-		}
 
 		// verify the profile about content will fit in the database
 		if(strlen($newProfileAbout) > 140) {
@@ -192,7 +188,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile address line 1
 	 * @param string $newProfileAddressLine1
-	 * @throws \InvalidArgumentException if $newProfileAddressLine1 is not a string or insecure
 	 * @throws \RangeException if $newProfileAddressLine1 is > 96 characters
 	 * @throws \TypeError if $newProfileAddressLine1 is not a string
 	 **/
@@ -200,9 +195,6 @@ class Profile implements \JsonSerializable {
 		// verify the profile address line 1 content is secure
 		$newProfileAddressLine1 = trim($newProfileAddressLine1);
 		$newProfileAddressLine1 = filter_var($newProfileAddressLine1, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileAddressLine1) === true) {
-			throw(new \InvalidArgumentException("profile address line 1 content is empty or insecure"));
-		}
 
 		// verify the profile address line 1 content will fit in the database
 		if(strlen($newProfileAddressLine1) > 96) {
@@ -224,7 +216,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile address line 2
 	 * @param string $newProfileAddressLine2
-	 * @throws \InvalidArgumentException if $newProfileAddressLine2 is not a string or insecure
 	 * @throws \RangeException if $newProfileAddressLine2 is > 96 characters
 	 * @throws \TypeError if $newProfileAddressLine2 is not a string
 	 **/
@@ -232,9 +223,6 @@ class Profile implements \JsonSerializable {
 		// verify the profile address line 2 content is secure
 		$newProfileAddressLine2 = trim($newProfileAddressLine2);
 		$newProfileAddressLine2 = filter_var($newProfileAddressLine2, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileAddressLine2) === true) {
-			throw(new \InvalidArgumentException("profile address line 2 content is empty or insecure"));
-		}
 
 		// verify the profile address line 2 content will fit in the database
 		if(strlen($newProfileAddressLine2) > 96) {
@@ -256,7 +244,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile city
 	 * @param string $newProfileCity
-	 * @throws \InvalidArgumentException if $newProfileCity is not a string or insecure
 	 * @throws \RangeException if $newProfileCity is > 48 characters
 	 * @throws \TypeError if $newProfileCity is not a string
 	 **/
@@ -264,9 +251,6 @@ class Profile implements \JsonSerializable {
 		// verify the profile city content is secure
 		$newProfileCity = trim($newProfileCity);
 		$newProfileCity = filter_var($newProfileCity, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileCity) === true) {
-			throw(new \InvalidArgumentException("profile city content is empty or insecure"));
-		}
 
 		// verify the profile city content will fit in the database
 		if(strlen($newProfileCity) > 48) {
@@ -357,7 +341,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile image
 	 * @param string $newProfileImage
-	 * @throws \InvalidArgumentException if $newProfileImage is not a string or insecure
 	 * @throws \RangeException if $newProfileImage is > 255 characters
 	 * @throws \TypeError if $newProfileImage is not a string
 	 **/
@@ -365,9 +348,6 @@ class Profile implements \JsonSerializable {
 		// verify the profile image content is secure
 		$newProfileImage = trim($newProfileImage);
 		$newProfileImage = filter_var($newProfileImage, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileImage) === true) {
-			throw(new \InvalidArgumentException("profile image content is empty or insecure"));
-		}
 
 		// verify the profile image content will fit in the database
 		if(strlen($newProfileImage) > 255) {
@@ -389,7 +369,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile name
 	 * @param string $newProfileName
-	 * @throws \InvalidArgumentException if $newProfileName is not a string or insecure
 	 * @throws \RangeException if $newProfileName is > 64 characters
 	 * @throws \TypeError if $newProfileName is not a string
 	 **/
@@ -397,9 +376,6 @@ class Profile implements \JsonSerializable {
 		// verify the profile name content is secure
 		$newProfileName = trim($newProfileName);
 		$newProfileName = filter_var($newProfileName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileName) === true) {
-			throw(new \InvalidArgumentException("profile name content is empty or insecure"));
-		}
 
 		// verify the profile name content will fit in the database
 		if(strlen($newProfileName) > 64) {
@@ -421,7 +397,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile state
 	 * @param string $newProfileState
-	 * @throws \InvalidArgumentException if $newProfileState is not a string or insecure
 	 * @throws \RangeException if $newProfileState is > 2 characters
 	 * @throws \TypeError if $newProfileState is not a string
 	 **/
@@ -429,9 +404,6 @@ class Profile implements \JsonSerializable {
 		// verify the profile state content is secure
 		$newProfileState = trim($newProfileState);
 		$newProfileState = filter_var($newProfileState, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileState) === true) {
-			throw(new \InvalidArgumentException("profile state content is empty or insecure"));
-		}
 
 		// verify the profile state content will fit in the database
 		if(strlen($newProfileState) > 2) {
@@ -485,7 +457,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile user type
 	 * @param string $newProfileUserType
-	 * @throws \InvalidArgumentException if $newProfileUserType is not a string or insecure
 	 * @throws \RangeException if $newProfileUserType is > 1 characters
 	 * @throws \TypeError if $newProfileUserType is not a string
 	 **/
@@ -493,9 +464,6 @@ class Profile implements \JsonSerializable {
 		// verify the profile user type content is secure
 		$newProfileUserType = trim($newProfileUserType);
 		$newProfileUserType = filter_var($newProfileUserType, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileUserType) === true) {
-			throw(new \InvalidArgumentException("profile user type content is empty or insecure"));
-		}
 
 		// verify the profile user type content will fit in the database
 		if(strlen($newProfileUserType) > 1) {
@@ -517,7 +485,6 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile zip
 	 * @param string $newProfileZip
-	 * @throws \InvalidArgumentException if $newProfileZip is not a string or insecure
 	 * @throws \RangeException if $newProfileZip is > 10 characters
 	 * @throws \TypeError if $newProfileZip is not a string
 	 **/
@@ -525,9 +492,6 @@ class Profile implements \JsonSerializable {
 		// verify the profile zip content is secure
 		$newProfileZip = trim($newProfileZip);
 		$newProfileZip = filter_var($newProfileZip, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileZip) === true) {
-			throw(new \InvalidArgumentException("profile zip content is empty or insecure"));
-		}
 
 		// verify the profile zip content will fit in the database
 		if(strlen($newProfileZip) > 10) {
