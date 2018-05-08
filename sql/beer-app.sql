@@ -18,7 +18,7 @@ CREATE TABLE profile (
 	profileName VARCHAR(64),
 	profileState CHAR(2),
 	profileUsername VARCHAR(48) NOT NULL,
-	profileUserType CHAR(1),
+	profileUserType CHAR(1) NOT NULL,
 	profileZip VARCHAR(10),
 	UNIQUE (profileEmail),
 	UNIQUE (profileUsername),
