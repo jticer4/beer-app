@@ -39,6 +39,7 @@ use Ramsey\Uuid\Uuid;
 		 * @var string $beerDescription
 		 **/
 		private $beerDescription;
+
 		/**
 		 * constructor for beer
 		 *
@@ -112,6 +113,8 @@ use Ramsey\Uuid\Uuid;
 		 * mutator method for beer profile id
 		 *
 		 * @param Uuid $beerProfileId
+		 * @throws \RangeException if beer profile id is null
+		 * @throws \TypeError if beer profile id is null
 		 */
 		public function setBeerProfileId(Uuid $newBeerProfileId) : void {
 			try {
@@ -146,6 +149,7 @@ use Ramsey\Uuid\Uuid;
 			//convert and store beer ibu
 			$this->beerIbu = $beerIbu;
 		}
+
 		/**
 		 * accessor method for beer abv
 		 *
@@ -210,6 +214,7 @@ use Ramsey\Uuid\Uuid;
 		 * mutator method for beer description
 		 *
 		 * @param string $beerDescription
+		 * @throws \InvalidArgumentException when beer description is too big
 		**/
 		public function setBeerDescription(string $newBeerDescription) : void {
 	$newBeerDescription = trim($newBeerDescription);
@@ -221,7 +226,34 @@ use Ramsey\Uuid\Uuid;
 			$this->beerDescription = $beerDescription;
 		}
 
+		/**
+		 * inserts this beer into mysql
+		 *
+		 * @param \PDO $pdo connection object
+		 * @throws \PDOException when mySQL related errors occur
+		 * @throws \TypeError if $pdo is not a PDO connection object
+		 **/
+		public function insert(\PDO $pdo) : void {
 
+			// create query template
+			$query = "INSERT INTO beer(beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription) VALUES(:beerId, :beerProfile, :beerIbu, :beerAbv, :beerName, :beerDescription)";
+			$statement = $pdo->prepare($query);
+
+			//bind the member variables to the place holders in the template
+			$parameters = ["beerId" => $this->beerId->getBytes(), "beerProfileId" => $this->beerProfileId->getBytes(), "beerIbu" => $this->beerIbu, "beerAbv" => $this->beerAbv, "beerName" => $this->beerName, "beerDescription" => $this->beerDescription];
+			$statement->execute($parameters);
+		}
+
+		/**
+		 *
+		 * @param \PDO $pdo PDO connection object
+		 * @throws \PDOException when mySQL  related errors occur
+		 * @throws \TypeError if $pdo is not a PDO connection object
+		 **/
+		public function delete(\PDO $pdo) : void {
+
+}
+)
 
 
 
