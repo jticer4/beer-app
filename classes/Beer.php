@@ -252,9 +252,9 @@ use Ramsey\Uuid\Uuid;
 		 **/
 		public function delete(\PDO $pdo) : void {
 
-}
+		//create query template
 )
-
+}
 
 
 
