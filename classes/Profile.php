@@ -279,9 +279,9 @@ class Profile implements \JsonSerializable {
 	public function setProfileEmail(string $newProfileEmail): void {
 		// verify the profile email content is secure
 		$newProfileEmail = trim($newProfileEmail);
-		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_SANITIZE_EMAIL, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newProfileEmail) === true) {
-			throw(new \InvalidArgumentException("profile email content is empty or insecure"));
+			throw(new \InvalidArgumentException("profile email content is empty or insecure") );
 		}
 
 		// verify the profile email content will fit in the database
