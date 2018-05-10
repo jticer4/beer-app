@@ -457,6 +457,7 @@ class Profile implements \JsonSerializable {
 	/**
 	 * mutator method for profile user type
 	 * @param string $newProfileUserType
+	 * @throws \InvalidArgumentException if $newProfileUsername is not a string or insecure
 	 * @throws \RangeException if $newProfileUserType is > 1 characters
 	 * @throws \TypeError if $newProfileUserType is not a string
 	 **/
@@ -464,6 +465,9 @@ class Profile implements \JsonSerializable {
 		// verify the profile user type content is secure
 		$newProfileUserType = trim($newProfileUserType);
 		$newProfileUserType = filter_var($newProfileUserType, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newProfileUsername) === true) {
+			throw(new \InvalidArgumentException("profile username content is empty or insecure"));
+		}
 
 		// verify the profile user type content will fit in the database
 		if(strlen($newProfileUserType) > 1) {
