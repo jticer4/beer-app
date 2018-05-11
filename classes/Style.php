@@ -161,5 +161,43 @@ class style implements \JsonSerializable {
 		return ($fields);
 	}
 
+	/**
+	 * gets the Style by styleId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $messageId message id to search for
+	 * @return Message|null Message found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getStyleByStyleId(\PDO $pdo, $styleId): ?Style {
+		// sanitize the messageId before searching
+		try {
+			$styleId = self::validateUuid($styleId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT styleId, styleType FROM style WHERE styleId = :styleId";
+		$statement = $pdo->prepare($query);
+
+		// bind the message id to the place holder in the template
+		$parameters = ["styleId" => $styleId->getBytes()];
+		$statement->execute($parameters);
+
+		// grab the profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$style = new Style($row["styleId"], $row["styleType"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($style);
+	}
 
 }
