@@ -263,15 +263,77 @@ use Ramsey\Uuid\Uuid;
 /**
 * updates this beer in mysql
 * @param \PDO $pdo PDO connection object
-* @throws
-*
-*
+* @throws \PDOException when mySQL related errors occur
+* @throws  \TypeError if $pdo is not a PDO object
 *
 **/
 public function update(\PDO $pdo) : void {
+
+// create query template
 $query ="UPDATE beer SET beerProfileId = :beerProfileId, beerAbv = :beerAbv, beerDescription = :beerDescription, beerIbu = :beerIbu, beerName = :beerName WHERE beerId = beerId";
 $statement = $pdo->prepare($query);
 
 $parameters = ["beerId" => $this->beerId->getBytes(),"beerProfileId" => $this->beerProfileId->getBytes(), "beerAbv" => $this->beerAbv,"beerDescription" => $this->beerDescription, "beerIbu" => $this->beerIbu, "beerName" => $this->beerName];
 $statement->execute($parameters);
 }
+
+/**
+ *gets beer by beer id
+ *
+ * @param \PDO $pdo PDO connection object
+ * @param Uuid|string $beerId beer id to search for
+ * @return Beer|null beer found or null if not found
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when a variable are not the correct data type
+**/
+public static function getBeerbyBeerId(\PDO $pdo, $beerId) : ?Beer {
+	//sanitize the beerId before searching
+	try {
+		$beerId = self::validateUuid($beerId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		throw(new \PDOException(($exception->getMessage(), 0, $exception));
+}
+
+//create query template
+	$query = "SELECT beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription from beer where beerId = :beerId";
+	$statement = $pdo->prepare($query);
+
+//bind the beer id to the place
+	$parameters = ["beerId" => $beerId->getBytes()];
+	$statement->execute($parameters);
+
+//grab beer from mysql
+	try {
+		$beer = null;
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		$row = $statement->fetch();
+		if($row !== false) {
+			$beer = new Beer($row["beerId"], $row["beerProfileId"], $row["beerIbu"], $row["beerAbv"], $row["beerName"], $row["beerDescription"]);
+		}
+	} catch(\PDOException($exception->getMessage(), 0, $exception));
+		//if the row couldn't be converted rethrow it
+	throw(new \PDOException($exception->getMessage(), 0, $exception));
+}
+return($beer);
+}
+
+/**
+ *gets the beer using the profile id
+ *
+**/
+public static function getBeerBeBeerProfileId(\PDO $pdo, $beerProfileId)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
