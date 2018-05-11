@@ -321,7 +321,34 @@ return($beer);
  *gets the beer using the profile id
  *
 **/
-public static function getBeerBeBeerProfileId(\PDO $pdo, $beerProfileId)
+public static function getBeerByBeerProfileId(\PDO $pdo, $beerProfileId) : \SplFixedArray {
+
+	try {
+		$beerProfileId = self::validateUuid($beerProfileId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
+	}
+	//create query template
+	$query = "SELECT beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription FROM beer where beerProfileId = :beerProfileId";
+	$statement = $pdo->prepare($query);
+	//bind the beer profile id to the place holder
+	$parameters = ["beerProfileId" => $beerProfileId->getBytes()];
+	$statement->execute($parameters);
+	// build an array of beers
+	$beers = new \SplFixedArray($statement->rowCount());
+	$statement->setFetchMode(\PDO::FETCH_ASSOC);
+	while(($row = $statement->fetch()) !== false) {
+		try {
+			$beer = new Beer($row["beer"], $row ["beerProfileId"], $row ["beerIbu"], $row ["beerAbv"], $row ["beerName"], $row beerDescription]);
+			$beers[$beers->key()] = $beer;
+			$beers->next();
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+	}
+	return($beers);
+}
 
 
 
