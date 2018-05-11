@@ -71,7 +71,7 @@ use Ramsey\Uuid\Uuid;
 				throw(new $exceptionType($exception->getMessage(), 0, $exception));
 			}
 		}
-	}
+
 
 		/**
 		 * accessor method for beer id
@@ -252,10 +252,26 @@ use Ramsey\Uuid\Uuid;
 		 **/
 		public function delete(\PDO $pdo) : void {
 
-		//create query template
-)
+			//create query template
+	$query ="DELETE FROM beer WHERE beerId = :beerId";
+	$statement = $pdo->prepare($query);
+			//bind the member variables to the place holder in the template
+	$parameters = ["beerId" => $this->beerId->getbytes()];
+	$statement ->execute($parameters);
 }
 
+/**
+* updates this beer in mysql
+* @param \PDO $pdo PDO connection object
+* @throws
+*
+*
+*
+**/
+public function update(\PDO $pdo) : void {
+$query ="UPDATE beer SET beerProfileId = :beerProfileId, beerAbv = :beerAbv, beerDescription = :beerDescription, beerIbu = :beerIbu, beerName = :beerName WHERE beerId = beerId";
+$statement = $pdo->prepare($query);
 
-
-
+$parameters = ["beerId" => $this->beerId->getBytes(),"beerProfileId" => $this->beerProfileId->getBytes(), "beerAbv" => $this->beerAbv,"beerDescription" => $this->beerDescription, "beerIbu" => $this->beerIbu, "beerName" => $this->beerName];
+$statement->execute($parameters);
+}
