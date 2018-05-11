@@ -320,6 +320,11 @@ return($beer);
 /**
  *gets the beer using the profile id
  *
+ * @param \PDO $pdo PDO connection object
+ * @param Uuid|string $beerProfileId profile id to search by
+ * @return \SplFixedArray of beers found
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError when variables are not the correct date type
 **/
 public static function getBeerByBeerProfileId(\PDO $pdo, $beerProfileId) : \SplFixedArray {
 
