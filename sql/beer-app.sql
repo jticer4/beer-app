@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS profile;
 CREATE TABLE profile (
 	profileId Binary(16) NOT NULL,
 	profileAbout VARCHAR(140),
+	profileActivationToken CHAR(32),
 	profileAddressLine1 VARCHAR(96),
 	profileAddressLine2 VARCHAR(96),
 	profileCity VARCHAR(48),

@@ -169,6 +169,7 @@ class Profile implements \JsonSerializable {
 		$newProfileAbout = filter_var($newProfileAbout, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 		// verify the profile about content will fit in the database
+		//TODO copy pasta
 		if(strlen($newProfileAbout) > 140) {
 			throw(new \RangeException("profile about content too large"));
 		}
