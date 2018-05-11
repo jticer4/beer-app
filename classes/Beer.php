@@ -355,8 +355,24 @@ public static function getBeerByBeerProfileId(\PDO $pdo, $beerProfileId) : \SplF
 	return($beers);
 }
 
+/**
+ *gets the beer by the beer name
+ *
+**/
+public static function getBeerByBeerName(\PDO $pdo string $beerName) : \SplFixedArray {
+	// sanitize the description before searching
+	$beerName = trim($beerName);
+	$beerName = filter_var($beerName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	if(empty($beerName) === true) {
+		throw(new \PDOException("beer content is invalid"));
+	}
+	// escape any mySQL wild cards
+	$beerName = str_replace("_", "\\_", str_replace("%", "\\%", $beerName));
 
-
+	//create query template
+	$query = "SELECT beerID, beerProfileId, beerIbu, beerAbv, beerName, beerDescription FROM beer WHERE beerName LIKE :beerName";
+	$statement->prepare($query);
+}
 
 
 
