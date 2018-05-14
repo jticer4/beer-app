@@ -688,8 +688,6 @@ class Profile implements \JsonSerializable {
 		return($profiles);
 	}
 
-	//TODO add get profile by activation token
-
 	/**
 	 * gets the Profile by profile email
 	 *
@@ -730,10 +728,42 @@ class Profile implements \JsonSerializable {
 		return($profile);
 	}
 
-
-
-
-
+	/**
+	 * get the profile by profile activation token
+	 *
+	 * @param string $profileActivationToken
+	 * @param \PDO object $pdo
+	 * @return Profile|null Profile or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public
+	static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken) : ?Profile {
+		//make sure activation token is in the right format and that it is a string representation of a hexadecimal
+		$profileActivationToken = trim($profileActivationToken);
+		if(ctype_xdigit($profileActivationToken) === false) {
+			throw(new \InvalidArgumentException("profile activation token is empty or in the wrong format"));
+		}
+		//create the query template
+		$query = "SELECT  profileId, profileAbout, profileActivationToken, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip FROM profile WHERE profileActivationToken = :profileActivationToken";
+		$statement = $pdo->prepare($query);
+		// bind the profile activation token to the placeholder in the template
+		$parameters = ["profileActivationToken" => $profileActivationToken];
+		$statement->execute($parameters);
+		// grab the Profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileAbout"], $row["profileActivationToken"], $row["profileAddressLine1"], $row["profileAddressLine2"], $row["profileCity"], $row["profileEmail"], $row["profileHash"], $row["profileImage"], $row["profileName"], $row["profileState"], $row["profileUsername"], $row["profileUserType"], $row["profileZip"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
+	}
 	/**
 	 * gets all Profiles
 	 *
