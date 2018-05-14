@@ -1,9 +1,9 @@
 <?php
 
 require_once("autoload.php");
-require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "vendor/autoload.php");
 
-namespace edu\cnm\beer;
+namespace \edu\cnm\beer;
 
 use Ramsey\Uuid\Uuid;
 
@@ -606,6 +606,7 @@ class Profile implements \JsonSerializable {
 
 	/**
 	 * gets the Profile by profileId
+	 * TODO GET PROFILE BY BEER, GET PROFILE BY VOTE
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $profileId profile id to search for
 	 * @return Profile|null Profile found or null if not found
@@ -642,6 +643,37 @@ class Profile implements \JsonSerializable {
 		}
 		return($profile);
 	}
+
+	/**
+	 * gets all Profiles
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Profiles found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllProfiles(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT profileId, profileAbout, profileActivationToken, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip FROM profile";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of profiles
+		$profiles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$profile = new Profile($row["profileId"], $row["profileAbout"], $row["profileActivationToken"], $row["profileAddressLine1"], $row["profileAddressLine2"], $row["profileCity"], $row["profileEmail"], $row["profileHash"], $row["profileImage"], $row["profileName"], $row["profileState"], $row["profileUsername"], $row["profileUserType"], $row["profileZip"]);
+				$profiles[$profiles->key()] = $profile;
+				$profiles->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($profiles);
+	}
+
 
 	/**
 	 * formats the state variables for JSON serialization
