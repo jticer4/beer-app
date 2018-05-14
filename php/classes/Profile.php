@@ -606,7 +606,6 @@ class Profile implements \JsonSerializable {
 
 	/**
 	 * gets the Profile by profileId
-	 * TODO get profile by username
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $profileId profile id to search for
 	 * @return Profile|null Profile found or null if not found
@@ -688,6 +687,51 @@ class Profile implements \JsonSerializable {
 		}
 		return($profiles);
 	}
+
+	//TODO add get profile by activation token
+
+	/**
+	 * gets the Profile by profile email
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param String $profileEmail profile email to search for
+	 * @return Profile|null Profile found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getProfileByProfileEmail(\PDO $pdo, $profileEmail) : ?Profile {
+		// sanitize the tweetId before searching
+		$profileEmail = trim($profileEmail);
+		$profileEmail = filter_var($profileEmail, FILTER_SANITIZE_EMAIL, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($profileEmail) === true) {
+			throw(new \PDOException("profile email content is invalid"));
+		}
+
+		// create query template
+		$query = "SELECT profileId, profileAbout, profileActivationToken, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip FROM profile WHERE profileEmail = :profileEmail";
+		$statement = $pdo->prepare($query);
+
+		// bind the profile email to the place holder in the template
+		$parameters = ["profileEmail" => $profileEmail];
+		$statement->execute($parameters);
+
+		// grab the profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileAbout"], $row["profileActivationToken"], $row["profileAddressLine1"], $row["profileAddressLine2"], $row["profileCity"], $row["profileEmail"], $row["profileHash"], $row["profileImage"], $row["profileName"], $row["profileState"], $row["profileUsername"], $row["profileUserType"], $row["profileZip"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($profile);
+	}
+
+
+
 
 
 	/**
