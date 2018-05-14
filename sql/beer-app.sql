@@ -1,7 +1,7 @@
 ALTER	DATABASE beer CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 DROP TABLE IF EXISTS vote;
-DROP TABLE IF EXISTS beerstyle;
+DROP TABLE IF EXISTS beerStyle;
 DROP TABLE IF EXISTS beer;
 DROP TABLE IF EXISTS style;
 DROP TABLE IF EXISTS profile;
@@ -44,7 +44,7 @@ CREATE TABLE beer (
 	PRIMARY KEY(beerId)
 );
 
-CREATE TABLE beerstyle(
+CREATE TABLE beerStyle(
 	beerStyleBeerId BINARY(16) NOT NULL,
 	beerStyleStyleId TINYINT UNSIGNED NOT NULL,
 	INDEX(beerStyleBeerId),

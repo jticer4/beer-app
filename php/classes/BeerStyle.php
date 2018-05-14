@@ -6,7 +6,7 @@ require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
-class beerstyle implements \JsonSerializable {
+class beerStyle implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * Beer id for the BeerStyle
@@ -15,11 +15,10 @@ class beerstyle implements \JsonSerializable {
 	private $beerStyleBeerId;
 	/**
 	 * Style id for the BeerStyle
-	 * @var $beerStyleStyleId
+	 * @var int $beerStyleStyleId
 	 */
 	private $beerStyleStyleId;
 
-//todo CHANGE styleId to int
 	/**
 	 * constructor for this BeerStyle
 	 *
@@ -72,7 +71,7 @@ class beerstyle implements \JsonSerializable {
 	 *
 	 * @return Uuid of BeerStyle style id
 	 */
-	public function getBeerStyleStyleId(): Uuid {
+	public function getBeerStyleStyleId(): int {
 		return ($this->beerStyleStyleId);
 	}
 
@@ -100,11 +99,11 @@ class beerstyle implements \JsonSerializable {
 	public function insert(\PDO $pdo): void {
 
 		//create query template
-		$query = "INSERT INTO beerstyle (beerStyleBeerId, beerStyleStyleId) VALUES (:beerStyleBeerId, :beerStyleStyleId)";
+		$query = "INSERT INTO beerStyle (beerStyleBeerId, beerStyleStyleId) VALUES (:beerStyleBeerId, :beerStyleStyleId)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
-		$parameters = ["beerStyleBeerId" => $this->beerStyleBeerId->getBytes(), "beerStyleStyleType" => $this->beerStyleStyleId->getBytes()];
+		$parameters = ["beerStyleBeerId" => $this->beerStyleBeerId->getBytes(), "beerStyleStyleType" => $this->beerStyleStyleId];
 		$statement->execute($parameters);
 	}
 
@@ -117,15 +116,55 @@ class beerstyle implements \JsonSerializable {
 	 **/
 	public function delete(\PDO $pdo): void {
 		//create query template
-		$query = "DELETE FROM beerstyle WHERE beerStyleBeerId = :beerStyleBeerId AND beerStyleStyleId = :beerStyleStyleId";
+		$query = "DELETE FROM beerStyle WHERE beerStyleBeerId = :beerStyleBeerId AND beerStyleStyleId = :beerStyleStyleId";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
-		$parameters = ["beerStyleBeerId" => $this->beerStyleBeerId->getBytes(), "beerStyleStyleId" => $this->beerStyleStyleId->getBytes()];
+		$parameters = ["beerStyleBeerId" => $this->beerStyleBeerId->getBytes(), "beerStyleStyleId" => $this->beerStyleStyleId];
 		$statement->execute($parameters);
 	}
 
-	//TODO getByBeerStyleAndBeer getByBeerStyle getByBeer
+	//TODO getBeerStyleByBeerStyleStyleId
+
+	/**
+	 * gets the BeerStyle by the BeerStyleBeerId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid $beerStyleBeerId id to search by
+	 * @return \SplFixedArray SplFixedArray of BeerStyles found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getBeerStyleByBeerStyleBeerId (\PDO $pdo, $beerStyleBeerId) :  \SplFixedArray{
+		try {
+				$beerStyleBeerId = self::validateUuid($beerStyleBeerId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+					throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		//create query template
+		$query = "SELECT beerStyleBeerId, beerStyleStyleId FROM beerStyle WHERE beerStyleBeerId = :beerStyleBeerId";
+		$statement = $pdo->prepare($query);
+
+		//bind the beerStyleBeerId to the place holder in the template
+		$parameters = ["beerStyleBeerId" => $beerStyleBeerId->getBytes()];
+		$statement->execute($parameters);
+
+		//build an array of beer styles
+		$beerStyles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+				try {
+						$beerStyle = new BeerStyle($row["beerStyleBeerId"], $row["beerStyleStyleId"]);
+						$beerStyles[$beerStyles->key()] = $beerStyle;
+						$beerStyles->next();
+				} catch(\Exception $exception) {
+					// if the row couldn't be converted, rethrow it
+					throw(new \PDOException($exception->getMessage(), 0, $exception));
+				}
+		}
+		return($beerStyles);
+	}
 
 	/**
 	 * formats the state variable for JSON serialization
@@ -135,8 +174,8 @@ class beerstyle implements \JsonSerializable {
 	public function jsonSerialize(): array {
 		$fields = get_object_vars($this);
 
-		$fields["beerStyleBeerId"] = $this->beerStyleBeerId;
-		$fields["beerStyleStyleId"] = $this->beerStyleStyleId->toString;
+		$fields["beerStyleBeerId"] = $this->beerStyleBeerId->toString();
+		$fields["beerStyleStyleId"] = $this->beerStyleStyleId;
 		return ($fields);
 	}
 

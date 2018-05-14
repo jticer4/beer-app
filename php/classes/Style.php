@@ -40,7 +40,7 @@ class style implements \JsonSerializable {
 	}
 
 	/**
-	 * TODO CHANGE UUID TO INTEGER, GET RID OF TRY BLOCK. DO IF BLOCK VALUES BETWEEN
+	 *
 	 * accessor method for style id
 	 *
 	 * @return int of style id
@@ -138,7 +138,7 @@ class style implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $messageId message id to search for
-	 * @return Message|null Message found or null if not found
+	 * @return int|null Style found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
