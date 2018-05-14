@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\DataDesign;
+namespace Edu\Cnm\Beer;
 
 require_once("autoload.php");
 require_once(dirname(__DIR__, 2) . "/classes/autoload.php");
@@ -19,12 +19,12 @@ class beerstyle implements \JsonSerializable {
 	 */
 	private $beerStyleStyleId;
 
-
+//todo CHANGE styleId to int
 	/**
 	 * constructor for this BeerStyle
 	 *
 	 * @param Uuid $newBeerStyleBeerId beer id of the BeerStyle
-	 * @param Uuid $newBeerStyleStyleId style id of the BeerStyle
+	 * @param int $newBeerStyleStyleId style id of the BeerStyle
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
@@ -32,7 +32,7 @@ class beerstyle implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 
-	public function __construct(string $newBeerStyleBeerId, Uuid $newBeerStyleStyleId) {
+	public function __construct(Uuid $newBeerStyleBeerId, int $newBeerStyleStyleId) {
 		try {
 			$this->setBeerStyleBeerId($newBeerStyleBeerId);
 			$this->setBeerStyleStyleId($newBeerStyleStyleId);
@@ -77,22 +77,21 @@ class beerstyle implements \JsonSerializable {
 	}
 
 	/*
-	 * mutatator method for BeerStyle style id
+	 * mutator method for BeerStyle style id
 	 *
-	 * @param Uuid|tinyint $newBeerStyleStyleId
+	 * @param int $newBeerStyleStyleId
 	 */
-	public function setBeerStyleStyleId($newBeerStyleStyleId) {
-		try {
-			$uuid = self::validateUuid($newBeerStyleStyleId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-			$exceptionType = get_class($exception);
-			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+	public function setBeerStyleStyleId(int $newBeerStyleStyleId) {
+		$newBeerStyleStyleId = filter_var($newBeerStyleStyleId, FILTER_VALIDATE_INT, FILTER_SANITIZE_NUMBER_INT);
+		if($newBeerStyleStyleId < 0 || $newBeerStyleStyleId > 255) {
+			throw(new \RangeException("There are no beers with this ID"));
 		}
-		$this->beerStyleStyleId = $uuid;
+
+		$this->beerStyleStyleId = $newBeerStyleStyleId;
 	}
 
 	/**
-	 *inserts BeerStyle into mySQL
+	 *inserts BeerStyle style id into mySQL
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
@@ -126,25 +125,7 @@ class beerstyle implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
-
-	/**
-	 * updates this BeerStyle in mySQL
-	 *
-	 * @param \PDO $pdo PDO connection object
-	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
-
-	public function update(\PDO $pdo) : void {
-
-		// create query template
-		$query = "UPDATE beerstyle SET styleId = :styleId, styleType = :styleType WHERE styleId = :styleId";
-		$statement = $pdo->prepare($query);
-
-		$parameters = ["styleId" => $this->styleId->getBytes(), "styleType" => $this->styleType];
-		$statement->execute($parameters);
-	}
-	 *
-	 * *	/
+	//TODO getByBeerStyleAndBeer getByBeerStyle getByBeer
 
 	/**
 	 * formats the state variable for JSON serialization
@@ -154,7 +135,7 @@ class beerstyle implements \JsonSerializable {
 	public function jsonSerialize(): array {
 		$fields = get_object_vars($this);
 
-		$fields["beerStyleBeerId"] = $this->beerStyleBeerId->toString;
+		$fields["beerStyleBeerId"] = $this->beerStyleBeerId;
 		$fields["beerStyleStyleId"] = $this->beerStyleStyleId->toString;
 		return ($fields);
 	}
