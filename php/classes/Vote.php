@@ -2,6 +2,9 @@
 
 namespace Edu\Cnm\Beer;
 
+require_once("autoload.php");
+require_once(dirname(__DIR__, 2) . "vendor/autoload.php");
+
 /**
  * Class of Vote takes the beer being voted, the profile doing the voting, and whether the vote is and up or down.
  *
