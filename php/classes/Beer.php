@@ -427,12 +427,34 @@ class Beer implements \JsonSerializable {
 		if($beerIbu < 0 || $beerIbu > 120) {
 			throw(new \PDOException("ibu is out of range"));
 		}
-		// escape any mySQL wild card0s
+		// escape any mySQL wild cards
 		$beerIbu = str_replace("_", "\\_", str_replace("%", "\\%", $beerIbu));
 
 		//create query template
 		$query = "SELECT beerId, beerProfileId, beerIbu, beerName, beerDescription FROM beer where beerIbu LIKE :beerIbu";
 		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		//build an array of beers
+		$beers = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$beer = new Beer(
+					$row["beerId"],
+					$row["beerProfileId"],
+					$row["beerIbu"],
+					$row["beerAbv"],
+					$row["beerName"],
+					$row["beerDescription"]);
+				$beers[$beers->key()] = $beer;
+				$beers->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(),0, $exception));
+			}
+		}
+		return ($beers);
 	}
 
 
