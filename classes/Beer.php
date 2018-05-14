@@ -221,6 +221,7 @@ use Ramsey\Uuid\Uuid;
 		$newBeerDescription = filter_var($newBeerDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	if(strlen($newBeerDescription) > 1024) {
+
 		throw(new \InvalidArgumentException("beer description is too large"));
 		//convert and store the beer description
 		$this->beerDescription = $newBeerDescription;
@@ -236,136 +237,143 @@ use Ramsey\Uuid\Uuid;
 	**/
 	public function insert(\PDO $pdo): void {
 
-			// create query template
-			$query = "INSERT INTO beer(beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription) VALUES(:beerId, :beerProfile, :beerIbu, :beerAbv, :beerName, :beerDescription)";
-			$statement = $pdo->prepare($query);
+	// create query template
+	$query = "INSERT INTO beer(beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription) VALUES(:beerId, :beerProfile, :beerIbu, :beerAbv, :beerName, :beerDescription)";
+	$statement = $pdo->prepare($query);
 
-			//bind the member variables to the place holders in the template
-			$parameters = ["beerId" => $this->beerId->getBytes(), "beerProfileId" => $this->beerProfileId->getBytes(), "beerIbu" => $this->beerIbu, "beerAbv" => $this->beerAbv, "beerName" => $this->beerName, "beerDescription" => $this->beerDescription];
-			$statement->execute($parameters);
-		}
+	//bind the member variables to the place holders in the template
+	$parameters = ["beerId" => $this->beerId->getBytes(), "beerProfileId" => $this->beerProfileId->getBytes(), "beerIbu" => $this->beerIbu,
+		"beerAbv" => $this->beerAbv, "beerName" => $this->beerName, "beerDescription" => $this->beerDescription];
+	$statement->execute($parameters);
+	}
 
-		/**
-		 *
-		 * @param \PDO $pdo PDO connection object
-		 * @throws \PDOException when mySQL  related errors occur
-		 * @throws \TypeError if $pdo is not a PDO connection object
-		 **/
-		public function delete(\PDO $pdo): void {
+	/**
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL  related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo): void {
 
-			//create query template
-			$query = "DELETE FROM beer WHERE beerId = :beerId";
-			$statement = $pdo->prepare($query);
-			//bind the member variables to the place holder in the template
-			$parameters = ["beerId" => $this->beerId->getbytes()];
-			$statement->execute($parameters);
-		}
+	//create query template
+	$query = "DELETE FROM beer WHERE beerId = :beerId";
+	$statement = $pdo->prepare($query);
+	//bind the member variables to the place holder in the template
+	$parameters = ["beerId" => $this->beerId->getbytes()];
+	$statement->execute($parameters);
+	}
 
-		/**
-		 * updates this beer in mysql
-		 * @param \PDO $pdo PDO connection object
-		 * @throws \PDOException when mySQL related errors occur
-		 * @throws  \TypeError if $pdo is not a PDO object
-		 *
-		 **/
-		public function update(\PDO $pdo): void {
+	/**
+	 * updates this beer in mysql
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws  \TypeError if $pdo is not a PDO object
+	 *
+	 **/
+	public function update(\PDO $pdo): void {
 
-// create query template
-			$query = "UPDATE beer SET beerProfileId = :beerProfileId, beerAbv = :beerAbv, beerDescription = :beerDescription, beerIbu = :beerIbu, beerName = :beerName WHERE beerId = beerId";
-			$statement = $pdo->prepare($query);
+	// create query template
+		$query = "UPDATE beer SET beerProfileId = :beerProfileId, beerAbv = :beerAbv, beerDescription = :beerDescription, beerIbu = :beerIbu, beerName = :beerName WHERE beerId = beerId";
+		$statement = $pdo->prepare($query);
 
-			$parameters = ["beerId" => $this->beerId->getBytes(), "beerProfileId" => $this->beerProfileId->getBytes(), "beerAbv" => $this->beerAbv, "beerDescription" => $this->beerDescription, "beerIbu" => $this->beerIbu, "beerName" => $this->beerName];
-			$statement->execute($parameters);
-		}
+		$parameters = ["beerId" => $this->beerId->getBytes(), "beerProfileId" => $this->beerProfileId->getBytes(), "beerAbv" => $this->beerAbv, "beerDescription" => $this->beerDescription,
+		"beerIbu" => $this->beerIbu, "beerName" => $this->beerName];
+		$statement->execute($parameters);
+	}
 
-		/**
-		 *gets beer by beer id
-		 *
-		 * @param \PDO $pdo PDO connection object
-		 * @param Uuid|string $beerId beer id to search for
-		 * @return Beer|null beer found or null if not found
-		 * @throws \PDOException when mySQL related errors occur
-		 * @throws \TypeError when a variable are not the correct data type
-		 **/
-		public static function getBeerbyBeerId(\PDO $pdo, $beerId): ?Beer {
-			//sanitize the beerId before searching
-			try {
-				$beerId = self::validateUuid($beerId);
-			} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-				throw(new \PDOException(($exception->getMessage()), 0, $exception));
-			}
+	/**
+	*gets beer by beer id
+	*
+	* @param \PDO $pdo PDO connection object
+	* @param Uuid|string $beerId beer id to search for
+	* @return Beer|null beer found or null if not found
+	* @throws \PDOException when mySQL related errors occur
+	* @throws \TypeError when a variable are not the correct data type
+	**/
+	public static function getBeerbyBeerId(\PDO $pdo, $beerId): ?Beer {
+	//sanitize the beerId before searching
+	try {
+		$beerId = self::validateUuid($beerId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		throw(new \PDOException(($exception->getMessage()), 0, $exception));
+	}
 
-//create query template
-			$query = "SELECT beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription from beer where beerId = :beerId";
-			$statement = $pdo->prepare($query);
+	//create query template
+		$query = "SELECT beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription from beer where beerId = :beerId";
+		$statement = $pdo->prepare($query);
 
-//bind the beer id to the place
-			$parameters = ["beerId" => $beerId->getBytes()];
-			$statement->execute($parameters);
+	//bind the beer id to the place
+	$parameters = ["beerId" => $beerId->getBytes()];
+	$statement->execute($parameters);
 
-//grab beer from mysql
-			try {
-				$beer = null;
-				$statement->setFetchMode(\PDO::FETCH_ASSOC);
-				$row = $statement->fetch();
-				if($row !== false) {
-					$beer = new Beer($row["beerId"], $row["beerProfileId"], $row["beerIbu"], $row["beerAbv"], $row["beerName"], $row["beerDescription"]);
-				}
-			} catch(\Exception $exception) {
-				//if the row couldn't be converted rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
+	//grab beer from mysql
+	try {
+		$beer = null;
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		$row = $statement->fetch();
+		if($row !== false) {
+			$beer = new Beer($row["beerId"], $row["beerProfileId"], $row["beerIbu"], $row["beerAbv"], $row["beerName"], $row["beerDescription"]);
+	}
+	} catch(\Exception $exception) {
+	//if the row couldn't be converted rethrow it
+	throw(new \PDOException($exception->getMessage(), 0, $exception));
+	}
 return ($beer);
 }
 
 
-		/**
-		 *gets the beer using the profile id
-		 *
-		 * @param \PDO $pdo PDO connection object
-		 * @param Uuid|string $beerProfileId profile id to search by
-		 * @return \SplFixedArray of beers found
-		 * @throws \PDOException when mySQL related errors occur
-		 * @throws \TypeError when variables are not the correct date type
-		 **/
-		public static function getBeerByBeerProfileId(\PDO $pdo, $beerProfileId): \SplFixedArray {
+	/**
+	*gets the beer using the profile id
+	*
+	* @param \PDO $pdo PDO connection object
+	* @param Uuid|string $beerProfileId profile id to search by
+	* @return \SplFixedArray of beers found
+	* @throws \PDOException when mySQL related errors occur
+	* @throws \TypeError when variables are not the correct date type
+	**/
+	public static function getBeerByBeerProfileId(\PDO $pdo, $beerProfileId): \SplFixedArray {
 
-			try {
-				$beerProfileId = self::validateUuid($beerProfileId);
-			} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-			//create query template
-			$query = "SELECT beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription FROM beer where beerProfileId = :beerProfileId";
-			$statement = $pdo->prepare($query);
-			//bind the beer profile id to the place holder
-			$parameters = ["beerProfileId" => $beerProfileId->getBytes()];
-			$statement->execute($parameters);
-			// build an array of beers
-			$beers = new \SplFixedArray($statement->rowCount());
-			$statement->setFetchMode(\PDO::FETCH_ASSOC);
-			while(($row = $statement->fetch()) !== false) {
-				try {
-					$beer = new Beer($row["beer"], $row ["beerProfileId"], $row ["beerIbu"], $row ["beerAbv"], $row ["beerName"], $row ["beerDescription"]);
+	try {
+		$beerProfileId = self::validateUuid($beerProfileId);
+	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
+	}
+	//create query template
+	$query = "SELECT beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription FROM beer where beerProfileId = :beerProfileId";
+	$statement = $pdo->prepare($query);
+	//bind the beer profile id to the place holder
+	$parameters = ["beerProfileId" => $beerProfileId->getBytes()];
+	$statement->execute($parameters);
+	// build an array of beers
+	$beers = new \SplFixedArray($statement->rowCount());
+	$statement->setFetchMode(\PDO::FETCH_ASSOC);
+	while(($row = $statement->fetch()) !== false) {
+		try {
+			$beer = new Beer($row["beer"], $row ["beerProfileId"], $row ["beerIbu"], $row ["beerAbv"], $row ["beerName"], $row ["beerDescription"]);
 			$beers[$beers->key()] = $beer;
 			$beers->next();
-		} catch(\Exception $exception) {
-					//if the row couldn't be converted, rethrow it
-					throw(new \PDOException($exception->getMessage(), 0, $exception));
-				}
-			}
-			return ($beers);
+	} catch(\Exception $exception) {
+	//if the row couldn't be converted, rethrow it
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
+	}
+	return ($beers);
+	}
 
-		/**
-		 *gets the beer by the beer name
-		 *
-		 **/
-		public static function getBeerByBeerName(\PDO $pdo, string $beerName) : \SplFixedArray {
-	// sanitize the description before searching
-	$beerName = trim($beerName);
-	$beerName = filter_var($beerName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	if(empty($beerName) === true) {
+	/**
+	*gets the beer by the beer name
+	*
+	*@param \PDO $pdo PDO connection object
+	*@param string $beerName beer name for searching
+	*@return \SplFixedArray SplFixedArray of beers found
+	*@throws \PDOException when mySQL related errors occur
+	*
+	**/
+	public static function getBeerByBeerName(\PDO $pdo, string $beerName) : \SplFixedArray {
+		// sanitize the description before searching
+		$beerName = trim($beerName);
+		$beerName = filter_var($beerName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($beerName) === true) {
 		throw(new \PDOException("beer content is invalid"));
 	}
 	// escape any mySQL wild cards
@@ -373,27 +381,43 @@ return ($beer);
 
 	//create query template
 	$query = "SELECT beerID, beerProfileId, beerIbu, beerAbv, beerName, beerDescription FROM beer WHERE beerName LIKE :beerName";
-	$statement->prepare($query);
-	$statement->execute();
+	$statement = $pdo->prepare($query);
+
+	//bind the beer name
+	$beerName = "%beerName%";
+	$parameters = ["beerName" => $beerName];
+	$statement->execute($parameters);
 
 	//build an array of beers
+	$beers = new \SplFixedArray($statement->rowCount());
+	$statement->setFetchMode(\PDO::FETCH_ASSOC);
+	while(($row = $statement->fetch()) !== false) {
+		try {
+			$beer = new Beer($row["beerId"], $row[$this->beerProfileId], $row[$this->beerIbu], $row[$this->beerAbv], $row[$this->beerName], $row[$this->beerDescription]);
+			$beers[$beers->key()] = $beer;
+			$beers->next();
+		} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
 		}
+		return($beers);
+	}
 
-		/**
-		 * formats the state variables for JSON serialization
-		 *
-		 * @return array resulting state variables to serialize
-		 **/
-		public function jsonSerialize() : array {
-			$fields = get_object_vars($this);
 
-			$fields["tweetId"] = $this->tweetId->toString();
-			$fields["tweetProfileId"] = $this->tweetProfileId->toString();
 
-			//format the date so that the front end can consume it
-			$fields["tweetDate"] = round(floatval($this->tweetDate->format("U.u")) * 1000);
-			return($fields);
-		}
+
+	/**
+	* formats the state variables for JSON serialization
+	*
+	* @return array resulting state variables to serialize
+	**/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+	$fields["beerId"] = $this->beerId->toString();
+	$fields["beerProfileId"] = $this->beerProfileId->toString();
+	}
 }
 
 
