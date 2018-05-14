@@ -112,7 +112,7 @@ class style implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$parameters = ["styleId" => $this->styleId->getBytes(), "styleType" => $this->styleType];
+		$parameters = ["styleId" => $this->styleId, "styleType" => $this->styleType];
 		$statement->execute($parameters);
 	}
 
@@ -128,7 +128,7 @@ class style implements \JsonSerializable {
 		$query = "DELETE FROM style WHERE styleId = :styleId";
 		$statement = $pdo->prepare($query);
 		// bind the member variables to the place holders in the template
-		$parameters = ["styleId" => $this->styleId->getBytes()];
+		$parameters = ["styleId" => $this->styleId];
 		$statement->execute($parameters);
 	}
 
