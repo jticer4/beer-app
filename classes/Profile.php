@@ -23,6 +23,12 @@ class Profile implements \JsonSerializable {
 	private $profileAbout;
 
 	/**
+	 * token handed out to verify that the profile is valid and not malicious.
+	 *@var $profileActivationToken
+	 **/
+	private $profileActivationToken;
+
+	/**
 	 * address line 1 for the Profile
 	 * @var string $profileAddressLine1
 	 **/
@@ -90,9 +96,11 @@ class Profile implements \JsonSerializable {
 
 	/**
 	 * constructor for this Profile
+	 * //TODO update constructor, updates, deletes, inserts, and get foo by bars
 	 *
 	 * @param string|Uuid $newProfileId id for this profile or null if a new profile
 	 * @param string $newProfileAbout string containing the profile about me content
+	 * @param string $newProfileActivationToken activation token to safe guard against malicious accounts
 	 * @param string $newProfileAddressLine1 string containing the profile address line 1
 	 * @param string $newProfileAddressLine2 string containing the address line 2
 	 * @param string $newProfileCity string containing the city of the profile
@@ -105,9 +113,10 @@ class Profile implements \JsonSerializable {
 	 * @param string $newProfileUserType string containing the user type of the profile
 	 * @param string $newProfileZip string containing the zip code of the profile
 	 **/
-	public function __construct(Uuid $newProfileId, string $newProfileAbout, string $newProfileAddressLine1, string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
+	public function __construct(Uuid $newProfileId, string $newProfileAbout, string $newProfileActivationToken, string $newProfileAddressLine1, string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
 		$this->setProfileId($newProfileId);
 		$this->setProfileAbout($newProfileAbout);
+		$this->setProfileActivationToken($newProfileActivationToken);
 		$this->setProfileAddressLine1($newProfileAddressLine1);
 		$this->setProfileAddressLine2($newProfileAddressLine2);
 		$this->setProfileCity($newProfileCity);
@@ -169,13 +178,45 @@ class Profile implements \JsonSerializable {
 		$newProfileAbout = filter_var($newProfileAbout, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 		// verify the profile about content will fit in the database
-		//TODO copy pasta
 		if(strlen($newProfileAbout) > 140) {
 			throw(new \RangeException("profile about content too large"));
 		}
 
 		// store the profile about content
 		$this->profileAbout = $newProfileAbout;
+	}
+
+	/**
+	 * accessor method for profile activation token
+	 *
+	 * @return string value of the activation token
+	 */
+	public function getProfileActivationToken() : ?string {
+		return ($this->profileActivationToken);
+	}
+
+	/**
+	 * mutator method for profile activation token
+	 *
+	 * @param string $newProfileActivationToken
+	 * @throws \InvalidArgumentException  if the token is not a string or insecure
+	 * @throws \RangeException if the token is not exactly 32 characters
+	 * @throws \TypeError if the activation token is not a string
+	 */
+	public function setProfileActivationToken(?string $newProfileActivationToken): void {
+		if($newProfileActivationToken === null) {
+			$this->profileActivationToken = null;
+			return;
+		}
+		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+		if(ctype_xdigit($newProfileActivationToken) === false) {
+			throw(new\RangeException("user activation is not valid"));
+		}
+		//make sure user activation token is only 32 characters
+		if(strlen($newProfileActivationToken) !== 32) {
+			throw(new\RangeException("user activation token has to be 32"));
+		}
+		$this->profileActivationToken = $newProfileActivationToken;
 	}
 
 	/**
@@ -518,11 +559,11 @@ class Profile implements \JsonSerializable {
 	public function insert(\PDO $pdo) : void {
 
 		// create query template
-		$query = "INSERT INTO profile(profileId, profileAbout, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip) VALUES(:profileId, :profileAbout, :profileAddressLine1, :profileAddressLine2, :profileCity, :profileEmail, :profileHash, :profileImage, :profileName, :profileState, :profileUsername, :profileUserType, :profileZip)";
+		$query = "INSERT INTO profile(profileId, profileAbout, profileActivationToken, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip) VALUES(:profileId, :profileAbout, :profileActivationToken, :profileAddressLine1, :profileAddressLine2, :profileCity, :profileEmail, :profileHash, :profileImage, :profileName, :profileState, :profileUsername, :profileUserType, :profileZip)";
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$parameters = ["profileId" => $this->profileId->getBytes(), "profileAbout" => $this->profileAbout, "profileAddressLine1" => $this->profileAddressLine1, "profileAddressLine2" => $this->profileAddressLine2, "profileCity" => $this->profileCity, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileImage" => $this->profileImage, "profileName" => $this->profileName, "profileState" => $this->profileState, "profileUsername" => $this->profileUsername, "profileUserType" => $this->profileUserType, "profileZip" => $this->profileZip];
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileAbout" => $this->profileAbout, "profileActivationToken" => $this->profileActivationToken, "profileAddressLine1" => $this->profileAddressLine1, "profileAddressLine2" => $this->profileAddressLine2, "profileCity" => $this->profileCity, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileImage" => $this->profileImage, "profileName" => $this->profileName, "profileState" => $this->profileState, "profileUsername" => $this->profileUsername, "profileUserType" => $this->profileUserType, "profileZip" => $this->profileZip];
 		$statement->execute($parameters);
 	}
 
