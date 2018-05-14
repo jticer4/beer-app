@@ -417,7 +417,7 @@ class Beer implements \JsonSerializable {
 	*
 	* @param \PDO $pdo PDO connection object
 	* @param int $beerIbu beer ibu for searching
-	* @return \
+	* @return \SplFixedArray SplFixedArray of beers found or null if not found
 	* @throws \
 	* @throws
 	*/
@@ -427,8 +427,6 @@ class Beer implements \JsonSerializable {
 		if($beerIbu < 0 || $beerIbu > 120) {
 			throw(new \PDOException("ibu is out of range"));
 		}
-		// escape any mySQL wild cards
-		$beerIbu = str_replace("_", "\\_", str_replace("%", "\\%", $beerIbu));
 
 		//create query template
 		$query = "SELECT beerId, beerProfileId, beerIbu, beerName, beerDescription FROM beer where beerIbu LIKE :beerIbu";
@@ -457,6 +455,25 @@ class Beer implements \JsonSerializable {
 		return ($beers);
 	}
 
+	/**
+	* get beer by beer abv
+	*
+	*
+	**/
+public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedArray {
+	//sanitize the description before searching
+	$beerAbv = filter_var($beerAbv, FILTER_VALIDATE_FLOAT, FILTER_SANITIZE_NUMBER_FLOAT);
+	if(empty($beerAbv) === true){
+		throw(new \PDOException("beer abv is invalid"));
+	}
+	//create query template
+	$query ="SELECT beerId, beerProfileId, beerAbv, beerIbu, beerName, beerDescription FROM beer WHERE beerAbv LIKE :beerAbv";
+	$statement = $pdo->prepare($query);
+	$statement->execute();
+
+	// build an array of beers
+	$beers = new \SplFixedArray($statement->fetch )
+}
 
 	/**
 	* formats the state variables for JSON serialization
