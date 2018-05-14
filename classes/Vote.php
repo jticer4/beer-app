@@ -1,6 +1,15 @@
 <?php
 
+namespace Edu\Cnm\Beer;
+
+/**
+ * Class of Vote takes the beer being voted, the profile doing the voting, and whether the vote is and up or down.
+ *
+ */
+
+
 class Vote implements \JsonSerializable {
+	use ValidateUuid;
 
 	/**
 	 * id of Beer being voted on;
@@ -28,9 +37,9 @@ class Vote implements \JsonSerializable {
 	/**
 	 * constructor for vote
 	 *
-	 * @param string|Uuid $voteBeerId id of beer being voted on, NOT NULL
-	 * @param string|Uuid $voteProfileId id of Profile casting a vote, NOT NULL
-	 * @param int $voteValue value of vote, NOT NULL
+	 * @param string|Uuid $newVoteBeerId id of beer being voted on, NOT NULL
+	 * @param string|Uuid $newVoteProfileId id of Profile casting a vote, NOT NULL
+	 * @param int $newVoteValue value of vote, NOT NULL
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
 	 * @throws \TypeError if data types violate type hints
@@ -38,7 +47,7 @@ class Vote implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 */
 
-	public function __construct($newVoteBeerId, $newVoteProfileId, $newVoteValue) {
+	public function __construct($newVoteBeerId, $newVoteProfileId, int $newVoteValue) {
 		try {
 			$this->setVoteBeerId($newVoteBeerId);
 			$this->setVoteProfileId($newVoteProfileId);
@@ -63,14 +72,14 @@ class Vote implements \JsonSerializable {
 	/**
 	 * mutator method for this vote's beer id
 	 *
-	 * @param Uuid|string $voteBeerId new value of the BeerId being voted on
+	 * @param Uuid|string $newVoteBeerId new value of the BeerId being voted on
 	 * @throws \InvalidArgumentException if $voteBeerId is not a valid argument
 	 * @throws \RangeException if $voteBeerId is not positive
 	 * @throws \TypeError if $voteBeerId is not a uuid or string
 	 */
-	public function setVoteBeerId($voteBeerId) : void {
+	public function setVoteBeerId($newVoteBeerId) : void {
 		try{
-			$uuid = self::validateUuid($voteBeerId);
+			$uuid = self::validateUuid($newVoteBeerId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception ) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
@@ -91,19 +100,19 @@ class Vote implements \JsonSerializable {
 	/**
 	 * mutator method for the ProfileId of this vote
 	 *
-	 * @param Uuid|string $voteProfileId new value of ProfileId of this vote
+	 * @param Uuid|string $newVoteProfileId new value of ProfileId of this vote
 	 * @throws \InvalidArgumentException if $voteProfileId is not a valid argument
 	 * @throws \RangeException if $voteProfileId is not positive
 	 * @throws \TypeError is $voteProfileId is not of expected type
 	 */
-	public function setVoteProfileId($voteProfileId) : void {
+	public function setVoteProfileId($newVoteProfileId) : void {
 		try {
-			$uuid = self::validateUuid($voteProfileId);
+			$uuid = self::validateUuid($newVoteProfileId);
 		} catch (\InvalidArgumentException | \RangeException | TypeError |Exception $exception) {
 			$exceptionType = get_class($exception);
 			throw (new $exceptionType($exception->getMessage(),0, $exception));
 		}
-		$this->voteProfileId = $voteProfileId;
+		$this->voteProfileId = $uuid;
 	}
 
 	/**
@@ -126,7 +135,7 @@ class Vote implements \JsonSerializable {
 		$newVoteValue = filter_var($newVoteValue, FILTER_VALIDATE_INT, FILTER_SANITIZE_NUMBER_INT);
 
 	//checks to see if $newVoteValue is and integer less than or equal to 1
-		if ((is_int($newVoteValue)) || $newVoteValue<=1) {
+		if ($newVoteValue!=-1 || $newVoteValue!=1) {
 			throw (new \TypeError("voteValue is invalid or insecure."));
 		}
 
@@ -169,6 +178,11 @@ class Vote implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
-
+	public function jsonSerialize(): array {
+		$fields = get_object_vars($this);
+		$fields["voteBeerId"] = $this->voteValue->toString();
+		$fields["voteProfileId"] = $this->voteProfileId->toString();
+		return ($fields);
+	}
 
 }
