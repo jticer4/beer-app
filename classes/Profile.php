@@ -96,7 +96,6 @@ class Profile implements \JsonSerializable {
 
 	/**
 	 * constructor for this Profile
-	 * //TODO update constructor, updates, deletes, inserts, and get foo by bars
 	 *
 	 * @param string|Uuid $newProfileId id for this profile or null if a new profile
 	 * @param string $newProfileAbout string containing the profile about me content
@@ -596,30 +595,16 @@ class Profile implements \JsonSerializable {
 	public function update(\PDO $pdo) : void {
 
 		// create query template
-		$query = "UPDATE profile SET profileAbout = :profileAbout, profileAddressLine1 = :profileAddressLine1, profileAddressLine2 = :profileAddressLine2, profileCity = :profileCity, profileEmail = :profileEmail, profileHash = :profileHash, profileImage = :profileImage, profileName = :profileName, profileState = :profileState, profileUsername = :profileUsername, profileUserType = :profileUserType, profileZip = :profileZip WHERE profileId = :profileId";
+		$query = "UPDATE profile SET profileAbout = :profileAbout, profileActivationToken = :profileActivationToken, profileAddressLine1 = :profileAddressLine1, profileAddressLine2 = :profileAddressLine2, profileCity = :profileCity, profileEmail = :profileEmail, profileHash = :profileHash, profileImage = :profileImage, profileName = :profileName, profileState = :profileState, profileUsername = :profileUsername, profileUserType = :profileUserType, profileZip = :profileZip WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 
 
-		$parameters = ["profileId" => $this->profileId->getBytes(), "profileAbout" => $this->profileAbout, "profileAddressLine1" => $this->profileAddressLine1, "profileAddressLine2" => $this->profileAddressLine2, "profileCity" => $this->profileCity, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileImage" => $this->profileImage, "profileName" => $this->profileName, "profileState" => $this->profileState, "profileUsername" => $this->profileUsername, "profileUserType" => $this->profileUserType, "profileZip" => $this->profileZip];
+		$parameters = ["profileId" => $this->profileId->getBytes(), "profileAbout" => $this->profileAbout, "profileActivationToken" => $this->profileActivationToken, "profileAddressLine1" => $this->profileAddressLine1, "profileAddressLine2" => $this->profileAddressLine2, "profileCity" => $this->profileCity, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileImage" => $this->profileImage, "profileName" => $this->profileName, "profileState" => $this->profileState, "profileUsername" => $this->profileUsername, "profileUserType" => $this->profileUserType, "profileZip" => $this->profileZip];
 		$statement->execute($parameters);
 	}
 
 	/**
-	 * formats the state variables for JSON serialization
-	 *
-	 * @return array resulting state variables to serialize
-	 **/
-	public function jsonSerialize() : array {
-		$fields = get_object_vars($this);
-
-		$fields["profileId"] = $this->profileId->toString();
-
-		return($fields);
-	}
-
-	/**
 	 * gets the Profile by profileId
-	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $profileId profile id to search for
 	 * @return Profile|null Profile found or null if not found
@@ -635,7 +620,7 @@ class Profile implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "SELECT profileId, profileAbout, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip FROM profile WHERE profileId = :profileId";
+		$query = "SELECT profileId, profileAbout, profileActivationToken, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip FROM profile WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 
 		// bind the profile id to the place holder in the template
@@ -648,13 +633,26 @@ class Profile implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$profile = new Profile($row["profileId"], $row["profileAbout"], $row["profileAddressLine1"], $row["profileAddressLine2"], $row["profileCity"], $row["profileEmail"], $row["profileHash"], $row['profileImage'], $row["profileName"], $row["profileState"], $row["profileUsername"], $row["profileUserType"], $row["profileZip"]);
+				$profile = new Profile($row["profileId"], $row["profileAbout"], $row["profileActivationToken"], $row["profileAddressLine1"], $row["profileAddressLine2"], $row["profileCity"], $row["profileEmail"], $row["profileHash"], $row['profileImage'], $row["profileName"], $row["profileState"], $row["profileUsername"], $row["profileUserType"], $row["profileZip"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return($profile);
+	}
+
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() : array {
+		$fields = get_object_vars($this);
+
+		$fields["profileId"] = $this->profileId->toString();
+
+		return($fields);
 	}
 
 }
