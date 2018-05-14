@@ -167,6 +167,45 @@ class beerStyle implements \JsonSerializable {
 	}
 
 	/**
+	 * gets the BeerStyle by the BeerStyleStyleId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid $beerStyleStyleId id to search by
+	 * @return \SplFixedArray SplFixedArray of BeerStyles found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 */
+	public static function getBeerStyleByBeerStyleStyleId (\PDO $pdo, $beerStyleStyleId) :  \SplFixedArray{
+		$beerStyleStyleId = filter_var($beerStyleStyleId, FILTER_VALIDATE_INT, FILTER_SANITIZE_NUMBER_INT);
+		if($beerStyleStyleId < 0 || $beerStyleStyleId > 255) {
+			throw(new \RangeException("There are no beers with this ID"));
+		}
+
+		//create query template
+		$query = "SELECT beerStyleBeerId, beerStyleStyleId FROM beerStyle WHERE beerStyleStyleId = :beerStyleStyleId";
+		$statement = $pdo->prepare($query);
+
+		//bind the beerStyleStyleId to the place holder in the template
+		$parameters = ["beerStyleStyleId" => $beerStyleStyleId];
+		$statement->execute($parameters);
+
+		//build an array of beer styles
+		$beerStyles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$beerStyle = new BeerStyle($row["beerStyleBeerId"], $row["beerStyleStyleId"]);
+				$beerStyles[$beerStyles->key()] = $beerStyle;
+				$beerStyles->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($beerStyles);
+	}
+
+	/**
 	 * formats the state variable for JSON serialization
 	 *
 	 * @return array resulting state variables to serialize
