@@ -606,7 +606,7 @@ class Profile implements \JsonSerializable {
 
 	/**
 	 * gets the Profile by profileId
-	 * TODO GET PROFILE BY BEER, GET PROFILE BY VOTE
+	 * TODO get profile by username
 	 * @param \PDO $pdo PDO connection object
 	 * @param Uuid|string $profileId profile id to search for
 	 * @return Profile|null Profile found or null if not found
@@ -643,6 +643,52 @@ class Profile implements \JsonSerializable {
 		}
 		return($profile);
 	}
+
+	/**
+	 * gets the Profile by profileUsername
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileUsername profile username to search for
+	 * @return \SplFixedArray SplFixedArray of Profiles found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getProfileByProfileUsername(\PDO $pdo, string $profileUsername) : \SplFixedArray {
+		// sanitize the description before searching
+		$profileUsername = trim($profileUsername);
+		$profileUsername = filter_var($profileUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($profileUsername) === true) {
+			throw(new \PDOException("profile username is invalid"));
+		}
+
+		// escape any mySQL wild cards
+		$profileUsername = str_replace("_", "\\_", str_replace("%", "\\%", $profileUsername));
+
+		// create query template
+		$query = "SELECT profileId, profileAbout, profileActivationToken, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip FROM profile WHERE profileUsername LIKE :profileUsername";
+		$statement = $pdo->prepare($query);
+
+		// bind the profile content to the place holder in the template
+		$profileUsername = "%$profileUsername%";
+		$parameters = ["profileUsername" => $profileUsername];
+		$statement->execute($parameters);
+
+		// build an array of profiles
+		$profiles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$profile = new Profile($row["profileId"], $row["profileAbout"], $row["profileActivationToken"], $row["profileAddressLine1"], $row["profileAddressLine2"], $row["profileCity"], $row["profileEmail"], $row["profileHash"], $row["profileImage"], $row["profileName"], $row["profileState"], $row["profileUsername"], $row["profileUserType"], $row["profileZip"]);
+				$profiles[$profiles->key()] = $profile;
+				$profiles->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($profiles);
+	}
+
 
 	/**
 	 * gets all Profiles
