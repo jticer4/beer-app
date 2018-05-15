@@ -167,7 +167,7 @@ class ProfileTest extends BeerAppTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH);
+		$profile = new Profile($profileId, $this->VALID_ABOUT, $this->VALID_ACTIVATION, $this->VALID_ADDRESS_LINE_1, $this->VALID_ADDRESS_LINE_2, $this->VALID_CITY, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_IMAGE, $this->VALID_NAME, $this->VALID_STATE, $this->VALID_USERNAME, $this->VALID_USER_TYPE, $this->VALID_ZIP);
 		$profile->insert($this->getPDO());
 		// delete the Profile from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
