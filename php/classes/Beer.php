@@ -26,6 +26,11 @@ class Beer implements \JsonSerializable {
 	**/
 	private $beerIbu;
 	/**
+	 * description of the beer
+	 * @var string $beerDescription
+	 **/
+	private $beerDescription;
+	/**
 	* abv number for beer
 	* @var float $beerAbv
 	**/
@@ -35,11 +40,6 @@ class Beer implements \JsonSerializable {
 	* @var$beerName
 	**/
 	private $beerName;
-	/**
-	* description of the beer
-	* @var string $beerDescription
-	**/
-	private $beerDescription;
 
 	/**
 	* constructor for beer
@@ -61,9 +61,9 @@ class Beer implements \JsonSerializable {
 			$this->setBeerId($newBeerId);
 			$this->setBeerProfileId($newBeerProfileId);
 			$this->setBeerIbu($newBeerIbu);
+			$this->setBeerDescription($newBeerDescription);
 			$this->setBeerAbv($newBeerAbv);
 			$this->setBeerName($newBeerName);
-			$this->setBeerDescription($newBeerDescription);
 	}
 	//determine the exception that was thrown
 	catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {

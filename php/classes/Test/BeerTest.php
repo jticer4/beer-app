@@ -131,9 +131,9 @@ public function TestDeleteValidBeer() : void {
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
 }
 /**
-*test inserting a beer and grabbing it again it from mysql
+*test inserting a beer and grabbing it again it from mySQL
 **/
-public function testGetValidBeerbyBeerId() : void {
+public function testGetValidBeerByBeerId() : void {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("beer");
 	$beerId = null;
@@ -147,7 +147,7 @@ public function testGetValidBeerbyBeerId() : void {
 	);
 	$beer->insert($this->getPDO());
 	// grab the data from mySQL and enforce the fields match our expectations
-	$pdoBeer = Beer::getBeerbyBeerId($this->getPDO(), $beer->getBeerId());
+	$pdoBeer = Beer::getBeerByBeerId($this->getPDO(), $beer->getBeerId());
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
 	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
 	$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
@@ -155,7 +155,18 @@ public function testGetValidBeerbyBeerId() : void {
 	$this->assertEquals($pdoBeer->getBeerAbv(), $this->VALID_BEERABV);
 	$this->assertEquals($pdoBeer->getBeerName(), $this->VALID_BEERNAME);
 }
-
+/**
+* test grabbing a beer that does not exist
+**/
+public function testGetInvalidBeerByBeerId() : void {
+	// grab a beer id that exceeds the maximum allowable beer id
+	$fakeBeerId = generateUuidV4();
+	$beer = BEER::getBeerByBeerId($this->getPDO(), $fakeBeerId );
+	$this->assertNull($beer);
+}
+/**
+* test inserting a beer and grabbing it again from mySQL
+**/
 
 
 
