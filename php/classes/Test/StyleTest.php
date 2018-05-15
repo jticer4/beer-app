@@ -33,7 +33,7 @@ class StyleTest extends BeerAppTest {
 		$numRows = $this->getConnection()->getRowCount("style");
 
 		// create a new style and insert it into mySQL
-		$style = new Style($styleId =, $this->VALID_STYLETYPE);
+		$style = new Style($styleId = null, $this->VALID_STYLETYPE);
 		$style->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
