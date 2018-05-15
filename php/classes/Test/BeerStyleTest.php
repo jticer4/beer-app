@@ -33,18 +33,11 @@ class BeerStyleTest extends BeerAppTest {
 	 **/
 	protected $style = null;
 
-
 	/**
-	 * valid profile hash to create the profile object to own the test
-	 * @var $VALID_BEERID
-	 */
-	protected $VALID_BEERID;
-
-	/**
-	 * valid style of beer style
-	 * @var $VALID_BEERID
-	 */
-	protected $VALID_STYLEID;
+	 * Style from the beer/style relationship ; this is for foreign key relations
+	 * @var Style style
+	 **/
+	protected $profile = null;
 
 
 
@@ -53,13 +46,19 @@ class BeerStyleTest extends BeerAppTest {
 	 **/
 	public final function setUp()  : void {
 		parent::setUp();
+		//create and insert a Profile up here
+		$this->profile = new \Profile(generateUuid4(),"We make beer to get you LIT", "");
+
+
 		//Create and insert Beer from beer style composite
-		$this->VALID_BEERID = new Beer(generateUuidV4());
+		$this->beer = new Beer(generateUuidV4(),$this->profile->getProfileId(), "");
 		$this->beer->insert($this->getPDO());
 
 		//Create and insert Style from beer style composite
-		$this->VALID_STYLEID = new Style(1,"pilsner");
+		$this->style = new Style(1,"pilsner");
 		$this->style->insert($this->getPDO());
+
+
 		}
 
 
@@ -79,3 +78,4 @@ class BeerStyleTest extends BeerAppTest {
 		$this->assertEquals($beerStyle->getBeerStyle(), $beerStyle);
 		}
 	}
+
