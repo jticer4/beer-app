@@ -53,14 +53,3 @@ CREATE TABLE beerStyle(
 	FOREIGN KEY(beerStyleStyleId) REFERENCES style(styleId),
 	PRIMARY KEY(beerStyleBeerId, beerStyleStyleId)
 );
-
-CREATE TABLE vote (
-	voteBeerId BINARY(16) NOT NULL,
-	voteProfileId BINARY(16) NOT NULL,
-	voteValue TINYINT NOT NULL,
-	INDEX(voteBeerId),
-	INDEX(voteProfileId),
-	FOREIGN KEY(voteBeerId) REFERENCES beer(beerId),
-	FOREIGN KEY(voteProfileId) REFERENCES profile(profileId),
-	PRIMARY KEY(voteBeerId, voteProfileId)
-);
