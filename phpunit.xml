@@ -2,9 +2,7 @@
 <phpunit>
 	<testsuites>
 		<testsuite name="beer-app">
-			<file>ProfileTest.php</file>
-			<file>TweetTest.php</file>
-			<file>FavoriteTest.php</file>
+			<file>php/classes/ProfileTest.php</file>
 		</testsuite>
 	</testsuites>
 	<filter>
