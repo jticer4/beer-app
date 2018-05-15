@@ -3,7 +3,7 @@
 require_once("autoload.php");
 require_once(dirname(__DIR__, 2) . "vendor/autoload.php");
 
-namespace \edu\cnm\Beer;
+namespace \Edu\Cnm\Beer;
 
 use Ramsey\Uuid\Uuid;
 

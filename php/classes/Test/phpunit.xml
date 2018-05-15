@@ -2,7 +2,7 @@
 <phpunit>
 	<testsuites>
 		<testsuite name="beer-app">
-			<file>php/classes/ProfileTest.php</file>
+			<file>ProfileTest.php</file>
 		</testsuite>
 	</testsuites>
 	<filter>
