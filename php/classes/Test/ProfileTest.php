@@ -21,6 +21,11 @@ class ProfileTest extends BeerAppTest {
 	 */
 	protected $VALID_ABOUT;
 	/**
+	 * content of the updated About
+	 * @var string $VALID_ABOUT_2
+	 **/
+	protected $VALID_ABOUT_2 = "Test content for new about";
+	/**
 	 * placeholder until account activation is created
 	 * @var string $VALID_ACTIVATION
 	 */
@@ -31,20 +36,40 @@ class ProfileTest extends BeerAppTest {
 	 */
 	protected $VALID_ADDRESS_LINE_1;
 	/**
+	 * content of the updated Address Line 1
+	 * @var string $VALID_ADDRESS_LINE_1_2
+	 **/
+	protected $VALID_ADDRESS_LINE_1_2 = "123 Placeholder Lane";
+	/**
 	 * valid profile address line 2
 	 * @var string $VALID_ADDRESS_LINE_2
 	 */
 	protected $VALID_ADDRESS_LINE_2;
+	/**
+	 * content of the updated Address Line 2
+	 * @var string $VALID_ADDRESS_LINE_2_2
+	 **/
+	protected $VALID_ADDRESS_LINE_2_2 = "Apt 234";
 	/**
 	 * valid profile city
 	 * @var string $VALID_CITY
 	 */
 	protected $VALID_CITY;
 	/**
+	 * content of the updated City
+	 * @var string $VALID_CITY_2
+	 **/
+	protected $VALID_CITY_2 = "Seattle";
+	/**
 	 * valid email to use
 	 * @var string $VALID_EMAIL
 	 **/
 	protected $VALID_EMAIL = "test@phpunit.de";
+	/**
+	 * content of the updated Email
+	 * @var string $VALID_EMAIL_2
+	 **/
+	protected $VALID_EMAIL_2 = "testing123@phpunit.de";
 	/**
 	 * valid hash to use
 	 * @var $VALID_HASH
@@ -56,30 +81,61 @@ class ProfileTest extends BeerAppTest {
 	 */
 	protected $VALID_IMAGE;
 	/**
+	 * content of the updated Image
+	 * @var string $VALID_IMAGE_2
+	 **/
+	protected $VALID_IMAGE_2 = "PHPUnit test still passing";
+	/**
 	 * valid profile name to use
 	 * @var $VALID_NAME
 	 */
 	protected $VALID_NAME;
+	/**
+	 * content of the updated Name
+	 * @var string $VALID_NAME_2
+	 **/
+	protected $VALID_NAME_2 = "Danny Divito";
 	/**
 	 * valid profile state to use
 	 * @var $VALID_STATE
 	 */
 	protected $VALID_STATE;
 	/**
+	 * content of the updated State
+	 * @var string $VALID_STATE_2
+	 **/
+	protected $VALID_STATE_2 = "PHPUnit test still passing";
+	/**
 	 * valid profile username to use
 	 * @var $VALID_USERNAME
 	 */
 	protected $VALID_USERNAME;
+	/**
+	 * content of the updated Username
+	 * @var string $VALID_USERNAME_2
+	 **/
+	protected $VALID_USERNAME_2 = "PHPUnit test still passing";
 	/**
 	 * valid profile user type
 	 * @var $VALID_USER_TYPE
 	 */
 	protected $VALID_USER_TYPE;
 	/**
+	 * content of the updated User Type
+	 * @var string $VALID_USER_TYPE_2
+	 **/
+	protected $VALID_USER_TYPE_2 = "PHPUnit test still passing";
+	/**
 	 * valid profile zip
 	 * @var $VALID_ZIP;
 	 */
 	protected $VALID_ZIP;
+	/**
+	 * content of the updated Zip
+	 * @var string $VALID_ZIP_2
+	 **/
+	protected $VALID_ZIP_2 = "PHPUnit test still passing";
+
 
 	/**
 	 * run the default setup operation to create salt and hash.
@@ -119,7 +175,7 @@ class ProfileTest extends BeerAppTest {
 		$this->assertEquals($pdoProfile->getProfileZip(), $this->VALID_ZIP);
 	}
 	/**
-	 *
+	 *TODO fix this method so that its updating it with zip2, email2, city2, etc...
 	 * test inserting a Profile, editing it, and then updating it
 	 **/
 	public function testUpdateValidProfile() {
@@ -130,17 +186,17 @@ class ProfileTest extends BeerAppTest {
 		$profile = new Profile($profileId, $this->VALID_ABOUT,$this->VALID_ACTIVATION, $this->VALID_ADDRESS_LINE_1, $this->VALID_ADDRESS_LINE_2, $this->VALID_CITY, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_IMAGE, $this->VALID_NAME, $this->VALID_STATE, $this->VALID_USERNAME, $this->VALID_USER_TYPE, $this->VALID_ZIP);
 		$profile->insert($this->getPDO());
 		// edit the Profile and update it in mySQL
-		$profile->setProfileAbout($this->VALID_ABOUT);
-		$profile->setProfileAddressLine1($this->VALID_ADDRESS_LINE_1);
-		$profile->setProfileAddressLine2($this->VALID_ADDRESS_LINE_2);
-		$profile->setProfileCity($this->VALID_CITY);
-		$profile->setProfileEmail($this->VALID_EMAIL);
-		$profile->setProfileImage($this->VALID_IMAGE);
-		$profile->setProfileName($this->VALID_NAME);
-		$profile->setProfileState($this->VALID_STATE);
-		$profile->setProfileUsername($this->VALID_USERNAME);
-		$profile->setProfileUserType($this->VALID_USER_TYPE);
-		$profile->setProfileZip($this->VALID_ZIP);
+		$profile->setProfileAbout($this->VALID_ABOUT_2);
+		$profile->setProfileAddressLine1($this->VALID_ADDRESS_LINE_1_2);
+		$profile->setProfileAddressLine2($this->VALID_ADDRESS_LINE_2_2);
+		$profile->setProfileCity($this->VALID_CITY_2);
+		$profile->setProfileEmail($this->VALID_EMAIL_2);
+		$profile->setProfileImage($this->VALID_IMAGE_2);
+		$profile->setProfileName($this->VALID_NAME_2);
+		$profile->setProfileState($this->VALID_STATE_2);
+		$profile->setProfileUsername($this->VALID_USERNAME_2);
+		$profile->setProfileUserType($this->VALID_USER_TYPE_2);
+		$profile->setProfileZip($this->VALID_ZIP_2);
 		$profile->update($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
