@@ -14,16 +14,55 @@ require_once(dirname(__DIR__) . "/autoload.php");
 
 class StyleTest extends BeerAppTest {
 	/**
-	 * Id of the Style selected;
-	 * @var int $VALID_STYLE
+	 * valid style type to use
+	 * @var string $VALID_STYLETYPE
 	 */
-	protected $VALID_STYLE_ID;
+	protected $VALID_STYLETYPE = "IPA";
 
 	/**
-	 * valid style type to use
-	 * @var
+	 * second valid style type to use
+	 * @var string $VALID_STYLETYPE2
 	 */
-	protected $VALID_STYLETYPE;
+	protected $VALID_STYLETYPE2 = "Stout";
+
+	/**
+	 * test inserting a valid Style and verify the actual mySQL data matches
+	 */
+	public function testInsertValidStyle() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("style");
+
+		$style = new Style($styleId, $this->VALID_STYLETYPE);
+		$style->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoStyle = Style::getStyleByStyleId($this->getPDO(), $style-getStyleId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("style"));
+		$this->assertEquals($pdoStyle->getStyleId(), $this->VALID_STYLE_ID);
+		$this->assertEquals($pdoStyle->getStyleType(), $this->VALID_STYLETYPE);
+	}
+
+	public function testUpdateValidStyle() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("style");
+
+		// create a new Style and insert it into mySQL
+		$styleID = null;
+		$style = new Style($styleID, $this->VALID_STYLETYPE);
+		$style -> insert($this->PDO());
+
+		// edit the Style and update it in mySQL
+		$style->setStyleType($this->VALID_STYLETYPE2);
+		$style->update($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoStyle = Style::getStyleByStyleId($this->PDO(), $style->getStyleId());
+
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("style"));
+		$this->assertEquals($pdoStyle->getStyleId(), $styleId);
+		$this->assertEquals($pdoStyle->getStyleType(), $this->VALID_STYLETYPE2);
 
 
+
+	}
 }
