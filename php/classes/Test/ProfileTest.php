@@ -21,6 +21,26 @@ class ProfileTest extends BeerAppTest {
 	 */
 	protected $VALID_ACTIVATION;
 	/**
+	 * valid profile about to use
+	 * @var string $VALID_ABOUT
+	 */
+	protected $VALID_ABOUT;
+	/**
+	 * valid profile address line 1
+	 * @var string $VALID_ADDRESS_LINE_1
+	 */
+	protected $VALID_ADDRESS_LINE_1;
+	/**
+	 * valid profile address line 2
+	 * @var string $VALID_ADDRESS_LINE_2
+	 */
+	protected $VALID_ADDRESS_LINE_2;
+	/**
+	 * valid profile city
+	 * @var string $VALID_CITY
+	 */
+	protected $VALID_CITY;
+	/**
 	 * valid email to use
 	 * @var string $VALID_EMAIL
 	 **/
@@ -30,6 +50,37 @@ class ProfileTest extends BeerAppTest {
 	 * @var $VALID_HASH
 	 */
 	protected $VALID_HASH;
+	/**
+	 * valid profile image to use
+	 * @var $VALID_IMAGE
+	 */
+	protected $VALID_IMAGE;
+	/**
+	 * valid profile name to use
+	 * @var $VALID_NAME
+	 */
+	protected $VALID_NAME;
+	/**
+	 * valid profile state to use
+	 * @var $VALID_STATE
+	 */
+	protected $VALID_STATE;
+	/**
+	 * valid profile username to use
+	 * @var $VALID_USERNAME
+	 */
+	protected $VALID_USERNAME;
+	/**
+	 * valid profile user type
+	 * @var $VALID_USER_TYPE
+	 */
+	protected $VALID_USER_TYPE;
+	/**
+	 * valid profile zip
+	 * @var $VALID_ZIP;
+	 */
+	protected $VALID_ZIP;
+
 	/**
 	 * run the default setup operation to create salt and hash.
 	 */
@@ -121,11 +172,15 @@ class ProfileTest extends BeerAppTest {
 		$profile = Profile::getProfileByProfileId($this->getPDO(), $fakeProfileId );
 		$this->assertNull($profile);
 	}
-	public function testGetValidProfileByAtHandle() {
+
+	/**
+	 * test grabbing a profile by profile username
+	 **/
+	public function testGetValidProfileByUsername() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH);
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
 		$profile->insert($this->getPDO());
 		//grab the data from MySQL TODO come back and change this so its not get profile by at handle
 		//$results = Profile::getProfileByProfileAtHandle($this->getPDO(), $this->VALID_ATHANDLE);
