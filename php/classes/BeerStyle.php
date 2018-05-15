@@ -124,7 +124,6 @@ class beerStyle implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
-	//TODO getBeerStyleByBeerStyleStyleId
 
 	/**
 	 * gets the BeerStyle by the BeerStyleBeerId

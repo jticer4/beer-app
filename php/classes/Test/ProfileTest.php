@@ -14,7 +14,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @see Profile
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  **/
-class ProfileTest extends BeerTest {
+class ProfileTest extends BeerAppTest {
 	/**
 	 * placeholder until account activation is created
 	 * @var string $VALID_ACTIVATION

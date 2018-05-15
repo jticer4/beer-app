@@ -20,7 +20,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @see BeerStyle
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  **/
-class BeerStyleTest extends BeerTest {
+class BeerStyleTest extends BeerAppTest {
 	/**
 	 * Beer from the beer/style relationship ; this is for foreign key relations
 	 * @var Beer Beer

@@ -51,7 +51,7 @@ class style implements \JsonSerializable {
 
 	/**
 	 * mutator method for style id
-	 *
+	 * @throws \RangeException if the id is out of range
 	 * @param int $newStyleId
 	 */
 	public function setStyleId(int $newStyleId) {
