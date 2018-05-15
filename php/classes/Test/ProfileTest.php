@@ -184,15 +184,25 @@ class ProfileTest extends BeerAppTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH);
+		$profile = new Profile($profileId, $this->VALID_ABOUT, $this->VALID_ACTIVATION, $this->VALID_ADDRESS_LINE_1, $this->VALID_ADDRESS_LINE_2, $this->VALID_CITY, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_IMAGE, $this->VALID_NAME, $this->VALID_STATE, $this->VALID_USERNAME, $this->VALID_USER_TYPE, $this->VALID_ZIP);
 		$profile->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileAbout(), $this->VALID_ABOUT);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileAddressLine1(), $this->VALID_ADDRESS_LINE_1);
+		$this->assertEquals($pdoProfile->getProfileAddressLine2(), $this->VALID_ADDRESS_LINE_2);
+		$this->assertEquals($pdoProfile->getProfileCity(), $this->VALID_CITY);
 		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileState(), $this->VALID_STATE);
+		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_USERNAME);
+		$this->assertEquals($pdoProfile->getProfileUserType(), $this->VALID_USER_TYPE);
+		$this->assertEquals($pdoProfile->getProfileZip(), $this->VALID_ZIP);
 	}
 	/**
 	 * test grabbing a Profile that does not exist
