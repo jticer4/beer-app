@@ -1,6 +1,5 @@
-<phpunit
-	colors="true"
-	>
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit>
 	<testsuites>
 		<testsuite name="beer-app">
 			<file>ProfileTest.php</file>
