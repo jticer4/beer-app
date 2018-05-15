@@ -6,22 +6,24 @@ use Edu\Cnm\Beer\StyleTest;
 // grab the class under to test
 require_once(dirname(__DIR__) . "/autoload.php");
 
+/**
+ * Full PHPUnit test for the Style class
+ *
+ * This is a complete PHPUnit test of the Style Class
+ */
+
 class StyleTest extends BeerAppTest {
 	/**
-	 * Beer that owns the Style;
-	 * @var Beer beer
-	 *
+	 * Id of the Style selected;
+	 * @var int $VALID_STYLE
 	 */
-	protected $beer = null;
+	protected $VALID_STYLE_ID;
 
 	/**
-	 * valid profile hash to create the profile object to own the test
+	 * valid style type to use
 	 * @var
 	 */
-	protected  ;
+	protected $VALID_STYLETYPE;
 
-	/**
-	 * name of Style
-	 * @var int $VALID_
-	 */
+
 }
