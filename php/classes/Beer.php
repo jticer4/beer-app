@@ -472,8 +472,34 @@ public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedAr
 	$statement->execute();
 
 	// build an array of beers
-	$beers = new \SplFixedArray($statement->fetch )
+	$beers = new \SplFixedArray($statement->rowCount());
+	$statement->setFetchMode(\PDO::FETCH_ASSOC);
+	while(($row = $statement->fetch()) !== false) {
+		try {
+			$beer = new Beer(
+				$row["beerId"],
+				$row["beerProfileId"],
+				$row["beerAbv"],
+				$row["beerIbu"],
+				$row["beerName"],
+				$row["beerDescription"]);
+			$beers[$beers->key()] = $beer;
+			$beers->next();
+		}catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+	}
+	return($beers);
 }
+
+	/**
+	*
+	*
+	*
+	*
+	**/
+
 
 	/**
 	* formats the state variables for JSON serialization
