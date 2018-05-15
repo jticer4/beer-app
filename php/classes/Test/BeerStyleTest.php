@@ -44,7 +44,7 @@ class BeerStyleTest extends BeerAppTest {
 	 * valid style of beer style
 	 * @var $VALID_BEERID
 	 */
-	protected $VALID_STYLEID;
+	protected $VALID_STYLEID = ;
 
 
 
@@ -62,10 +62,6 @@ class BeerStyleTest extends BeerAppTest {
 		$this->style->insert($this->getPDO());
 		}
 
-	public final function tearDown() : void {
-		unset($this->VALID_BEERID);
-		unset($this->VALID_STYLEID);
-	}
 
 	public function testInsertValidBeerStyle() :void {
 		//count the number of rows
@@ -80,6 +76,7 @@ class BeerStyleTest extends BeerAppTest {
 		$pdoBeerStyle = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO(),$beerId->getBeerId());
 		$this->assertEquals($numrows + 1, $this->getConnection()->getRowCount($beerStyle));
 		$this->assertEquals($pdoBeerStyle->getBeerId(), $beerStyle);
+		$this->assertEquals($beerStyle->getBeerStyle());
 
 		//TODO Finish assertions
 
