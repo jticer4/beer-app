@@ -253,7 +253,7 @@ class Beer implements \JsonSerializable {
 		}
 
 	/**
-	*
+	* deletes this beer from mysql
 	* @param \PDO $pdo PDO connection object
 	* @throws \PDOException when mySQL  related errors occur
 	* @throws \TypeError if $pdo is not a PDO connection object
@@ -458,7 +458,9 @@ class Beer implements \JsonSerializable {
 	/**
 	* get beer by beer abv
 	*
-	*
+	* @param \PDO $pdo Pdo connection object
+	* @return \SplFixedArray of beers found or null if not found
+	* @throws
 	**/
 public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedArray {
 	//sanitize the description before searching
