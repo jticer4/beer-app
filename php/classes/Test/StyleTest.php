@@ -49,8 +49,7 @@ class StyleTest extends BeerAppTest {
 		$numRows = $this->getConnection()->getRowCount("style");
 
 		// create a new Style and insert it into mySQL
-		$styleId = null;
-		$style = new Style($styleId, $this->VALID_STYLETYPE);
+		$style = new Style($styleId = null, $this->VALID_STYLETYPE);
 		$style -> insert($this->PDO());
 
 		// edit the Style and update it in mySQL
@@ -72,8 +71,7 @@ class StyleTest extends BeerAppTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("style");
 
-		$styleId = null;
-		$style = new Style($styleId, $this->VALID_STYLETYPE);
+		$style = new Style($styleId = null, $this->VALID_STYLETYPE);
 		$style->insert($this->getPDO());
 
 		// delete the Style from mySQL
@@ -93,8 +91,7 @@ class StyleTest extends BeerAppTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("style");
 
-		$styleId = null;
-		$style = new Style($styleId, $this->VALID_STYLETYPE);
+		$style = new Style($styleId = null, $this->VALID_STYLETYPE);
 		$style->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -122,8 +119,7 @@ class StyleTest extends BeerAppTest {
 		$numRows = $this->getConnection()->getRowCount("style");
 
 		//create new Style and insert into mySQL
-		$styleId = null;
-		$style = new Style($styleId, $this->VALID_STYLETYPE);
+		$style = new Style($styleId = null, $this->VALID_STYLETYPE);
 		$style->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations

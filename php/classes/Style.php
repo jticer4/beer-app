@@ -114,6 +114,8 @@ class style implements \JsonSerializable {
 		// bind the member variables to the place holders in the template
 		$parameters = ["styleId" => $this->styleId, "styleType" => $this->styleType];
 		$statement->execute($parameters);
+
+		$this->styleId = intval ($pdo->lastInsertId());
 	}
 
 	/**
