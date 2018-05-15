@@ -61,8 +61,33 @@ class StyleTest extends BeerAppTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("style"));
 		$this->assertEquals($pdoStyle->getStyleId(), $styleId);
 		$this->assertEquals($pdoStyle->getStyleType(), $this->VALID_STYLETYPE2);
+	}
 
+	/**
+	 * test creating a Style and then deleting it
+	 */
+	public function testDeleteValidStyle() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("style");
 
+		$styleId = null;
+		$style = new Style($styleId, $this->VALID_STYLETYPE);
+		$style->insert($this->getPDO());
 
+		// delete the Style from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("style"));
+		$style->delete($this->getPDO());
+
+		// grab the data from mySQL and enforce the Style does not exist
+		$pdoStyle = Style::getStyleByStyleId($this->getPDO(), $style->getStyleId());
+		$this->assertNull($pdoProfile);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("style"));
+	}
+
+	/**
+	 * test inserting a Style and regrabbing it from mySQL
+	 */
+	public function testGetValidStyleByStyleId() : void {
+		$numRows = $this->getConnection()->getRowCount("style");
 	}
 }
