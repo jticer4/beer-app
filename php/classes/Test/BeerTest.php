@@ -179,7 +179,7 @@ public function testGetValidBeerByProfileId() : void {
 	$this->VALID_BEERABV,
 	$this->VALID_BEERNAME
 	);
-	$beer->insert($this->getPDO();
+	$beer->insert($this->getPDO());
 	//grab the data from mySQL and enforce the fields match our expectations
 	$pdoBeer = BEER::getBeerByBeerProfileId($this->getPDO(), $beer->getBeerProfileId());
 	$this->assertEquals($numRows +1, $this->getConnection()->getRowContent("beer"));
@@ -198,5 +198,14 @@ public function testGetInvalidBeerByProfileId() : void {
 	$fakeProfileId = generateUuidV4();
 	$beer = BEER::getBeerByBeerProfileId($this->getPDO(), $fakeBeerProfileId);
 	$this->assertNull($beer);
+}
+/**
+* test inserting a beer and grabbing it by the beer name
+**/
+public function testGetValidBeerByBeerName() : void {
+	// count the number of rows and save it for later
+	$numRows = $this->getConnection()->getRowContent("beer");
+	$beerId = null;
+	$beerProfile
 }
 }
