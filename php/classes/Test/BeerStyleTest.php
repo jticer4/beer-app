@@ -44,7 +44,7 @@ class BeerStyleTest extends BeerAppTest {
 	 * valid style of beer style
 	 * @var $VALID_BEERID
 	 */
-	protected $VALID_STYLEID = ;
+	protected $VALID_STYLEID;
 
 
 
@@ -58,7 +58,7 @@ class BeerStyleTest extends BeerAppTest {
 		$this->beer->insert($this->getPDO());
 
 		//Create and insert Style from beer style composite
-		$this->style = new Style(1,"pilsner");
+		$this->VALID_STYLEID = new Style(1,"pilsner");
 		$this->style->insert($this->getPDO());
 		}
 
@@ -76,9 +76,6 @@ class BeerStyleTest extends BeerAppTest {
 		$pdoBeerStyle = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO(),$beerId->getBeerId());
 		$this->assertEquals($numrows + 1, $this->getConnection()->getRowCount($beerStyle));
 		$this->assertEquals($pdoBeerStyle->getBeerId(), $beerStyle);
-		$this->assertEquals($beerStyle->getBeerStyle());
-
-		//TODO Finish assertions
-
+		$this->assertEquals($beerStyle->getBeerStyle(), $beerStyle);
+		}
 	}
-}
