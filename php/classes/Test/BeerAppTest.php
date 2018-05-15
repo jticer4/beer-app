@@ -53,7 +53,6 @@ abstract class BeerAppTest extends TestCase {
 		$dataset->addTable("style");
 		$dataset->addTable("beer");
 		$dataset->addTable("beerStyle");
-		$dataset->addTable("vote");
 		return($dataset);
 	}
 
