@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\Beer\Test;
 
-use Edu\Cnm\Beer\StyleTest;
+use Edu\Cnm\Beer\Style;
 
 // grab the class under to test
 require_once(dirname(__DIR__) . "/autoload.php");
