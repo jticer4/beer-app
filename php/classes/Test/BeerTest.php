@@ -90,6 +90,7 @@ public function testUpdateValidBeer() {
 	$beerId = null;
 	$beer = new Beer(
 		$beerId,
+		$beerProfileId,
 		$this->VALID_BEERIBU,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERNAME,
@@ -119,17 +120,41 @@ public function TestDeleteValidBeer() : void {
 	$beerId = null;
 	$beer = new Beer(
 		$beerId,
+		$beerProfileId,
 		$this->VALID_BEERIBU,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERNAME,
-		$this->VALID_BEERDESCRIPTION);
+		$this->VALID_BEERDESCRIPTION
+	);
 	$beer->insert($this->getPDO());
 	// delete the beer from mySQL
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
 }
 /**
-*test inserting a beer and regrabbing it from mysql
+*test inserting a beer and grabbing it again it from mysql
 **/
+public function testGetValidBeerbyBeerId() : void {
+	// count the number of rows and save it for later
+	$numRows = $this->getConnection()->getRowCount("beer");
+	$beerId = null;
+	$beer = new Beer(
+		$beerId,
+		$beerProfileId,
+		$this->VALID_BEERIBU,
+		$this->VALID_BEERABV,
+		$this->VALID_BEERNAME,
+		$this->VALID_BEERDESCRIPTION
+	);
+	$beer->insert($this->getPDO());
+	// grab the data from mySQL and enforce the fields match our expectations
+	$pdoBeer = Beer::getBeerbyBeerId($this->getPDO(), $beer->getBeerId());
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
+	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
+	$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
+	$this->assertEquals($pdoBeer->getBeerIbu(), $this->VALID_BEERIBU);
+	$this->assertEquals($pdoBeer->getBeerAbv(), $this->VALID_BEERABV);
+	$this->assertEquals($pdoBeer->getBeerName(), $this->VALID_BEERNAME);
+}
 
 
 

@@ -495,6 +495,8 @@ public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedAr
 	return($beers);
 }
 
+//TODO getAllBeers
+
 	/**
 	* formats the state variables for JSON serialization
 	*
