@@ -58,12 +58,14 @@ class BeerStyleTest extends BeerTest {
 		//Create and insert Style from beer style composite
 		$this->style = new Style(1,"pilsner");
 		$this->style->insert($this->getPDO());
-
-
 		}
 
 	public final function tearDown() : void {
 		unset($this->VALID_BEERID);
 		unset($this->VALID_STYLEID);
+	}
+
+	public function testInsertValidBeer() :void {
+
 	}
 }
