@@ -496,36 +496,6 @@ public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedAr
 }
 
 	/**
-	*gets the beer by the style
-	*
-	* @param \PDO $pdo PDO connection object
-	* @return
-	* @throws
-	* @throws
-	**/
-public static function getBeerByStyle(\PDO $pdo, $style) : \SplFixedArray {
-	//create query template
-	$query = "SELECT "
-	$statement = $pdo->prepare($query);
-	$statement->execute();
-
-	//build and array of styles
-	$styles = new \SplFixedArray($statement->rowCount());
-	$statement->setFetchMode(\PDO::FETCH_ASSOC);
-	while(($row = $statement->fetch()) !== false) {
-		try {
-			$style = new Style($row["style");
-			$styles[$styles->key()] = $style;
-			$styles->next();
-	} catch(\Exception $exception) {
-			//if the row couldn't be converted, rethrow it
-		throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-	}
-return ($styles);
-}
-
-	/**
 	* formats the state variables for JSON serialization
 	*
 	* @return array resulting state variables to serialize
