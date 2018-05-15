@@ -221,20 +221,30 @@ class ProfileTest extends BeerAppTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_USERNAME);
+		$profile = new Profile($profileId, $this->VALID_ABOUT, $this->VALID_ACTIVATION, $this->VALID_ADDRESS_LINE_1, $this->VALID_ADDRESS_LINE_2, $this->VALID_CITY, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_IMAGE, $this->VALID_NAME, $this->VALID_STATE, $this->VALID_USERNAME, $this->VALID_USER_TYPE, $this->VALID_ZIP);
 		$profile->insert($this->getPDO());
-		//grab the data from MySQL TODO come back and change this so its not get profile by at handle
-		//$results = Profile::getProfileByProfileAtHandle($this->getPDO(), $this->VALID_ATHANDLE);
-		//$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("profile"));
+		//grab the data from MySQL
+		$results = Profile::getProfileByProfileUsername($this->getPDO(), $this->VALID_USERNAME);
+		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("profile"));
 		//enforce no other objects are bleeding into profile
-		$this->assertContainsOnlyInstancesOf("Edu\\CNM\\DataDesign\\Profile", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\CNM\\Beer\\Profile", $results);
 		//enforce the results meet expectations
 		$pdoProfile = $results[0];
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileAbout(), $this->VALID_ABOUT);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileAddressLine1(), $this->VALID_ADDRESS_LINE_1);
+		$this->assertEquals($pdoProfile->getProfileAddressLine2(), $this->VALID_ADDRESS_LINE_2);
+		$this->assertEquals($pdoProfile->getProfileCity(), $this->VALID_CITY);
 		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileState(), $this->VALID_STATE);
+		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_USERNAME);
+		$this->assertEquals($pdoProfile->getProfileUserType(), $this->VALID_USER_TYPE);
+		$this->assertEquals($pdoProfile->getProfileZip(), $this->VALID_ZIP);
 	}
 	/**
 	 * test grabbing a Profile by email
@@ -243,15 +253,25 @@ class ProfileTest extends BeerAppTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH);
+		$profile = new Profile($profileId, $this->VALID_ABOUT, $this->VALID_ACTIVATION, $this->VALID_ADDRESS_LINE_1, $this->VALID_ADDRESS_LINE_2, $this->VALID_CITY, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_IMAGE, $this->VALID_NAME, $this->VALID_STATE, $this->VALID_USERNAME, $this->VALID_USER_TYPE, $this->VALID_ZIP);
 		$profile->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoProfile = Profile::getProfileByProfileEmail($this->getPDO(), $profile->getProfileEmail());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileAbout(), $this->VALID_ABOUT);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileAddressLine1(), $this->VALID_ADDRESS_LINE_1);
+		$this->assertEquals($pdoProfile->getProfileAddressLine2(), $this->VALID_ADDRESS_LINE_2);
+		$this->assertEquals($pdoProfile->getProfileCity(), $this->VALID_CITY);
 		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileState(), $this->VALID_STATE);
+		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_USERNAME);
+		$this->assertEquals($pdoProfile->getProfileUserType(), $this->VALID_USER_TYPE);
+		$this->assertEquals($pdoProfile->getProfileZip(), $this->VALID_ZIP);
 	}
 	/**
 	 * test grabbing a Profile by an email that does not exist
@@ -268,21 +288,31 @@ class ProfileTest extends BeerAppTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH);
+		$profile = new Profile($profileId, $this->VALID_ABOUT, $this->VALID_ACTIVATION, $this->VALID_ADDRESS_LINE_1, $this->VALID_ADDRESS_LINE_2, $this->VALID_CITY, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_IMAGE, $this->VALID_NAME, $this->VALID_STATE, $this->VALID_USERNAME, $this->VALID_USER_TYPE, $this->VALID_ZIP);
 		$profile->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoProfile = Profile::getProfileByProfileActivationToken($this->getPDO(), $profile->getProfileActivationToken());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileAbout(), $this->VALID_ABOUT);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileAddressLine1(), $this->VALID_ADDRESS_LINE_1);
+		$this->assertEquals($pdoProfile->getProfileAddressLine2(), $this->VALID_ADDRESS_LINE_2);
+		$this->assertEquals($pdoProfile->getProfileCity(), $this->VALID_CITY);
 		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
+		$this->assertEquals($pdoProfile->getProfileState(), $this->VALID_STATE);
+		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_USERNAME);
+		$this->assertEquals($pdoProfile->getProfileUserType(), $this->VALID_USER_TYPE);
+		$this->assertEquals($pdoProfile->getProfileZip(), $this->VALID_ZIP);
 	}
 	/**
 	 * test grabbing a Profile by an activation token that does not exist
 	 **/
 	public function testGetInvalidProfileActivation() : void {
-		// grab an email that does not exist
+		// grab an activation token that does not exist
 		$profile = Profile::getProfileByProfileActivationToken($this->getPDO(), "6675636b646f6e616c646472756d7066");
 		$this->assertNull($profile);
 	}
