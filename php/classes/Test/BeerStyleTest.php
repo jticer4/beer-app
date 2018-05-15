@@ -1,7 +1,9 @@
 <?php
 namespace Edu\Cnm\Beer\Test;
 
-use Edu\Cnm\Beer\{Beer, Style};
+use Edu\Cnm\Beer\{
+	Beer, beerStyle, Style
+};
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
@@ -65,7 +67,21 @@ class BeerStyleTest extends BeerTest {
 		unset($this->VALID_STYLEID);
 	}
 
-	public function testInsertValidBeer() :void {
+	public function testInsertValidBeerStyle() :void {
+		//count the number of rows
+		$numrows = $this->getConnection()->getRowCount("beerStyle");
+
+		// create new beer style and insert it into mySQL
+		$beerId = generateUuidV4();
+		$beerStyle = new BeerStyle($beerId,$this->VALID_STYLEID);
+		$beerStyle->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoBeerStyle = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO(),$beerId->getBeerId());
+		$this->assertEquals($numrows + 1, $this->getConnection()->getRowCount($beerStyle));
+		$this->assertEquals($pdoBeerStyle->getBeerId(), $beerStyle);
+
+		//TODO Finish assertions
 
 	}
 }
