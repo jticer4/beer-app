@@ -505,8 +505,9 @@ public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedAr
 
 		$fields["beerId"] = $this->beerId->toString();
 		$fields["beerProfileId"] = $this->beerProfileId->toString();
+		return($fields);
 	}
-}
+	}
 
 
 
