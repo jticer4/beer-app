@@ -19,12 +19,12 @@ class ProfileTest extends BeerAppTest {
 	 * valid profile about to use
 	 * @var string $VALID_ABOUT
 	 */
-	protected $VALID_ABOUT;
+	protected $VALID_ABOUT = "I love long walks on the beach...";
 	/**
 	 * content of the updated About
 	 * @var string $VALID_ABOUT_2
 	 **/
-	protected $VALID_ABOUT_2 = "Test content for new about";
+	protected $VALID_ABOUT_2 = "I enjoy drinking orange juice after brushing my teeth";
 	/**
 	 * placeholder until account activation is created
 	 * @var string $VALID_ACTIVATION
@@ -34,7 +34,7 @@ class ProfileTest extends BeerAppTest {
 	 * valid profile address line 1
 	 * @var string $VALID_ADDRESS_LINE_1
 	 */
-	protected $VALID_ADDRESS_LINE_1;
+	protected $VALID_ADDRESS_LINE_1 = "123 mulberry lane";
 	/**
 	 * content of the updated Address Line 1
 	 * @var string $VALID_ADDRESS_LINE_1_2
@@ -44,7 +44,7 @@ class ProfileTest extends BeerAppTest {
 	 * valid profile address line 2
 	 * @var string $VALID_ADDRESS_LINE_2
 	 */
-	protected $VALID_ADDRESS_LINE_2;
+	protected $VALID_ADDRESS_LINE_2 = "Apt 123";
 	/**
 	 * content of the updated Address Line 2
 	 * @var string $VALID_ADDRESS_LINE_2_2
@@ -54,7 +54,7 @@ class ProfileTest extends BeerAppTest {
 	 * valid profile city
 	 * @var string $VALID_CITY
 	 */
-	protected $VALID_CITY;
+	protected $VALID_CITY = "Albuquerque";
 	/**
 	 * content of the updated City
 	 * @var string $VALID_CITY_2
@@ -79,17 +79,17 @@ class ProfileTest extends BeerAppTest {
 	 * valid profile image to use
 	 * @var $VALID_IMAGE
 	 */
-	protected $VALID_IMAGE;
+	protected $VALID_IMAGE = "https://s-i.huffpost.com/gen/1787756/images/n-AMY-POEHLER-COOL-MOM-628x314.jpg";
 	/**
 	 * content of the updated Image
 	 * @var string $VALID_IMAGE_2
 	 **/
-	protected $VALID_IMAGE_2 = "PHPUnit test still passing";
+	protected $VALID_IMAGE_2 = "http://i0.kym-cdn.com/photos/images/original/000/746/539/5df.jpg";
 	/**
 	 * valid profile name to use
 	 * @var $VALID_NAME
 	 */
-	protected $VALID_NAME;
+	protected $VALID_NAME = "Marty McFly";
 	/**
 	 * content of the updated Name
 	 * @var string $VALID_NAME_2
@@ -99,42 +99,42 @@ class ProfileTest extends BeerAppTest {
 	 * valid profile state to use
 	 * @var $VALID_STATE
 	 */
-	protected $VALID_STATE;
+	protected $VALID_STATE = "Kentucky";
 	/**
 	 * content of the updated State
 	 * @var string $VALID_STATE_2
 	 **/
-	protected $VALID_STATE_2 = "PHPUnit test still passing";
+	protected $VALID_STATE_2 = "Washington";
 	/**
 	 * valid profile username to use
 	 * @var $VALID_USERNAME
 	 */
-	protected $VALID_USERNAME;
+	protected $VALID_USERNAME = "kewlmom4lyfe";
 	/**
 	 * content of the updated Username
 	 * @var string $VALID_USERNAME_2
 	 **/
-	protected $VALID_USERNAME_2 = "PHPUnit test still passing";
+	protected $VALID_USERNAME_2 = "Regina George";
 	/**
 	 * valid profile user type
 	 * @var $VALID_USER_TYPE
 	 */
-	protected $VALID_USER_TYPE;
+	protected $VALID_USER_TYPE = "U";
 	/**
 	 * content of the updated User Type
 	 * @var string $VALID_USER_TYPE_2
 	 **/
-	protected $VALID_USER_TYPE_2 = "PHPUnit test still passing";
+	protected $VALID_USER_TYPE_2 = "B";
 	/**
 	 * valid profile zip
 	 * @var $VALID_ZIP;
 	 */
-	protected $VALID_ZIP;
+	protected $VALID_ZIP = "87120";
 	/**
 	 * content of the updated Zip
 	 * @var string $VALID_ZIP_2
 	 **/
-	protected $VALID_ZIP_2 = "PHPUnit test still passing";
+	protected $VALID_ZIP_2 = "87111";
 
 
 	/**
