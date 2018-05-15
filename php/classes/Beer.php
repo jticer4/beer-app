@@ -418,14 +418,14 @@ class Beer implements \JsonSerializable {
 	* @param \PDO $pdo PDO connection object
 	* @param int $beerIbu beer ibu for searching
 	* @return \SplFixedArray SplFixedArray of beers found or null if not found
-	* @throws \
-	* @throws
-	*/
+	* @throws \RangeException if ibu is out of range
+	* @throws \TypeError whe variables are not the correct data
+	**/
 	public static function getBeerByBeerIbu(\PDO $pdo, int $beerIbu) : \SplFixedArray {
 		//sanitize the description before searching
 		$beerIbu =filter_var($beerIbu, FILTER_VALIDATE_INT, FILTER_SANITIZE_NUMBER_INT);
 		if($beerIbu < 0 || $beerIbu > 120) {
-			throw(new \PDOException("ibu is out of range"));
+			throw(new \RangeException("ibu is out of range"));
 		}
 
 		//create query template
@@ -494,12 +494,34 @@ public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedAr
 }
 
 	/**
+	*gets the beer by the style
 	*
-	*
-	*
-	*
+	* @param \PDO $pdo PDO connection object
+	* @return
+	* @throws
+	* @throws
 	**/
+public static function getBeerByStyle(\PDO $pdo, $style) : \SplFixedArray {
+	//create query template
+	$query = "SELECT "
+	$statement = $pdo->prepare($query);
+	$statement->execute();
 
+	//build and array of styles
+	$styles = new \SplFixedArray($statement->rowCount());
+	$statement->setFetchMode(\PDO::FETCH_ASSOC);
+	while(($row = $statement->fetch()) !== false) {
+		try {
+			$style = new Style($row["style");
+			$styles[$styles->key()] = $style;
+			$styles->next();
+	} catch(\Exception $exception) {
+			//if the row couldn't be converted, rethrow it
+		throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+	}
+return ($styles);
+}
 
 	/**
 	* formats the state variables for JSON serialization
