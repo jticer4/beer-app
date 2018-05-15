@@ -175,7 +175,6 @@ class ProfileTest extends BeerAppTest {
 		$this->assertEquals($pdoProfile->getProfileZip(), $this->VALID_ZIP);
 	}
 	/**
-	 *TODO fix this method so that its updating it with zip2, email2, city2, etc...
 	 * test inserting a Profile, editing it, and then updating it
 	 **/
 	public function testUpdateValidProfile() {
@@ -202,19 +201,19 @@ class ProfileTest extends BeerAppTest {
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
-		$this->assertEquals($pdoProfile->getProfileAbout(), $this->VALID_ABOUT);
+		$this->assertEquals($pdoProfile->getProfileAbout(), $this->VALID_ABOUT_2);
 		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
-		$this->assertEquals($pdoProfile->getProfileAddressLine1(), $this->VALID_ADDRESS_LINE_1);
-		$this->assertEquals($pdoProfile->getProfileAddressLine2(), $this->VALID_ADDRESS_LINE_2);
-		$this->assertEquals($pdoProfile->getProfileCity(), $this->VALID_CITY);
-		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+		$this->assertEquals($pdoProfile->getProfileAddressLine1(), $this->VALID_ADDRESS_LINE_1_2);
+		$this->assertEquals($pdoProfile->getProfileAddressLine2(), $this->VALID_ADDRESS_LINE_2_2);
+		$this->assertEquals($pdoProfile->getProfileCity(), $this->VALID_CITY_2);
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL_2);
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
-		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE);
-		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME);
-		$this->assertEquals($pdoProfile->getProfileState(), $this->VALID_STATE);
-		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_USERNAME);
-		$this->assertEquals($pdoProfile->getProfileUserType(), $this->VALID_USER_TYPE);
-		$this->assertEquals($pdoProfile->getProfileZip(), $this->VALID_ZIP);
+		$this->assertEquals($pdoProfile->getProfileImage(), $this->VALID_IMAGE_2);
+		$this->assertEquals($pdoProfile->getProfileName(), $this->VALID_NAME_2);
+		$this->assertEquals($pdoProfile->getProfileState(), $this->VALID_STATE_2);
+		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_USERNAME_2);
+		$this->assertEquals($pdoProfile->getProfileUserType(), $this->VALID_USER_TYPE_2);
+		$this->assertEquals($pdoProfile->getProfileZip(), $this->VALID_ZIP_2);
 	}
 	/**
 	 * test creating a Profile and then deleting it
