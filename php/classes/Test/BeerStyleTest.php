@@ -52,11 +52,11 @@ class BeerStyleTest extends BeerAppTest {
 
 
 		//Create and insert Beer from beer style composite
-		$this->beer = new \Beer(generateUuid4(), $profile->getProfileId(), "45", 3.2, "Shit Kicker IPA", "Pretty much budlight");
+		$this->beer = new Beer(generateUuidV4(), $profile->getProfileId(),3.2, "Pretty much budlight",10,"Shit Kicker IPA");
 		$this->beer->insert($this->getPDO());
 
 		//Create and insert Style from beer style composite
-		$this->style = new \Style(66, "piss lager");
+		$this->style = new Style(66, "piss lager");
 		$this->style->insert($this->getPDO());
 
 	}
