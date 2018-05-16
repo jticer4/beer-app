@@ -59,8 +59,8 @@ class BeerTest extends BeerAppTest {
 public function testInsertValidBeer(): void {
 	//count the number of row and save it for later
 	$numRows = $this->getConnection()->getRowCount("Beer");
-	$beerId = null;
-	$beerProfileId = null;
+	$beerId = generateUuidV4();
+	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
 		$this->VALID_BEERIBU,
@@ -87,8 +87,8 @@ public function testUpdateValidBeer() {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("beer");
 	// create a new Beer and insert it into mySql
-	$beerId = null;
-	$beerProfileId = null;
+	$beerId = generateUuidV4();
+	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
 		$this->VALID_BEERIBU,
@@ -117,8 +117,8 @@ public function testUpdateValidBeer() {
 public function TestDeleteValidBeer() : void {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("beer");
-	$beerId = null;
-	$beerProfileId = null;
+	$beerId = generateUuidV4();
+	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
 		$this->VALID_BEERIBU,
@@ -136,8 +136,8 @@ public function TestDeleteValidBeer() : void {
 public function testGetValidBeerByBeerId() : void {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("beer");
-	$beerId = null;
-	$beerProfileId = null;
+	$beerId = generateUuidV4();
+	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
 		$this->VALID_BEERIBU,
@@ -161,8 +161,7 @@ public function testGetValidBeerByBeerId() : void {
 **/
 public function testGetInvalidBeerByBeerId() : void {
 	// grab a beer id that exceeds the maximum allowable beer id
-	$fakeBeerId = generateUuidV4();
-	$beer = BEER::getBeerByBeerId($this->getPDO(), $fakeBeerId );
+	$beer = BEER::getBeerByBeerId($this->getPDO(), generateUuidV4());
 	$this->assertCount(0, $beer);
 }
 /**
@@ -173,8 +172,8 @@ public function testGetValidBeerByProfileId() : void {
 	$numRows = $this->getConnection()->getRowCount("beer");
 
 	//create a new beer and insert it into mysql
-	$beerId = null;
-	$beerProfileId = null;
+	$beerId = generateUuidV4();
+	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 	$this->VALID_BEERIBU,
 	$this->VALID_BEERDESCRIPTION,
@@ -198,8 +197,7 @@ public function testGetValidBeerByProfileId() : void {
 **/
 public function testGetInvalidBeerByProfileId() : void {
 	//grab a beer id that exceeds the maximum allowable profile id's
-	$fakeBeerProfileId = generateUuidV4();
-	$beer = Beer::getBeerByBeerProfileId($this->getPDO(), $fakeBeerProfileId);
+	$beer = Beer::getBeerByBeerProfileId($this->getPDO(), generateUuidV4());
 	$this->assertCount(0, $beer);
 }
 /**
@@ -210,8 +208,8 @@ public function testGetValidBeerByBeerName() : void {
 	$numRows = $this->getConnection()->getRowCount("beer");
 
 	//create a new beer and insert it into mySQL
-	$beerId = null;
-	$beerProfileId = null;
+	$beerId = generateUuidV4();
+	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$this->VALID_BEERIBU,
 		$this->VALID_BEERDESCRIPTION,
@@ -232,7 +230,6 @@ public function testGetValidBeerByBeerName() : void {
 	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
 	$this->assertEquals($pdoBeer->getbeerProfileId(), $this->profile->getProfileId());
 	$this->assertEquals($pdoBeer->getBeerName(), $this->VALID_BEERNAME);
-
 }
 
 /**
@@ -250,8 +247,8 @@ public function testGetInvalidBeerByName() : void {
 public function testGetValidBeerByIbu() : void {
 	//count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("beer");
-	$beerId = null;
-	$beerProfileId = null;
+	$beerId = generateUuidV4();
+	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$this->VALID_BEERIBU,
 		$this->VALID_BEERDESCRIPTION,
@@ -282,8 +279,8 @@ public function testGetInvalidBeerByIbu() : void {
 public function testGetValidBeerByBeerAbv() : void {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("beer");
-	$beerId = null;
-	$beerProfileId = null;
+	$beerId = generateUuidV4();
+	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
 		$this->VALID_BEERIBU,
@@ -317,8 +314,8 @@ public function testGetAllValidBeers() : void {
 	$numRows = $this->getConnection()->getRowCount("beer");
 
 	// create a new beer and insert it into mySQL
-	$beerId = null;
-	$beerProfileId = null;
+	$beerId = generateUuidV4();
+	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
 		$this->beer->getBeerId(),
