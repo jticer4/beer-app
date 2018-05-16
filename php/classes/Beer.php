@@ -247,10 +247,10 @@ class Beer implements \JsonSerializable {
 		$parameters = [
 			"beerId" => $this->beerId->getBytes(),
 			"beerProfileId" => $this->beerProfileId->getBytes(),
-			"beerIbu" => $this->beerAbv,
-			"beerAbv" => $this->beerIbu,
-			"beerName" => $this->beerDescription,
-			"beerDescription" => $this->beerName,
+			"beerAbv" => $this->beerAbv,
+			"beerDescription" => $this->beerDescription,
+			"beerIbu" => $this->beerIbu,
+			"beerName" => $this->beerName,
 		];
 		$statement->execute($parameters);
 		}
@@ -324,7 +324,7 @@ class Beer implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$beer = new Beer($row["beerId"], $row["beerProfileId"], $row["beerAbv"], $row["beerDescription"], $row["beerIbu"], $row["beerDescription"]);
+				$beer = new Beer($row["beerId"], $row["beerProfileId"], $row["beerAbv"], $row["beerDescription"], $row["beerIbu"], $row["beerName"]);
 		}
 		} catch(\Exception $exception) {
 		//if the row couldn't be converted rethrow it
@@ -350,7 +350,7 @@ class Beer implements \JsonSerializable {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		//create query template
-		$query = "SELECT beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription FROM beer where beerProfileId = :beerProfileId";
+		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer where beerProfileId = :beerProfileId";
 		$statement = $pdo->prepare($query);
 		//bind the beer profile id to the place holder
 		$parameters = ["beerProfileId" => $beerProfileId->getBytes()];
@@ -360,7 +360,7 @@ class Beer implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$beer = new Beer($row["beer"], $row ["beerProfileId"], $row ["beerIbu"], $row ["beerAbv"], $row ["beerName"], $row ["beerDescription"]);
+				$beer = new Beer($row["beer"], $row ["beerProfileId"], $row ["beerAbv"], $row ["beerDescription"], $row ["beerIbu"], $row ["beerName"]);
 				$beers[$beers->key()] = $beer;
 				$beers->next();
 			} catch(\Exception $exception) {
@@ -385,7 +385,7 @@ class Beer implements \JsonSerializable {
 			throw(new \PDOException("beer abv is invalid"));
 		}
 		//create query template
-		$query ="SELECT beerId, beerProfileId, beerAbv, beerIbu, beerName, beerDescription FROM beer WHERE beerAbv LIKE :beerAbv";
+		$query ="SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer WHERE beerAbv LIKE :beerAbv";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -398,9 +398,9 @@ class Beer implements \JsonSerializable {
 					$row["beerId"],
 					$row["beerProfileId"],
 					$row["beerAbv"],
+					$row["beerDescription"],
 					$row["beerIbu"],
-					$row["beerName"],
-					$row["beerDescription"]);
+					$row["beerName"]);
 				$beers[$beers->key()] = $beer;
 				$beers->next();
 			}catch(\Exception $exception) {
@@ -428,7 +428,7 @@ class Beer implements \JsonSerializable {
 		}
 
 		//create query template
-		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName, FROM beer where beerIbu LIKE :beerIbu";
+		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer where beerIbu LIKE :beerIbu";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -474,7 +474,7 @@ class Beer implements \JsonSerializable {
 		$beerName = str_replace("_", "\\_", str_replace("%", "\\%", $beerName));
 
 		//create query template
-		$query = "SELECT beerID, beerProfileId, beerIbu, beerAbv, beerName, beerDescription FROM beer WHERE beerName LIKE :beerName";
+		$query = "SELECT beerID, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer WHERE beerName LIKE :beerName";
 		$statement = $pdo->prepare($query);
 
 		//bind the beer name
@@ -487,7 +487,7 @@ class Beer implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$beer = new Beer($row["beerId"], $row["beerProfileId"], $row["beerIbu"], $row["beerAbv"], $row["beerName"], $row["beerDescription"]);
+				$beer = new Beer($row["beerId"], $row["beerProfileId"], $row["beerAbv"], $row["beerDescription"], $row["beerIbu"], $row["beerName"]);
 				$beers[$beers->key()] = $beer;
 				$beers->next();
 			} catch(\Exception $exception) {
@@ -499,12 +499,12 @@ class Beer implements \JsonSerializable {
 	}
 
 	/**
-	* gets all styles
+	* gets all beers
 	*
-	* @param \PDO $pdo PDO connection obeject
-	* @return
-	* @throws
-	* @throws
+	* @param \PDO $pdo PDO connection object
+	* @return string beers for searching
+	* @throws \SplFixedArray SplFixedArray of all beers found
+	* @throws \PDOException when mySQL errors occur
 	**/
 	public static function getAllBeers (\PDO $pdo) : \SplFixedArray {
 		//create query templates
