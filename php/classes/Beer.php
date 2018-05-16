@@ -26,15 +26,16 @@ class Beer implements \JsonSerializable {
 	**/
 	private $beerIbu;
 	/**
-	 * description of the beer
-	 * @var string $beerDescription
-	 **/
+	* description of the beer
+	* @var string $beerDescription
+	**/
 	private $beerDescription;
 	/**
 	* abv number for beer
 	* @var float $beerAbv
 	**/
 	private $beerAbv;
+
 	/**
 	* name of the beer
 	* @var$beerName
@@ -462,11 +463,11 @@ class Beer implements \JsonSerializable {
 	* @return \SplFixedArray of beers found or null if not found
 	* @throws
 	**/
-public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedArray {
-	//sanitize the description before searching
-	$beerAbv = filter_var($beerAbv, FILTER_VALIDATE_FLOAT, FILTER_SANITIZE_NUMBER_FLOAT);
-	if(empty($beerAbv) === true){
-		throw(new \PDOException("beer abv is invalid"));
+	public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedArray {
+		//sanitize the description before searching
+		$beerAbv = filter_var($beerAbv, FILTER_VALIDATE_FLOAT, FILTER_SANITIZE_NUMBER_FLOAT);
+		if(empty($beerAbv) === true){
+			throw(new \PDOException("beer abv is invalid"));
 	}
 	//create query template
 	$query ="SELECT beerId, beerProfileId, beerAbv, beerIbu, beerName, beerDescription FROM beer WHERE beerAbv LIKE :beerAbv";
@@ -495,7 +496,42 @@ public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedAr
 	return($beers);
 }
 
-//TODO getAllBeers
+	/**
+	* gets all styles
+	*
+	* @param \PDO $pdo PDO connection obeject
+	* @return
+	* @throws
+	* @throws
+	**/
+
+	public static function getAllBeers (\PDO $pdo) : \SplFixedArray {
+		//create query templates
+		$query = "SELECT beerId, beerProfileId, beerIbu, beerDescription, beerAbv, beerName FROM beer";
+		$statement = $pdo->prepare($query);
+		$statement ->execute();
+
+		//build an array of tweets
+		$beers = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			while(($row = $statement->fetch()) !== false) {
+				try {
+					$beer = new Beer(
+						$row["beerId"],
+						$row["beerProfileId"],
+						$row["beerIbu"],
+						$row["beerDescription"],
+						$row["beerAbv"],
+						$row["beerName"]);
+					$beers[$beers->key()] = $beer;
+					$beers->next();
+				} catch(\Exception $exception) {
+					// if the row couldn't be converted, rethrow it
+					throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($beers);
+	}
 
 	/**
 	* formats the state variables for JSON serialization
