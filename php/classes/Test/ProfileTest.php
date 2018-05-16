@@ -99,12 +99,12 @@ class ProfileTest extends BeerAppTest {
 	 * valid profile state to use
 	 * @var $VALID_STATE
 	 */
-	protected $VALID_STATE = "Kentucky";
+	protected $VALID_STATE = "NM";
 	/**
 	 * content of the updated State
 	 * @var string $VALID_STATE_2
 	 **/
-	protected $VALID_STATE_2 = "Washington";
+	protected $VALID_STATE_2 = "HI";
 	/**
 	 * valid profile username to use
 	 * @var $VALID_USERNAME
