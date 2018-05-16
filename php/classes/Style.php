@@ -115,7 +115,7 @@ class style implements \JsonSerializable {
 		$parameters = ["styleId" => $this->styleId, "styleType" => $this->styleType];
 		$statement->execute($parameters);
 
-		$this->styleId = intval ($pdo->lastInsertId());
+
 	}
 
 	/**
@@ -140,7 +140,7 @@ class style implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $styleId message id to search for
-	 * @return int Style found or null if not found
+	 * @return ?Style found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
@@ -155,7 +155,7 @@ class style implements \JsonSerializable {
 
 		// grab the profile from mySQL
 		try {
-			$profile = null;
+			$style = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {

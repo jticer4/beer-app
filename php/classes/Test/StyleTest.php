@@ -33,7 +33,7 @@ class StyleTest extends BeerAppTest {
 		$numRows = $this->getConnection()->getRowCount("style");
 
 		// create a new style and insert it into mySQL
-		$style = new Style($styleId = null, $this->VALID_STYLETYPE);
+		$style = new Style($styleId = 1, $this->VALID_STYLETYPE);
 		$style->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -51,7 +51,7 @@ class StyleTest extends BeerAppTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("style");
 
-		$style = new Style($styleId = null, $this->VALID_STYLETYPE);
+		$style = new Style($styleId = 2, $this->VALID_STYLETYPE);
 		$style->insert($this->getPDO());
 
 		// delete the Style from mySQL
@@ -71,12 +71,11 @@ class StyleTest extends BeerAppTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("style");
 
-		$styleId =103;
-		$style = new Style($styleId, $this->VALID_STYLETYPE);
+		$style = new Style($styleId = 3, $this->VALID_STYLETYPE);
 		$style->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoStyle = Style:: getStyleByStyleId($this->getPDO(), $style->getStyleId());
+		$pdoStyle = Style::getStyleByStyleId($this->getPDO(), $style->getStyleId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("style"));
 		$this->assertEquals($pdoStyle->getStyleId(), $styleId);
 		$this->assertEquals($pdoStyle->getStyleType(), $this->VALID_STYLETYPE);
@@ -87,7 +86,7 @@ class StyleTest extends BeerAppTest {
 	 */
 	public function testGetInvalidStyleByStyleId() : void {
 		// grab a style id that exceeds the maximum allowable allowable style id
-		$fakeStyleId = null;
+		$fakeStyleId = 86484;
 		$style = Style::getStyleByStyleId($this->getPDO(), $fakeStyleId);
 		$this->assertNull($style);
 	}
