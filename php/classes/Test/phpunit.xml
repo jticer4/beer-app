@@ -2,7 +2,7 @@
 <phpunit>
 	<testsuites>
 		<testsuite name="beer-app">
-			<file>BeerStyleTest.php</file>
+			<file>BeerTest.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>
