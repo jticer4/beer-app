@@ -80,10 +80,9 @@ public function testInsertValidBeer(): void {
 
 	//create a beer and insert it into mySQL
 	$beerId = generateUuidV4();
-	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->beerProfileId,
+		$this->profile->getProfileId,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -94,7 +93,7 @@ public function testInsertValidBeer(): void {
 	$pdoBeer = Beer::getBeerByBeerProfileId($this->getPDO(), $beer->getBeerId());
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
 	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
-	$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
+	$this->assertEquals($pdoBeer->getBeerProfileId(), $this->profile->getProfileId());
 	$this->assertEquals($pdoBeer->getBeerAbv(), $this->VALID_BEERABV);
 	$this->assertEquals($pdoBeer->getBeerDescription(), $this->VALID_BEERDESCRIPTION);
 	$this->assertEquals($pdoBeer->getBeerIbu(), $this->VALID_BEERIBU);
@@ -109,10 +108,9 @@ public function testUpdateValidBeer() {
 	$numRows = $this->getConnection()->getRowCount("beer");
 	// create a new Beer and insert it into mySql
 	$beerId = generateUuidV4();
-	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->beerProfileId,
+		$this->profile->getProfileId,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -126,7 +124,7 @@ public function testUpdateValidBeer() {
 	$pdoBeer = Beer::getBeerbyBeerId($this->getPDO(), $beer->getBeerId());
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
 	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
-	$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
+	$this->assertEquals($pdoBeer->getBeerProfileId(), $this->profile->getProfileId());
 	$this->assertEquals($pdoBeer->getBeerAbv(), $this->VALID_BEERABV);
 	$this->assertEquals($pdoBeer->getBeerName(), $this->VALID_BEERDESCRIPTION);
 	$this->assertEquals($pdoBeer->getBeerIbu(), $this->VALID_BEERIBU);
@@ -140,9 +138,9 @@ public function TestDeleteValidBeer() : void {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("beer");
 	$beerId = generateUuidV4();
-	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
+		$this->profile->getProfileId,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERIBU,
 		$this->VALID_BEERDESCRIPTION,
@@ -159,9 +157,9 @@ public function testGetValidBeerByBeerId() : void {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("beer");
 	$beerId = generateUuidV4();
-	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
+		$this->profile->getProfileId,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -172,7 +170,7 @@ public function testGetValidBeerByBeerId() : void {
 	$pdoBeer = Beer::getBeerByBeerId($this->getPDO(), $beer->getBeerId());
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
 	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
-	$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
+	$this->assertEquals($pdoBeer->getBeerProfileId(), $this->profile->getProfileId());
 	$this->assertEquals($pdoBeer->getBeerAbv(), $this->VALID_BEERABV);
 	$this->assertEquals($pdoBeer->getBeerDescription(), $this->VALID_BEERDESCRIPTION);
 	$this->assertEquals($pdoBeer->getBeerIbu(), $this->VALID_BEERIBU);
@@ -195,9 +193,9 @@ public function testGetValidBeerByProfileId() : void {
 
 	//create a new beer and insert it into mysql
 	$beerId = generateUuidV4();
-	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
+		$this->profile->getProfileId,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -209,7 +207,7 @@ public function testGetValidBeerByProfileId() : void {
 	$pdoBeer = Beer::getBeerByBeerProfileId($this->getPDO(), $beer->getBeerProfileId());
 	$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("beer"));
 	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
-	$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
+	$this->assertEquals($pdoBeer->getBeerProfileId(), $this->profile->getProfileId());
 	$this->assertEquals($pdoBeer->getBeerAbv(), $this->VALID_BEERABV);
 	$this->assertEquals($pdoBeer->getBeerDescription(), $this->VALID_BEERDESCRIPTION);
 	$this->assertEquals($pdoBeer->getBeerIbu(), $this->VALID_BEERIBU);
@@ -230,9 +228,9 @@ public function testGetInvalidBeerByProfileId() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("beer");
 		$beerId = generateUuidV4();
-		$beerProfileId = generateUuidV4();
 		$beer = new Beer(
 			$beerId,
+			$this->profile->getProfileId,
 			$this->VALID_BEERABV,
 			$this->VALID_BEERDESCRIPTION,
 			$this->VALID_BEERIBU,
@@ -242,7 +240,7 @@ public function testGetInvalidBeerByProfileId() : void {
 		$pdoBeer = Beer::getBeerByBeerAbv($this->getPDO(), $beer->getBeerIbu());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
 		$this->assertEquals($pdoBeer->getBeerId(), $beerId);
-		$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
+		$this->assertEquals($pdoBeer->getBeerProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBeer->getBeerAbv(), $this->VALID_BEERABV);
 		$this->assertEquals($pdoBeer->getBeerDescription(), $this->VALID_BEERDESCRIPTION);
 		$this->assertEquals($pdoBeer->getBeerIbu(), $this->VALID_BEERIBU);
@@ -265,9 +263,9 @@ public function testGetInvalidBeerByProfileId() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("beer");
 		$beerId = generateUuidV4();
-		$beerProfileId = generateUuidV4();
 		$beer = new Beer(
 			$beerId,
+			$this->profile->getProfileId,
 			$this->VALID_BEERABV,
 			$this->VALID_BEERDESCRIPTION,
 			$this->VALID_BEERIBU,
@@ -277,7 +275,7 @@ public function testGetInvalidBeerByProfileId() : void {
 		$pdoBeer = Beer::getBeerByBeerIbu($this->getPDO(), $beer->getBeerIbu());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
 		$this->assertEquals($pdoBeer->getBeerId(), $beerId);
-		$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
+		$this->assertEquals($pdoBeer->getBeerProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoBeer->getBeerAbv(), $this->VALID_BEERABV);
 		$this->assertEquals($pdoBeer->getBeerDescription(), $this->VALID_BEERDESCRIPTION);
 		$this->assertEquals($pdoBeer->getbeerIbu(), $this->VALID_BEERIBU);
@@ -302,9 +300,9 @@ public function testGetValidBeerByBeerName() : void {
 
 	//create a new beer and insert it into mySQL
 	$beerId = generateUuidV4();
-	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
+		$this->profile->getProfileId,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -324,6 +322,9 @@ public function testGetValidBeerByBeerName() : void {
 	$pdoBeer = $results[0];
 	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
 	$this->assertEquals($pdoBeer->getbeerProfileId(), $this->profile->getProfileId());
+	$this->assertEquals($pdoBeer->getBeerAbv, $this->VALID_BEERABV);
+	$this->assertEquals($pdoBeer->getBeerDescription, $this->VALID_BEERDESCRIPTION);
+	$this->assertEquals($pdoBeer->getBeerIbu(), $this->VALID_BEERIBU);
 	$this->assertEquals($pdoBeer->getBeerName(), $this->VALID_BEERNAME);
 }
 
@@ -345,10 +346,9 @@ public function testGetAllValidBeers() : void {
 
 	// create a new beer and insert it into mySQL
 	$beerId = generateUuidV4();
-	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->beer->getBeerId(),
+		$this->profile->getProfileId,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -362,10 +362,10 @@ public function testGetAllValidBeers() : void {
 	//grab the result from the array and validate it
 	$pdoBeer = $results[0];
 	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
-	$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
+	$this->assertEquals($pdoBeer->getBeerProfileId(), $this->profile->getProfileId());
 	$this->assertEquals($pdoBeer->getBeerAbv, $this->VALID_BEERABV);
 	$this->assertEquals($pdoBeer->getBeerDescription, $this->VALID_BEERDESCRIPTION);
-	$this->assertEquals($pdoBeer->getBeerIbu(), $this->VALID_BEERIBU);
+	$this->assertEquals($pdoBeer->getBeerIbu, $this->VALID_BEERIBU);
 	$this->assertEquals($pdoBeer->getBeerName, $this->VALID_BEERNAME);
 }
 }
