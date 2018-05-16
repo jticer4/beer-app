@@ -19,6 +19,21 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 **/
 class BeerTest extends BeerAppTest {
 	/**
+	 * valid abv to use
+	 * @var float $VALID_BEERABV
+	 **/
+	protected $VALID_BEERABV = "7.2";
+	/**
+	 * valid abv to use
+	 * @var float $VALID_BEERABV_2
+	 **/
+	protected $VALID_BEERABV_2 = "5.5";
+	/**
+	 * valid description
+	 * @var string $VALID_BEERDESCRIPTION
+	 **/
+	protected $VALID_BEERDESCRIPTION ="It’s pretty good. You should try it. Get Elevated!";
+	/**
 	* valid ibu to use
 	* @var int $VALID_BEERIBU
 	**/
@@ -28,21 +43,6 @@ class BeerTest extends BeerAppTest {
 	* @var int $VALID_BEERIBU_2
 	**/
 	protected $VALID_BEERIBU_2 = "12";
-	/**
-	 * valid description
-	 * @var string $VALID_BEERDESCRIPTION
-	 **/
-	protected $VALID_BEERDESCRIPTION ="It’s pretty good. You should try it. Get Elevated!";
-	/**
-	* valid abv to use
-	* @var float $VALID_BEERABV
-	**/
-	protected $VALID_BEERABV = "7.2";
-	/**
-	* valid abv to use
-	* @var float $VALID_BEERABV_2
-	**/
-	protected $VALID_BEERABV_2 = "5.5";
 	/**
 	* valid name to use
 	* @var string $VALID_BEERNAME
@@ -66,7 +66,7 @@ public final function setUp(): void {
 
 	//create and insert a Profile to own the beer
 	$this->profile = new Profile(generateUuidV4(), "!!!", $this->VALID_ACTIVATION, "6009 Oak St NW", "6008 Oak St NW",
-		Albuquerque, "iluvu@hotmail.com", $this->VALID_HASH, "", "Fredo", "NM", "holleratyourboi", "whatever!", "87110");
+		"Albuquerque", "iluvu@hotmail.com", $this->VALID_HASH, "", "Fredo", "NM", "holleratyourboi", "whatever!", "87110");
 	$this->profile->insert($this->getPDO());
 }
 
@@ -200,8 +200,8 @@ public function testGetValidBeerByProfileId() : void {
 		$beerId,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
-	$this->VALID_BEERIBU,
-	$this->VALID_BEERNAME
+		$this->VALID_BEERIBU,
+		$this->VALID_BEERNAME
 	);
 	$beer->insert($this->getPDO());
 
@@ -304,6 +304,7 @@ public function testGetValidBeerByBeerName() : void {
 	$beerId = generateUuidV4();
 	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
+		$beerId,
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
