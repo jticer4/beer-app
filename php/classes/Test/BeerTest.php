@@ -54,7 +54,7 @@ class BeerTest extends BeerAppTest {
 	/*
 	* valid hash to use
 	**/
-	protected $VALID_HASH;
+	protected $VALID_PROFILE_HASH;
 	/*
 	* valid activation token to create the profile object that created the beer
 	**/
@@ -71,7 +71,7 @@ public final function setUp(): void {
 
 	//create and insert a Profile to own the beer
 	$this->profile = new Profile(generateUuidV4(), "!!!", $this->VALID_ACTIVATION, "6009 Oak St NW", "6008 Oak St NW",
-		"Albuquerque", "iluvu@hotmail.com", $this->VALID_HASH, "", "Fredo", "NM", "holleratyourboi", "whatever!", "87110");
+		"Albuquerque", "iluvu@hotmail.com", $this->VALID_PROFILE_HASH, "", "Fredo", "NM", "holleratyourboi", "w", "87110");
 	$this->profile->insert($this->getPDO());
 }
 
@@ -81,13 +81,13 @@ public final function setUp(): void {
 **/
 public function testInsertValidBeer(): void {
 	//count the number of row and save it for later
-	$numRows = $this->getConnection()->getRowCount("Beer");
+	$numRows = $this->getConnection()->getRowCount("beer");
 
 	//create a beer and insert it into mySQL
 	$beerId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->profile->getProfileId,
+		$this->profile->getProfileId(),
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -115,7 +115,7 @@ public function testUpdateValidBeer() {
 	$beerId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->profile->getProfileId,
+		$this->profile->getProfileId(),
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -145,7 +145,7 @@ public function TestDeleteValidBeer() : void {
 	$beerId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->profile->getProfileId,
+		$this->profile->getProfileId(),
 		$this->VALID_BEERABV,
 		$this->VALID_BEERIBU,
 		$this->VALID_BEERDESCRIPTION,
@@ -165,7 +165,7 @@ public function testGetValidBeerByBeerId() : void {
 	$beerId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->profile->getProfileId,
+		$this->profile->getProfileId(),
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -202,7 +202,7 @@ public function testGetValidBeerByProfileId() : void {
 	$beerId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->profile->getProfileId,
+		$this->profile->getProfileId(),
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -238,7 +238,7 @@ public function testGetInvalidBeerByProfileId() : void {
 		$beerId = generateUuidV4();
 		$beer = new Beer(
 			$beerId,
-			$this->profile->getProfileId,
+			$this->profile->getProfileId(),
 			$this->VALID_BEERABV,
 			$this->VALID_BEERDESCRIPTION,
 			$this->VALID_BEERIBU,
@@ -273,7 +273,7 @@ public function testGetInvalidBeerByProfileId() : void {
 		$beerId = generateUuidV4();
 		$beer = new Beer(
 			$beerId,
-			$this->profile->getProfileId,
+			$this->profile->getProfileId(),
 			$this->VALID_BEERABV,
 			$this->VALID_BEERDESCRIPTION,
 			$this->VALID_BEERIBU,
@@ -310,7 +310,7 @@ public function testGetValidBeerByBeerName() : void {
 	$beerId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->profile->getProfileId,
+		$this->profile->getProfileId(),
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,
@@ -356,7 +356,7 @@ public function testGetAllValidBeers() : void {
 	$beerId = generateUuidV4();
 	$beer = new Beer(
 		$beerId,
-		$this->profile->getProfileId,
+		$this->profile->getProfileId(),
 		$this->VALID_BEERABV,
 		$this->VALID_BEERDESCRIPTION,
 		$this->VALID_BEERIBU,

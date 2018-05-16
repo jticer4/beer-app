@@ -46,7 +46,7 @@ class Beer implements \JsonSerializable {
 	* constructor for beer
 	*
 	* @param string|Uuid $newBeerId id for beer or null if a new beer
-	* @param string|Uuid $newBeerProfile id for beer profile
+	* @param string|Uuid $newBeerProfileId for beer profile
 	* @param float $newBeerAbv decimal containing abv for beer
 	* @param string $newBeerDescription string containing description of beer
 	* @param int $newBeerIbu tinyint containing ibu for beer
@@ -57,7 +57,7 @@ class Beer implements \JsonSerializable {
 	* @throws \TypeError if data types violate type hints
 	* @documentation https://php.net/manual/en/language.oop5.decon.php
 	**/
-	public function __construct($newBeerId, $newBeerProfileId, float $newBeerAbv, string $newBeerDescription, int $newBeerIbu, string $newBeerName ) {
+	public function __construct(Uuid $newBeerId, Uuid $newBeerProfileId, float $newBeerAbv, string $newBeerDescription, int $newBeerIbu, string $newBeerName ) {
 		try {
 			$this->setBeerId($newBeerId);
 			$this->setBeerProfileId($newBeerProfileId);
@@ -240,7 +240,7 @@ class Beer implements \JsonSerializable {
 	**/
 	public function insert(\PDO $pdo): void {
 		// create query template
-		$query = "INSERT INTO beer(beerId, beerProfileId, beerAbv, beerIbu, beerDescription, beerName) VALUES(:beerId, :beerProfile, :beerAbv, :beerDescription, :beerIbu, :beerName)";
+		$query = "INSERT INTO beer(beerId, beerProfileId, beerAbv, beerIbu, beerDescription, beerName) VALUES(:beerId, :beerProfileId, :beerAbv, :beerDescription, :beerIbu, :beerName)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
