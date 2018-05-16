@@ -2,8 +2,8 @@
 namespace Edu\Cnm\Beer\Test;
 
 use Edu\Cnm\Beer\{
-	Beer, BeerStyle, Style, Profile };
-
+	Beer, BeerStyle, Style
+};
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
@@ -21,6 +21,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  **/
 class BeerStyleTest extends BeerAppTest {
+	protected $profile = null;
 
 	/**
 	 * Beer from the beer/style relationship ; this is for foreign key relations
@@ -34,7 +35,9 @@ class BeerStyleTest extends BeerAppTest {
 	 **/
 	protected $style = null;
 
-	protected $profile = null;
+	protected $VALID_HASH;
+
+	protected $VALID_ACTIVATION;
 
 
 	/**
@@ -43,17 +46,18 @@ class BeerStyleTest extends BeerAppTest {
 	public final function setUp(): void {
 		parent::setUp();
 		$password = "zuck123";
-		$VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
-		$VALID_ACTIVATION = bin2hex(random_bytes(16));
+		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		//create and insert a Profile up here
-		$this->profile = new Profile(generateUuidV4(), "I make grumpy beer from curmudgeonly back-enders",
-			$VALID_ACTIVATION, "666 Diablo Rd", "", "Burque", "gKephart@beersnob.com", $VALID_HASH, "https://media.giphy.com/media/3o6Ztqojq5fHrODpjW/giphy.gif", "George K", "NM", "DeepDiveCodingBrewCrew","1", 87101);
+		$this->profile = new Profile(generateUuid4(), "I make grumpy beer from curmudgeonly back-enders",
+			$this->VALID_ACTIVATION, "666 Diablo Rd",
+			"", "Burque", "gKephart@beersnob.com", $this->VALID_HASH, "https://media.giphy.com/media/3o6Ztqojq5fHrODpjW/giphy.gif", "George K", "NM", "DeepDiveCodingBrewCrew","1", 87101);
 		$this->profile->insert($this->getPDO());
 
 
 		//Create and insert Beer from beer style composite
-		$this->beer = new Beer(generateUuidV4(), $profile->getProfileId(),3.2, "Pretty much budlight",10,"Shit Kicker IPA");
+		$this->beer = new Beer(generateUuidV4(), $this->profile->getProfileId(),3.2, "Pretty much budlight",10,"Shit Kicker IPA");
 		$this->beer->insert($this->getPDO());
 
 		//Create and insert Style from beer style composite

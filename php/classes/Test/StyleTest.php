@@ -86,7 +86,7 @@ class StyleTest extends BeerAppTest {
 	 */
 	public function testGetInvalidStyleByStyleId() : void {
 		// grab a style id that exceeds the maximum allowable allowable style id
-		$fakeStyleId = 86484;
+		$fakeStyleId = 5468654846;
 		$style = Style::getStyleByStyleId($this->getPDO(), $fakeStyleId);
 		$this->assertNull($style);
 	}
