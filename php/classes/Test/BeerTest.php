@@ -2,9 +2,7 @@
 
 namespace Edu\Cnm\Beer\Test;
 
-use Edu\Cnm\Beer\Beer;
-use Edu\Cnm\Beer\Profile;
-
+use Edu\Cnm\Beer\{Profile, Beer};
 //grab class
 require_once(dirname(__DIR__) . "/autoload.php");
 // grab the uuid generator
@@ -53,7 +51,14 @@ class BeerTest extends BeerAppTest {
 	* @var string $VALID_BEERNAME_2
 	**/
 	protected $VALID_BEERNAME_2 = "ELEPHANTS ON PARADE";
-
+	/*
+	* valid hash to use
+	**/
+	protected $VALID_HASH;
+	/*
+	* valid activation token to create the profile object that created the beer
+	**/
+	protected $VALID_ACTIVATION;
 /**
 * create dependent objects before running each test
 */

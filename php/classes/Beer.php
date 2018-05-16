@@ -220,7 +220,7 @@ class Beer implements \JsonSerializable {
 	public function setBeerName($newBeerName): void {
 		$newBeerName = trim($newBeerName);
 		$newBeerName = filter_var($newBeerName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newBeerName === true)) {
+		if(empty($newBeerName) === true) {
 			throw(new \InvalidArgumentException("beer name is either empty or insecure"));
 		}
 		if(strlen($newBeerName) > 128) {
