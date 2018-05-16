@@ -205,7 +205,12 @@ public function testGetInvalidBeerByProfileId() : void {
 public function testGetValidBeerByBeerName() : void {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowContent("beer");
+
+	//create a new beer and insert it into mySQL
 	$beerId = null;
-	$beerProfile
+	$beer = new Beer(
+		$beerId,
+		$this
+	)
 }
 }
