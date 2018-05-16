@@ -341,9 +341,4 @@ public function testGetAllValidBeers() : void {
 	$this->assertEquals($pdoBeer->getBeerAbv, $this->VALID_BEERABV);
 	$this->assertEquals($pdoBeer->getBeerName, $this->VALID_BEERNAME);
 }
-
-
-
-
-
 }
