@@ -150,6 +150,7 @@ public function TestDeleteValidBeer() : void {
 	// delete the beer from mySQL
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
 }
+
 /**
 *test inserting a beer and grabbing it again it from mySQL by beer id
 **/
@@ -184,6 +185,7 @@ public function testGetInvalidBeerByBeerId() : void {
 	$beer = Beer::getBeerByBeerId($this->getPDO(), generateUuidV4());
 	$this->assertCount(0, $beer);
 }
+
 /**
 * test inserting a beer and grabbing it again from mySQL by profile id
 **/
@@ -221,6 +223,7 @@ public function testGetInvalidBeerByProfileId() : void {
 	$beer = Beer::getBeerByBeerProfileId($this->getPDO(), generateUuidV4());
 	$this->assertCount(0, $beer);
 }
+
 	/**
 	 * test grabbing a beer by its abv
 	 */
