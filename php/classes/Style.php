@@ -139,8 +139,8 @@ class style implements \JsonSerializable {
 	 * gets the Style by styleId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid|string $messageId message id to search for
-	 * @return int|null Style found or null if not found
+	 * @param int $styleId message id to search for
+	 * @return int Style found or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
