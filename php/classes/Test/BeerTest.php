@@ -175,6 +175,7 @@ public function testGetValidBeerByProfileId() : void {
 	$beerId = generateUuidV4();
 	$beerProfileId = generateUuidV4();
 	$beer = new Beer(
+		$beerId,
 	$this->VALID_BEERIBU,
 	$this->VALID_BEERDESCRIPTION,
 	$this->VALID_BEERABV,
