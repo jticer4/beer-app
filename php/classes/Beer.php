@@ -213,7 +213,7 @@ class Beer implements \JsonSerializable {
 	/**
 	* mutator method for beer name
 	*
-	* @param string $beerName
+	* @param string $newBeerName
 	* @throws \InvalidArgumentException when there's no beer name or if its insecure
 	* @throws \RangeException when beer name is too large
 	**/

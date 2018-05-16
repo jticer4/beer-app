@@ -57,7 +57,7 @@ class BeerStyleTest extends BeerAppTest {
 
 
 		//Create and insert Beer from beer style composite
-		$this->beer = new Beer(generateUuidV4(), $this->profile->getProfileId(),, "Pretty much budlight",10,"Shit Kicker IPA");
+		$this->beer = new Beer(generateUuidV4(), $this->profile->getProfileId(),3.2, "Pretty much budlight",10,"Shit Kicker IPA");
 		$this->beer->insert($this->getPDO());
 
 		//Create and insert Style from beer style composite
