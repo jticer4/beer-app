@@ -161,7 +161,7 @@ public function testGetValidBeerByBeerId() : void {
 **/
 public function testGetInvalidBeerByBeerId() : void {
 	// grab a beer id that exceeds the maximum allowable beer id
-	$beer = BEER::getBeerByBeerId($this->getPDO(), generateUuidV4());
+	$beer = Beer::getBeerByBeerId($this->getPDO(), generateUuidV4());
 	$this->assertCount(0, $beer);
 }
 /**
@@ -218,6 +218,7 @@ public function testGetValidBeerByBeerName() : void {
 		$this->VALID_BEERNAME
 		);
 	$beer->insert($this->getPDO());
+
 	//grab the data from mySQL and enforce the fields match out expectations
 	$results = Beer::getBeerByBeerName($this->getPDO(), $beer->getBeerName());
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
