@@ -144,7 +144,7 @@ class Beer implements \JsonSerializable {
 	 * @throws \RangeException when input is out of range
 	 **/
 	public function setBeerAbv(float $newBeerAbv): void {
-		if($newBeerAbv > 0.0 || $newBeerAbv < 16.0) {
+		if($newBeerAbv < 0.0 || $newBeerAbv > 16.0) {
 			throw(new \RangeException("beer abv is out of range"));
 		}
 		//convert and store the beer abv

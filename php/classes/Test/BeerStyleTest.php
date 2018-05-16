@@ -2,7 +2,7 @@
 namespace Edu\Cnm\Beer\Test;
 
 use Edu\Cnm\Beer\{
-	Beer, BeerStyle, Style
+	Beer, BeerStyle, Style, Profile
 };
 
 // grab the class under scrutiny
@@ -50,14 +50,14 @@ class BeerStyleTest extends BeerAppTest {
 		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		//create and insert a Profile up here
-		$this->profile = new Profile(generateUuid4(), "I make grumpy beer from curmudgeonly back-enders",
+		$this->profile = new Profile(generateUuidV4(), "I make grumpy beer from curmudgeonly back-enders",
 			$this->VALID_ACTIVATION, "666 Diablo Rd",
 			"", "Burque", "gKephart@beersnob.com", $this->VALID_HASH, "https://media.giphy.com/media/3o6Ztqojq5fHrODpjW/giphy.gif", "George K", "NM", "DeepDiveCodingBrewCrew","1", 87101);
 		$this->profile->insert($this->getPDO());
 
 
 		//Create and insert Beer from beer style composite
-		$this->beer = new Beer(generateUuidV4(), $this->profile->getProfileId(),3.2, "Pretty much budlight",10,"Shit Kicker IPA");
+		$this->beer = new Beer(generateUuidV4(), $this->profile->getProfileId(),, "Pretty much budlight",10,"Shit Kicker IPA");
 		$this->beer->insert($this->getPDO());
 
 		//Create and insert Style from beer style composite
