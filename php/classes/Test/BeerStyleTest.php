@@ -45,7 +45,7 @@ class BeerStyleTest extends BeerAppTest {
 		$VALID_ACTIVATION = bin2hex(random_bytes(16));
 
 		//create and insert a Profile up here
-		$profile = new \Profile(generateUuid4(), "I make grumpy beer from curmudgeonly back-enders",
+		$profile = new Profile(generateUuid4(), "I make grumpy beer from curmudgeonly back-enders",
 			$VALID_ACTIVATION, "666 Diablo Rd",
 			"", "Burque", "gKephart@beersnob.com", $VALID_HASH, "https://media.giphy.com/media/3o6Ztqojq5fHrODpjW/giphy.gif", "George K", "NM", "DeepDiveCodingBrewCrew","1", 87101);
 		$profile->insert($this->getPDO());
