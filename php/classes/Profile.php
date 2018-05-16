@@ -509,7 +509,7 @@ class Profile implements \JsonSerializable {
 		// verify the profile user type content is secure
 		$newProfileUserType = trim($newProfileUserType);
 		$newProfileUserType = filter_var($newProfileUserType, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($newProfileUsername) === true) {
+		if(empty($newProfileUserType) === true) {
 			throw(new \InvalidArgumentException("profile user type content is empty or insecure"));
 		}
 
