@@ -170,7 +170,9 @@ public function testGetInvalidBeerByBeerId() : void {
 **/
 public function testGetValidBeerByProfileId() : void {
 	// count the number of rows and save it for later
-	$numRows = $this->getConnection()->getRowContent("beer");
+	$numRows = $this->getConnection()->getRowCount("beer");
+
+	//create a new beer and insert it into mysql
 	$beerId = null;
 	$beerProfileId = null;
 	$beer = new Beer(
@@ -180,9 +182,10 @@ public function testGetValidBeerByProfileId() : void {
 	$this->VALID_BEERNAME
 	);
 	$beer->insert($this->getPDO());
+
 	//grab the data from mySQL and enforce the fields match our expectations
-	$pdoBeer = BEER::getBeerByBeerProfileId($this->getPDO(), $beer->getBeerProfileId());
-	$this->assertEquals($numRows +1, $this->getConnection()->getRowContent("beer"));
+	$pdoBeer = Beer::getBeerByBeerProfileId($this->getPDO(), $beer->getBeerProfileId());
+	$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("beer"));
 	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
 	$this->assertEquals($pdoBeer->getBeerProfileId(), $beerProfileId);
 	$this->assertEquals($pdoBeer->getBeerIbu(), $this->VALID_BEERIBU);
@@ -195,8 +198,8 @@ public function testGetValidBeerByProfileId() : void {
 **/
 public function testGetInvalidBeerByProfileId() : void {
 	//grab a beer id that exceeds the maximum allowable profile id's
-	$fakeProfileId = generateUuidV4();
-	$beer = BEER::getBeerByBeerProfileId($this->getPDO(), $fakeBeerProfileId);
+	$fakeBeerProfileId = generateUuidV4();
+	$beer = Beer::getBeerByBeerProfileId($this->getPDO(), $fakeBeerProfileId);
 	$this->assertNull($beer);
 }
 /**
@@ -204,13 +207,54 @@ public function testGetInvalidBeerByProfileId() : void {
 **/
 public function testGetValidBeerByBeerName() : void {
 	// count the number of rows and save it for later
-	$numRows = $this->getConnection()->getRowContent("beer");
+	$numRows = $this->getConnection()->getRowCount("beer");
 
 	//create a new beer and insert it into mySQL
 	$beerId = null;
+	$beerProfileId = null;
 	$beer = new Beer(
-		$beerId,
-		$this
-	)
+		$this->VALID_BEERIBU,
+		$this->VALID_BEERDESCRIPTION,
+		$this->VALID_BEERABV,
+		$this->VALID_BEERNAME
+		);
+	$beer->insert($this->getPDO());
+	//grab the data from mySQL and enforce the fields match out expectations
+	$results = Beer::getBeerByBeerName($this->getPDO(), $beer->getBeerName());
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
+	$this->assertCount(1,$results);
+
+	//enforce no other objects bleed into the test
+	$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Beer", $results);
+
+	//grab the result from the array and validate it
+	$pdoBeer = $results[0];
+	$this->assertEquals($pdoBeer->getBeerId(), $beerId);
+	$this->assertEquals($pdoBeer->getbeerProfileId(), $this->profile->getProfileId());
+	$this->assertEquals($pdoBeer->getBeerName(), $this->VALID_BEERNAME);
+
 }
+
+/**
+*test grabbing a beer that does not exist
+**/
+public function testGetInvalidBeerByName() : void {
+	//grab a beer by a name that doesn't exist
+	$beer = Beer::getBeerByBeerName($this->getPDO(), "Giraffes on Parade");
+	$this->assertCount(0,$beer);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
