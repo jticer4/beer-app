@@ -69,7 +69,7 @@ class BeerStyleTest extends BeerAppTest {
 
 	public function testInsertValidBeerStyle(): void {
 		//count the number of rows
-		$numrows = $this->getConnection()->getRowCount("beerStyle");
+		$numRows = $this->getConnection()->getRowCount("beerStyle");
 
 		// create new beer style and insert it into mySQL
 		$beerStyle = new BeerStyle($this->beer->getBeerId(), $this->style->getStyleId());
@@ -77,7 +77,7 @@ class BeerStyleTest extends BeerAppTest {
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoBeerStyle = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO(),$this->beer->getBeerProfileId(), $this->style->getStyleId());
-		$this->assertEquals($numrows + 1, $this->getConnection()->getRowCount($beerStyle));
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount($beerStyle));
 		$this->assertEquals($pdoBeerStyle->getBeerStyleBeerId(), $this->beer->getBeerId());
 		$this->assertEquals($pdoBeerStyle->getBeerStyleStyleId(), $this->style->getStyleId());
 	}
