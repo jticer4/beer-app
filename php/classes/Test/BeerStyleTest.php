@@ -21,6 +21,7 @@ require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  **/
 class BeerStyleTest extends BeerAppTest {
+
 	/**
 	 * Beer from the beer/style relationship ; this is for foreign key relations
 	 * @var Beer Beer
@@ -33,49 +34,84 @@ class BeerStyleTest extends BeerAppTest {
 	 **/
 	protected $style = null;
 
-	/**
-	 * Style from the beer/style relationship ; this is for foreign key relations
-	 * @var Style style
-	 **/
-	protected $profile = null;
-
-
 
 	/**
 	 * create dependent objects before running each test
 	 **/
-	public final function setUp()  : void {
+	public final function setUp(): void {
 		parent::setUp();
+		$password = "zuck123";
+		$this->VALID_HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
+		$this->VALID_ACTIVATION = bin2hex(random_bytes(16));
+
 		//create and insert a Profile up here
-		$this->profile = new \Profile(generateUuid4(),"We make beer to get you LIT", "");
+		$this->profile = new \Profile(generateUuid4(), "I make grumpy beer from curmudgeonly back-enders",
+			$this->VALID_ACTIVATION, "",
+			"", "Burque", "gKephart@beersnob.com", $this->VALID_HASH, "", "DDCBC", "NM", "DeepDiveCodingBrewCrew", 1, 87101);
+		$this->profile->insert($this->());
 
 
 		//Create and insert Beer from beer style composite
-		$this->beer = new Beer(generateUuidV4(),$this->profile->getProfileId(), "");
+		$this->beer = new Beer(generate, $this->profile->getProfileId(), "45", 3.2, "Shit Kicker IPA", "Pretty much budlight");
 		$this->beer->insert($this->getPDO());
 
 		//Create and insert Style from beer style composite
-		$this->style = new Style(1,"pilsner");
+		$this->style = new Style(66, "piss lager");
 		$this->style->insert($this->getPDO());
 
+	}
 
-		}
 
-
-	public function testInsertValidBeerStyle() :void {
+	public function testInsertValidBeerStyle(): void {
 		//count the number of rows
 		$numrows = $this->getConnection()->getRowCount("beerStyle");
 
 		// create new beer style and insert it into mySQL
-		$beerId = generateUuidV4();
-		$beerStyle = new BeerStyle($beerId,$this->VALID_STYLEID);
+		$beerStyle = new BeerStyle($this->beer->getBeerId(), $this->style->getStyleId());
 		$beerStyle->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
-		$pdoBeerStyle = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO(),$beerId->getBeerId());
+		$pdoBeerStyle = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO(),$this->beer->getBeerProfileId(), $this->style->getStyleId());
 		$this->assertEquals($numrows + 1, $this->getConnection()->getRowCount($beerStyle));
-		$this->assertEquals($pdoBeerStyle->getBeerId(), $beerStyle);
-		$this->assertEquals($beerStyle->getBeerStyle(), $beerStyle);
-		}
+		$this->assertEquals($pdoBeerStyle->getBeerStyleBeerId(), $this->beer->getBeerId());
+		$this->assertEquals($pdoBeerStyle->getBeerStyleStyleId(), $this->style->getStyleId());
 	}
+
+	public function testDeleteValidBeerStyle(): void {
+		//count the number of rows save for later
+		$numrows = $this->getConnection()->getRowCount("beerStyle");
+
+		//create a new beer style and insert it into mySQL
+		$beerStyle = new BeerStyle($this->beer->getBeerId(), $this->style->getStyleId());
+		$beerStyle->delete($this->getPDO());
+
+		$pdoBeerStyle = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO(), $this->beer->getBeerId(), $this->style->getStyleId());
+		$this->assertNull($pdoBeerStyle);
+		$this->assertEquals($numrows, $this->getConnection()->getRowCount("beerStyle"));
+	}
+
+	public function testGetBeerStyleByBeerStyleBeerId() : void{
+		// count number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("beerStyle");
+
+		//create a new Like and insert it into mySQL
+		$beerStyle = new BeerStyle ($this->beer->getBeerId(),$this->style->getStyleId());
+		$beerStyle->insert($this->getPDO());
+
+		// grab data from mySQL, force fields to match our expectations
+		$pdoBeerStyle = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO, $this->beer->getBeerId(),
+			$this->style->getStyleId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beerStyle"));
+		$this->assertEquals($pdoBeerStyle->getBeerStyleBeerId(),$this->beer->getBeerProfileId());
+		$this->assertEquals($pdoBeerStyle->getBeerStyleStyleId(),$this->style->getBeerStyleStyleId());
+	}
+
+	public function testBeerStyleByBeerStyleStyleId() : void{
+		//
+
+
+	}
+
+
+}
 
