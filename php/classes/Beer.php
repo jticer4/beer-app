@@ -47,23 +47,23 @@ class Beer implements \JsonSerializable {
 	*
 	* @param string|Uuid $newBeerId id for beer or null if a new beer
 	* @param string|Uuid $newBeerProfile id for beer profile
-	* @param int $newBeerIbu tinyint containing ibu for beer
 	* @param float $newBeerAbv decimal containing abv for beer
-	* @param string $newBeerName string containing name of beer
 	* @param string $newBeerDescription string containing description of beer
+	* @param int $newBeerIbu tinyint containing ibu for beer
+	* @param string $newBeerName string containing name of beer
 	* @throws \InvalidArgumentException if data types are not valid
 	* @throws \RangeException if data values are out of bounds
 	* @throws \Exception for when an exception is thrown
 	* @throws \TypeError if data types violate type hints
 	* @documentation https://php.net/manual/en/language.oop5.decon.php
 	**/
-	public function __construct($newBeerId, $newBeerProfileId, int $newBeerIbu, float $newBeerAbv, string $newBeerName, string $newBeerDescription) {
+	public function __construct($newBeerId, $newBeerProfileId, float $newBeerAbv, string $newBeerDescription, int $newBeerIbu, string $newBeerName ) {
 		try {
 			$this->setBeerId($newBeerId);
 			$this->setBeerProfileId($newBeerProfileId);
-			$this->setBeerIbu($newBeerIbu);
-			$this->setBeerDescription($newBeerDescription);
 			$this->setBeerAbv($newBeerAbv);
+			$this->setBeerDescription($newBeerDescription);
+			$this->setBeerIbu($newBeerIbu);
 			$this->setBeerName($newBeerName);
 	}
 	//determine the exception that was thrown
@@ -129,6 +129,55 @@ class Beer implements \JsonSerializable {
 		}
 
 	/**
+	 * accessor method for beer abv
+	 *
+	 * @return float for beer abv
+	 **/
+	public function getBeerAbv(): float {
+		return $this->beerAbv;
+	}
+
+	/**
+	 * mutator method for beer abv
+	 *
+	 * @param float $beerAbv
+	 * @throws \RangeException when input is out of range
+	 **/
+	public function setBeerAbv(float $newBeerAbv): void {
+		if($newBeerAbv > 0.0 || $newBeerAbv < 16.0) {
+			throw(new \RangeException("beer abv is out of range"));
+		}
+		//convert and store the beer abv
+		$this->beerAbv = $newBeerAbv;
+	}
+
+	/**
+	 * accessor method for beer description
+	 *
+	 * @return string for beer description
+	 **/
+	public function getBeerDescription(): string {
+		return $this->beerDescription;
+	}
+
+	/**
+	 * mutator method for beer description
+	 *
+	 * @param string $newBeerDescription
+	 * @throws \InvalidArgumentException when beer description is too big
+	 **/
+	public function setBeerDescription(string $newBeerDescription): void {
+		$newBeerDescription = trim($newBeerDescription);
+		$newBeerDescription = filter_var($newBeerDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		if(strlen($newBeerDescription) > 1024) {
+			throw(new \InvalidArgumentException("beer description is too large"));
+		}
+		//convert and store the beer description
+		$this->beerDescription = $newBeerDescription;
+	}
+
+	/**
 	* accessor method for beer ibu
 	*
 	* @return int for beer ibu
@@ -151,28 +200,6 @@ class Beer implements \JsonSerializable {
 		$this->beerIbu = $newBeerIbu;
 		}
 
-	/**
-	* accessor method for beer abv
-	*
-	* @return float for beer abv
-	**/
-	public function getBeerAbv(): float {
-			return $this->beerAbv;
-		}
-
-	/**
-	* mutator method for beer abv
-	*
-	* @param float $beerAbv
-	* @throws \RangeException when input is out of range
-	**/
-	public function setBeerAbv(float $newBeerAbv): void {
-		if($newBeerAbv > 0.0 || $newBeerAbv < 16.0) {
-			throw(new \RangeException("beer abv is out of range"));
-		}
-		//convert and store the beer abv
-		$this->beerAbv = $newBeerAbv;
-		}
 
 	/**
 	* accessor method for beer name
@@ -203,31 +230,6 @@ class Beer implements \JsonSerializable {
 		$this->beerName = $newBeerName;
 	}
 
-	/**
-	* accessor method for beer description
-	*
-	* @return string for beer description
-	**/
-	public function getBeerDescription(): string {
-		return $this->beerDescription;
-	}
-
-	/**
-	* mutator method for beer description
-	*
-	* @param string $newBeerDescription
-	* @throws \InvalidArgumentException when beer description is too big
-	**/
-	public function setBeerDescription(string $newBeerDescription): void {
-		$newBeerDescription = trim($newBeerDescription);
-		$newBeerDescription = filter_var($newBeerDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-
-		if(strlen($newBeerDescription) > 1024) {
-			throw(new \InvalidArgumentException("beer description is too large"));
-		}
-		//convert and store the beer description
-		$this->beerDescription = $newBeerDescription;
-	}
 
 	/**
 	* inserts this beer into mysql
@@ -238,17 +240,17 @@ class Beer implements \JsonSerializable {
 	**/
 	public function insert(\PDO $pdo): void {
 		// create query template
-		$query = "INSERT INTO beer(beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription) VALUES(:beerId, :beerProfile, :beerIbu, :beerAbv, :beerName, :beerDescription)";
+		$query = "INSERT INTO beer(beerId, beerProfileId, beerAbv, beerIbu, beerDescription, beerName) VALUES(:beerId, :beerProfile, :beerAbv, :beerDescription, :beerIbu, :beerName)";
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
 		$parameters = [
 			"beerId" => $this->beerId->getBytes(),
 			"beerProfileId" => $this->beerProfileId->getBytes(),
-			"beerIbu" => $this->beerIbu,
-			"beerAbv" => $this->beerAbv,
-			"beerName" => $this->beerName,
-			"beerDescription" => $this->beerDescription
+			"beerIbu" => $this->beerAbv,
+			"beerAbv" => $this->beerIbu,
+			"beerName" => $this->beerDescription,
+			"beerDescription" => $this->beerName,
 		];
 		$statement->execute($parameters);
 		}
@@ -309,7 +311,7 @@ class Beer implements \JsonSerializable {
 		}
 
 		//create query template
-		$query = "SELECT beerId, beerProfileId, beerIbu, beerAbv, beerName, beerDescription from beer where beerId = :beerId";
+		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName from beer where beerId = :beerId";
 		$statement = $pdo->prepare($query);
 
 		//bind the beer id to the place
@@ -322,7 +324,7 @@ class Beer implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$beer = new Beer($row["beerId"], $row["beerProfileId"], $row["beerIbu"], $row["beerAbv"], $row["beerName"], $row["beerDescription"]);
+				$beer = new Beer($row["beerId"], $row["beerProfileId"], $row["beerAbv"], $row["beerDescription"], $row["beerIbu"], $row["beerDescription"]);
 		}
 		} catch(\Exception $exception) {
 		//if the row couldn't be converted rethrow it
@@ -364,6 +366,89 @@ class Beer implements \JsonSerializable {
 			} catch(\Exception $exception) {
 		//if the row couldn't be converted, rethrow it
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($beers);
+	}
+
+	/**
+	 * get beer by beer abv
+	 *
+	 * @param \PDO $pdo Pdo connection object
+	 * @return \SplFixedArray of beers found or null if not found
+	 * @throws
+	 **/
+	public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedArray {
+		//sanitize the description before searching
+		$beerAbv = filter_var($beerAbv, FILTER_VALIDATE_FLOAT, FILTER_SANITIZE_NUMBER_FLOAT);
+		if(empty($beerAbv) === true){
+			throw(new \PDOException("beer abv is invalid"));
+		}
+		//create query template
+		$query ="SELECT beerId, beerProfileId, beerAbv, beerIbu, beerName, beerDescription FROM beer WHERE beerAbv LIKE :beerAbv";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of beers
+		$beers = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$beer = new Beer(
+					$row["beerId"],
+					$row["beerProfileId"],
+					$row["beerAbv"],
+					$row["beerIbu"],
+					$row["beerName"],
+					$row["beerDescription"]);
+				$beers[$beers->key()] = $beer;
+				$beers->next();
+			}catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($beers);
+	}
+
+	/**
+	 *gets beer by beer Ibu
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $beerIbu beer ibu for searching
+	 * @return \SplFixedArray SplFixedArray of beers found or null if not found
+	 * @throws \RangeException if ibu is out of range
+	 * @throws \TypeError whe variables are not the correct data
+	 **/
+	public static function getBeerByBeerIbu(\PDO $pdo, int $beerIbu) : \SplFixedArray {
+		//sanitize the description before searching
+		$beerIbu =filter_var($beerIbu, FILTER_VALIDATE_INT, FILTER_SANITIZE_NUMBER_INT);
+		if($beerIbu < 0 || $beerIbu > 120) {
+			throw(new \RangeException("ibu is out of range"));
+		}
+
+		//create query template
+		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName, FROM beer where beerIbu LIKE :beerIbu";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		//build an array of beers
+		$beers = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$beer = new Beer(
+					$row["beerId"],
+					$row["beerProfileId"],
+					$row["beerAbv"],
+					$row["beerDescription"],
+					$row["beerIbu"],
+					$row["beerName"]);
+				$beers[$beers->key()] = $beer;
+				$beers->next();
+			} catch(\Exception $exception) {
+				//if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(),0, $exception));
 			}
 		}
 		return ($beers);
@@ -414,89 +499,6 @@ class Beer implements \JsonSerializable {
 	}
 
 	/**
-	*gets beer by beer Ibu
-	*
-	* @param \PDO $pdo PDO connection object
-	* @param int $beerIbu beer ibu for searching
-	* @return \SplFixedArray SplFixedArray of beers found or null if not found
-	* @throws \RangeException if ibu is out of range
-	* @throws \TypeError whe variables are not the correct data
-	**/
-	public static function getBeerByBeerIbu(\PDO $pdo, int $beerIbu) : \SplFixedArray {
-		//sanitize the description before searching
-		$beerIbu =filter_var($beerIbu, FILTER_VALIDATE_INT, FILTER_SANITIZE_NUMBER_INT);
-		if($beerIbu < 0 || $beerIbu > 120) {
-			throw(new \RangeException("ibu is out of range"));
-		}
-
-		//create query template
-		$query = "SELECT beerId, beerProfileId, beerIbu, beerName, beerDescription FROM beer where beerIbu LIKE :beerIbu";
-		$statement = $pdo->prepare($query);
-		$statement->execute();
-
-		//build an array of beers
-		$beers = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$beer = new Beer(
-					$row["beerId"],
-					$row["beerProfileId"],
-					$row["beerIbu"],
-					$row["beerAbv"],
-					$row["beerName"],
-					$row["beerDescription"]);
-				$beers[$beers->key()] = $beer;
-				$beers->next();
-			} catch(\Exception $exception) {
-				//if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(),0, $exception));
-			}
-		}
-		return ($beers);
-	}
-
-	/**
-	* get beer by beer abv
-	*
-	* @param \PDO $pdo Pdo connection object
-	* @return \SplFixedArray of beers found or null if not found
-	* @throws
-	**/
-	public static function getBeerByBeerAbv(\PDO $pdo, float $beerAbv) : \SplFixedArray {
-		//sanitize the description before searching
-		$beerAbv = filter_var($beerAbv, FILTER_VALIDATE_FLOAT, FILTER_SANITIZE_NUMBER_FLOAT);
-		if(empty($beerAbv) === true){
-			throw(new \PDOException("beer abv is invalid"));
-	}
-	//create query template
-	$query ="SELECT beerId, beerProfileId, beerAbv, beerIbu, beerName, beerDescription FROM beer WHERE beerAbv LIKE :beerAbv";
-	$statement = $pdo->prepare($query);
-	$statement->execute();
-
-	// build an array of beers
-	$beers = new \SplFixedArray($statement->rowCount());
-	$statement->setFetchMode(\PDO::FETCH_ASSOC);
-	while(($row = $statement->fetch()) !== false) {
-		try {
-			$beer = new Beer(
-				$row["beerId"],
-				$row["beerProfileId"],
-				$row["beerAbv"],
-				$row["beerIbu"],
-				$row["beerName"],
-				$row["beerDescription"]);
-			$beers[$beers->key()] = $beer;
-			$beers->next();
-		}catch(\Exception $exception) {
-			//if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(), 0, $exception));
-		}
-	}
-	return($beers);
-}
-
-	/**
 	* gets all styles
 	*
 	* @param \PDO $pdo PDO connection obeject
@@ -504,10 +506,9 @@ class Beer implements \JsonSerializable {
 	* @throws
 	* @throws
 	**/
-
 	public static function getAllBeers (\PDO $pdo) : \SplFixedArray {
 		//create query templates
-		$query = "SELECT beerId, beerProfileId, beerIbu, beerDescription, beerAbv, beerName FROM beer";
+		$query = "SELECT beerId, beerProfileId, beerDescription, beerIbu, beerName FROM beer";
 		$statement = $pdo->prepare($query);
 		$statement ->execute();
 
@@ -519,9 +520,9 @@ class Beer implements \JsonSerializable {
 					$beer = new Beer(
 						$row["beerId"],
 						$row["beerProfileId"],
-						$row["beerIbu"],
-						$row["beerDescription"],
 						$row["beerAbv"],
+						$row["beerDescription"],
+						$row["beerIbu"],
 						$row["beerName"]);
 					$beers[$beers->key()] = $beer;
 					$beers->next();
