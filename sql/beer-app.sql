@@ -34,7 +34,7 @@ CREATE TABLE style (
 CREATE TABLE beer (
 	beerId BINARY(16) NOT NULL,
 	beerProfileId BINARY(16) NOT NULL,
-	beerAbv DECIMAL(6,6) NOT NULL,
+	beerAbv DECIMAL(8,6) NOT NULL,
 	beerDescription VARCHAR(1024),
 	beerIbu TINYINT UNSIGNED ,
 	beerName VARCHAR(128) NOT NULL,

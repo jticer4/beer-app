@@ -21,21 +21,20 @@ class Beer implements \JsonSerializable {
 	**/
 	private $beerProfileId;
 	/**
+	 * abv number for beer
+	 * @var float $beerAbv
+	 **/
+	private $beerAbv;
+	/**
+	 * description of the beer
+	 * @var string $beerDescription
+	 **/
+	private $beerDescription;
+	/**
 	* ibu number for beer
 	* @var int $beerIbu
 	**/
 	private $beerIbu;
-	/**
-	* description of the beer
-	* @var string $beerDescription
-	**/
-	private $beerDescription;
-	/**
-	* abv number for beer
-	* @var float $beerAbv
-	**/
-	private $beerAbv;
-
 	/**
 	* name of the beer
 	* @var$beerName
@@ -57,7 +56,7 @@ class Beer implements \JsonSerializable {
 	* @throws \TypeError if data types violate type hints
 	* @documentation https://php.net/manual/en/language.oop5.decon.php
 	**/
-	public function __construct(Uuid $newBeerId, Uuid $newBeerProfileId, float $newBeerAbv, string $newBeerDescription, int $newBeerIbu, string $newBeerName ) {
+	public function __construct($newBeerId, $newBeerProfileId, float $newBeerAbv, string $newBeerDescription, int $newBeerIbu, string $newBeerName) {
 		try {
 			$this->setBeerId($newBeerId);
 			$this->setBeerProfileId($newBeerProfileId);
@@ -90,7 +89,7 @@ class Beer implements \JsonSerializable {
 	* @throws \RangeException if $newBeerId is null
 	* @throws \TypeError if $newBeerId is not a uuid
 	**/
-	public function setBeerId(Uuid $newBeerId): void {
+	public function setBeerId($newBeerId): void {
 		try {
 			$uuid = self::validateUuid($newBeerId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -240,9 +239,9 @@ class Beer implements \JsonSerializable {
 	**/
 	public function insert(\PDO $pdo): void {
 		// create query template
-		$query = "INSERT INTO beer(beerId, beerProfileId, beerAbv, beerIbu, beerDescription, beerName) VALUES(:beerId, :beerProfileId, :beerAbv, :beerDescription, :beerIbu, :beerName)";
+		$query = "INSERT INTO beer(beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName) VALUES(:beerId, :beerProfileId, :beerAbv, :beerDescription, :beerIbu, :beerName)";
 		$statement = $pdo->prepare($query);
-
+var_dump($this->beerAbv);
 		//bind the member variables to the place holders in the template
 		$parameters = [
 			"beerId" => $this->beerId->getBytes(),
@@ -384,10 +383,15 @@ class Beer implements \JsonSerializable {
 		if(empty($beerAbv) === true){
 			throw(new \PDOException("beer abv is invalid"));
 		}
+
 		//create query template
 		$query ="SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer WHERE beerAbv LIKE :beerAbv";
 		$statement = $pdo->prepare($query);
-		$statement->execute();
+
+		//bind the beer abv
+		$beerAbv = "%$beerAbv%";
+		$parameters = ["beerAbv" => $beerAbv];
+		$statement->execute($parameters);
 
 		// build an array of beers
 		$beers = new \SplFixedArray($statement->rowCount());
@@ -403,7 +407,7 @@ class Beer implements \JsonSerializable {
 					$row["beerName"]);
 				$beers[$beers->key()] = $beer;
 				$beers->next();
-			}catch(\Exception $exception) {
+			} catch(\Exception $exception) {
 				//if the row couldn't be converted, rethrow it
 				throw(new \PDOException($exception->getMessage(), 0, $exception));
 			}
