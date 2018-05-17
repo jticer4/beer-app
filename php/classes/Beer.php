@@ -116,7 +116,7 @@ class Beer implements \JsonSerializable {
 	* @throws \RangeException if beer profile id is null
 	* @throws \TypeError if beer profile id is null
 	**/
-	public function setBeerProfileId(Uuid $newBeerProfileId): void {
+	public function setBeerProfileId($newBeerProfileId): void {
 		try {
 			$uuid = self::validateUuid($newBeerProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
