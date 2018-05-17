@@ -139,7 +139,7 @@ class Beer implements \JsonSerializable {
 	/**
 	 * mutator method for beer abv
 	 *
-	 * @param float $beerAbv
+	 * @param float $newBeerAbv
 	 * @throws \RangeException when input is out of range
 	 **/
 	public function setBeerAbv(float $newBeerAbv): void {
@@ -241,7 +241,6 @@ class Beer implements \JsonSerializable {
 		// create query template
 		$query = "INSERT INTO beer(beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName) VALUES(:beerId, :beerProfileId, :beerAbv, :beerDescription, :beerIbu, :beerName)";
 		$statement = $pdo->prepare($query);
-var_dump($this->beerAbv);
 		//bind the member variables to the place holders in the template
 		$parameters = [
 			"beerId" => $this->beerId->getBytes(),
@@ -278,7 +277,7 @@ var_dump($this->beerAbv);
 	**/
 	public function update(\PDO $pdo): void {
 		// create query template
-		$query = "UPDATE beer SET beerProfileId = :beerProfileId, beerAbv = :beerAbv, beerDescription = :beerDescription, beerIbu = :beerIbu, beerName = :beerName WHERE beerId = beerId";
+		$query = "UPDATE beer SET beerProfileId = :beerProfileId, beerAbv = :beerAbv, beerDescription = :beerDescription, beerIbu = :beerIbu, beerName = :beerName WHERE beerId = :beerId";
 		$statement = $pdo->prepare($query);
 
 		$parameters = [
@@ -341,7 +340,7 @@ var_dump($this->beerAbv);
 	* @throws \PDOException when mySQL related errors occur
 	* @throws \TypeError when variables are not the correct date type
 	**/
-	public static function getBeerByBeerProfileId(\PDO $pdo, $beerProfileId): \SplFixedArray {
+	public static function getBeerByBeerProfileId(\PDO $pdo, string $beerProfileId): \SplFixedArray {
 
 		try {
 			$beerProfileId = self::validateUuid($beerProfileId);
@@ -349,7 +348,7 @@ var_dump($this->beerAbv);
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		//create query template
-		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer where beerProfileId = :beerProfileId";
+		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer WHERE beerProfileId = :beerProfileId";
 		$statement = $pdo->prepare($query);
 		//bind the beer profile id to the place holder
 		$parameters = ["beerProfileId" => $beerProfileId->getBytes()];
@@ -359,7 +358,7 @@ var_dump($this->beerAbv);
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$beer = new Beer($row["beer"], $row ["beerProfileId"], $row ["beerAbv"], $row ["beerDescription"], $row ["beerIbu"], $row ["beerName"]);
+				$beer = new Beer($row["beerId"], $row ["beerProfileId"], $row ["beerAbv"], $row ["beerDescription"], $row ["beerIbu"], $row ["beerName"]);
 				$beers[$beers->key()] = $beer;
 				$beers->next();
 			} catch(\Exception $exception) {
@@ -434,7 +433,8 @@ var_dump($this->beerAbv);
 		//create query template
 		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer where beerIbu LIKE :beerIbu";
 		$statement = $pdo->prepare($query);
-		$statement->execute();
+		$parameters = ["beerIbu" => $beerIbu];
+		$statement->execute($parameters);
 
 		//build an array of beers
 		$beers = new \SplFixedArray($statement->rowCount());
@@ -478,11 +478,11 @@ var_dump($this->beerAbv);
 		$beerName = str_replace("_", "\\_", str_replace("%", "\\%", $beerName));
 
 		//create query template
-		$query = "SELECT beerID, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer WHERE beerName LIKE :beerName";
+		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer WHERE beerName LIKE :beerName";
 		$statement = $pdo->prepare($query);
 
 		//bind the beer name
-		$beerName = "%beerName%";
+		$beerName = "%$beerName%";
 		$parameters = ["beerName" => $beerName];
 		$statement->execute($parameters);
 
@@ -512,7 +512,7 @@ var_dump($this->beerAbv);
 	**/
 	public static function getAllBeers (\PDO $pdo) : \SplFixedArray {
 		//create query templates
-		$query = "SELECT beerId, beerProfileId, beerDescription, beerIbu, beerName FROM beer";
+		$query = "SELECT beerId, beerProfileId, beerAbv, beerDescription, beerIbu, beerName FROM beer";
 		$statement = $pdo->prepare($query);
 		$statement ->execute();
 
