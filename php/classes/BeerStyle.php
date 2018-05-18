@@ -4,6 +4,7 @@ namespace Edu\Cnm\Beer;
 require_once("autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
+use PhpParser\Node\Scalar\String_;
 use Ramsey\Uuid\Uuid;
 
 class beerStyle implements \JsonSerializable {
@@ -22,7 +23,7 @@ class beerStyle implements \JsonSerializable {
 	/**
 	 * constructor for this BeerStyle
 	 *
-	 * @param Uuid $newBeerStyleBeerId beer id of the BeerStyle
+	 * @param string|Uuid $newBeerStyleBeerId beer id of the BeerStyle
 	 * @param int $newBeerStyleStyleId style id of the BeerStyle
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -31,7 +32,7 @@ class beerStyle implements \JsonSerializable {
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
 
-	public function __construct(Uuid $newBeerStyleBeerId, int $newBeerStyleStyleId) {
+	public function __construct( string $newBeerStyleBeerId, int $newBeerStyleStyleId) {
 		try {
 			$this->setBeerStyleBeerId($newBeerStyleBeerId);
 			$this->setBeerStyleStyleId($newBeerStyleStyleId);
@@ -46,7 +47,7 @@ class beerStyle implements \JsonSerializable {
 	 *
 	 * @return Uuid of BeerStyle beer id
 	 */
-	public function getBeerStyleBeerId(): Uuid {
+	public function getBeerStyleBeerId(): string {
 		return ($this->beerStyleBeerId);
 	}
 
@@ -69,13 +70,13 @@ class beerStyle implements \JsonSerializable {
 	/**
 	 * accessor method for BeerStyle style id
 	 *
-	 * @return Uuid of BeerStyle style id
+	 * @return int of BeerStyle style id
 	 */
 	public function getBeerStyleStyleId(): int {
 		return ($this->beerStyleStyleId);
 	}
 
-	/*
+	/**
 	 * mutator method for BeerStyle style id
 	 *
 	 * @param int $newBeerStyleStyleId
@@ -103,7 +104,8 @@ class beerStyle implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		//bind the member variables to the place holders in the template
-		$parameters = ["beerStyleBeerId" => $this->beerStyleBeerId->getBytes(), "beerStyleStyleType" => $this->beerStyleStyleId];
+		$parameters = ["beerStyleBeerId" => $this->beerStyleBeerId->getBytes(), "beerStyleStyleId" =>
+			$this->beerStyleStyleId];
 		$statement->execute($parameters);
 	}
 
@@ -129,12 +131,12 @@ class beerStyle implements \JsonSerializable {
 	 * gets the BeerStyle by the BeerStyleBeerId
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid $beerStyleBeerId id to search by
+	 * @param string|Uuid $beerStyleBeerId id to search by
 	 * @return \SplFixedArray SplFixedArray of BeerStyles found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 */
-	public static function getBeerStyleByBeerStyleBeerId (\PDO $pdo, $beerStyleBeerId) :  \SplFixedArray{
+	public static function getBeerStyleByBeerStyleBeerId (\PDO $pdo, Uuid $beerStyleBeerId) :  \SplFixedArray{
 		try {
 				$beerStyleBeerId = self::validateUuid($beerStyleBeerId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -162,6 +164,7 @@ class beerStyle implements \JsonSerializable {
 					throw(new \PDOException($exception->getMessage(), 0, $exception));
 				}
 		}
+
 		return($beerStyles);
 	}
 

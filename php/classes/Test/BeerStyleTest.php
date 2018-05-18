@@ -100,11 +100,14 @@ class BeerStyleTest extends BeerAppTest {
 
 		//delete the beer style
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beerStyle"));
+		//grab the data and enforce that beer style does not exits
+		$result = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO(), $this->beer->getBeerId());
+		$pdoBeerStyle = $result[0];
+
+		$this->assert($beerStyle);
 		$beerStyle->delete($this->getPDO());
 
-		//grab the data and enforce that beer style does not exits
-		$pdoBeerStyle = BeerStyle::getBeerStyleByBeerStyleBeerId($this->getPDO(), $this->beer->getBeerId());
-		$this->assertNull($pdoBeerStyle);
+
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("beerStyle"));
 	}
 
