@@ -113,7 +113,7 @@ class Profile implements \JsonSerializable {
 	 * @param string $newProfileUserType string containing the user type of the profile
 	 * @param string $newProfileZip string containing the zip code of the profile
 	 **/
-	public function __construct(Uuid $newProfileId, string $newProfileAbout, string $newProfileActivationToken, string $newProfileAddressLine1, string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
+	public function __construct( $newProfileId, string $newProfileAbout, string $newProfileActivationToken, string $newProfileAddressLine1, string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
 		$this->setProfileId($newProfileId);
 		$this->setProfileAbout($newProfileAbout);
 		$this->setProfileActivationToken($newProfileActivationToken);
@@ -145,7 +145,7 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileId is not positive
 	 * @throws \TypeError if $newProfileId is not a uuid or string
 	 **/
-	public function setProfileId(Uuid $newProfileId): void {
+	public function setProfileId( $newProfileId): void {
 		try {
 			$uuid = self::validateUuid($newProfileId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
