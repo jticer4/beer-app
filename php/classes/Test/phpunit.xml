@@ -3,6 +3,9 @@
 	<testsuites>
 		<testsuite name="beer-app">
 			<file>ProfileTest.php</file>
+			<file>BeerTest.php</file>
+			<file>StyleTest.php</file>
+			<file>BeerStyleTest.php</file>
 		</testsuite>
 	</testsuites>
 </phpunit>
