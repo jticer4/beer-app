@@ -7,7 +7,7 @@ require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 use PhpParser\Node\Scalar\String_;
 use Ramsey\Uuid\Uuid;
 
-class beerStyle implements \JsonSerializable {
+class BeerStyle implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * Beer id for the BeerStyle
