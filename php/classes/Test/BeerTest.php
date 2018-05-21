@@ -149,6 +149,12 @@ public function TestDeleteValidBeer() : void {
 	$beer->insert($this->getPDO());
 	// delete the beer from mySQL
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("beer"));
+	$beer->delete($this->getPDO());
+
+	//grab the data from mysql and enforce the beer does not exist
+	$pdoBeer = Beer::getBeerbyBeerId($this->getPDO(), $beer->getBeerId());
+	$this->assertNull($pdoBeer);
+	$this->assertEquals($numRows, $this->getConnection()->getRowCount("beer"));
 }
 
 /**

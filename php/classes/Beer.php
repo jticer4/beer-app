@@ -7,6 +7,15 @@ require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
+/**
+* Class Beer
+* This is the data stored when a profile creates a beer. This sets tha name for a specific beer(one).
+*
+*@author Carlos Marquez <carl.marq95@gmail.com>
+*@author
+*
+ **/
+
 class Beer implements \JsonSerializable {
 	use ValidateUuid;
 
@@ -516,7 +525,7 @@ class Beer implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 		$statement ->execute();
 
-		//build an array of tweets
+		//build an array of beers
 		$beers = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			while(($row = $statement->fetch()) !== false) {
