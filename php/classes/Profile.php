@@ -6,7 +6,11 @@ require_once("autoload.php");
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
-
+/**
+ * The profile class that will be used for each of the brewers that want to sign up
+ *
+ * This profile contains all of the information that will be displayed by the brewer
+ **/
 class Profile implements \JsonSerializable {
 
 	use ValidateUuid;
@@ -114,22 +118,29 @@ class Profile implements \JsonSerializable {
 	 * @param string $newProfileZip string containing the zip code of the profile
 	 **/
 	public function __construct( $newProfileId, string $newProfileAbout, string $newProfileActivationToken, string $newProfileAddressLine1, string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
-		$this->setProfileId($newProfileId);
-		$this->setProfileAbout($newProfileAbout);
-		$this->setProfileActivationToken($newProfileActivationToken);
-		$this->setProfileAddressLine1($newProfileAddressLine1);
-		$this->setProfileAddressLine2($newProfileAddressLine2);
-		$this->setProfileCity($newProfileCity);
-		$this->setProfileEmail($newProfileEmail);
-		$this->setProfileHash($newProfileHash);
-		$this->setProfileImage($newProfileImage);
-		$this->setProfileName($newProfileName);
-		$this->setProfileState($newProfileState);
-		$this->setProfileUsername($newProfileUsername);
-		$this->setProfileUserType($newProfileUserType);
-		$this->setProfileZip($newProfileZip);
-	}
+		try {
+			$this->setProfileId($newProfileId);
+			$this->setProfileAbout($newProfileAbout);
+			$this->setProfileActivationToken($newProfileActivationToken);
+			$this->setProfileAddressLine1($newProfileAddressLine1);
+			$this->setProfileAddressLine2($newProfileAddressLine2);
+			$this->setProfileCity($newProfileCity);
+			$this->setProfileEmail($newProfileEmail);
+			$this->setProfileHash($newProfileHash);
+			$this->setProfileImage($newProfileImage);
+			$this->setProfileName($newProfileName);
+			$this->setProfileState($newProfileState);
+			$this->setProfileUsername($newProfileUsername);
+			$this->setProfileUserType($newProfileUserType);
+			$this->setProfileZip($newProfileZip);
+		}
+			//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 
+		}
 
 	/**
 	 * accessor method for profile Id
@@ -775,6 +786,36 @@ class Profile implements \JsonSerializable {
 	public static function getAllProfiles(\PDO $pdo) : \SPLFixedArray {
 		// create query template
 		$query = "SELECT profileId, profileAbout, profileActivationToken, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip FROM profile";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of profiles
+		$profiles = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$profile = new Profile($row["profileId"], $row["profileAbout"], $row["profileActivationToken"], $row["profileAddressLine1"], $row["profileAddressLine2"], $row["profileCity"], $row["profileEmail"], $row["profileHash"], $row["profileImage"], $row["profileName"], $row["profileState"], $row["profileUsername"], $row["profileUserType"], $row["profileZip"]);
+				$profiles[$profiles->key()] = $profile;
+				$profiles->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($profiles);
+	}
+
+	/**
+	 * get all Profiles that have not been activated
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Profiles found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllNonActiveProfiles(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT profileId, profileAbout, profileActivationToken, profileAddressLine1, profileAddressLine2, profileCity, profileEmail, profileHash, profileImage, profileName, profileState, profileUsername, profileUserType, profileZip FROM profile WHERE profileActivationToken IS NOT NULL";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
