@@ -7,6 +7,12 @@ require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 use PhpParser\Node\Scalar\String_;
 use Ramsey\Uuid\Uuid;
 
+/**
+ * Cross section between Beer and Style which creates BeerStyle
+ *
+ * This is an intersection table (weak entity) from an m-to-n relationship between Beer and Style
+ */
+
 class BeerStyle implements \JsonSerializable {
 	use ValidateUuid;
 	/**

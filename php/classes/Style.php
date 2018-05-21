@@ -14,7 +14,7 @@ use Ramsey\Uuid\Uuid;
  * @author Brent Kie bkie3@cnm.edu
  *
  */
-class style implements \JsonSerializable {
+class Style implements \JsonSerializable {
 	use ValidateUuid;
 	/**
 	 * id for the style of beer
