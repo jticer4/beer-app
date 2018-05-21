@@ -6,6 +6,14 @@ require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
+/**
+ * Style class
+ *
+ * This is the data stored when a style is created. This sets the name for a specific style.
+ *
+ * @author Brent Kie bkie3@cnm.edu
+ *
+ */
 class style implements \JsonSerializable {
 	use ValidateUuid;
 	/**
@@ -182,7 +190,7 @@ class style implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
-		//build an array of tweets
+		//build an array of styles
 		$styles = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
