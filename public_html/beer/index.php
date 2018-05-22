@@ -46,7 +46,30 @@ try {
 		(new InvalidArgumentException("id cannot be empty", 405));
 	}
 
+	// handle GET request - if id is present, that beer is returned, otherwise all tweets are returned
+	if($method === "GET") {
+		//set XSRF cookie
+		setXsrfCookie();
 
+		//get a specific beer or all beers and update reply
+		if(empty($id) === false) {
+			$reply->data = Beer::getBeerbyBeerId($pdo, $id);
+		} else if(empty($beerProfileId) === false) {
+			$reply->data = Beer::getBeerByBeerProfileId($pdo, $beerProfileId);
+		} else if(empty($beerAbv) === false) {
+			$reply->data = Beer::getBeerByBeerAbv($pdo, $beerAbv);
+		} else if(empty($beerIbu) === false) {
+			$reply->data = Beer::getBeerByBeerIbu($pdo, $beerIbu);
+		} else if(empty($beerName) === false) {
+			$reply->data = Beer::getBeerByBeerName($pdo, $beerName);
+		} else {
+			$reply->data = Beer::getAllBeers($pdo)->toArray();
+		}
+	} else if($method === "PUT" || $method === "POST") {
+
+
+
+	}
 
 
 
