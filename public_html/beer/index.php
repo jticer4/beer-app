@@ -1,30 +1,54 @@
 <?php
 
-// we determine if we have a GET request. If so, we then process the request.
-if ($method === "GET") {
+require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
+require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
+require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
+require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 
-// If it is not a GET request, we then proceed here to determine if we have a PUT or POST request.
-} else if($method === "PUT" || $method === "POST") {
+use Edu\Cnm\Beer\{
+	Beer,
+	// we only use the profile class for testing purposes
+	Profile
+};
 
-	//do setup that is needed for both PUT and POST requests
+/**
+ * Api for the Beer Class
+ *
+ * @author Deep Dive Coding, Cohort 20, Gang of Four
+ */
 
-	//perform the actual put or post
-	if($method === "PUT") {
-		// determines if we have a PUT request. If so we process the request.
-		// process PUT requests here
-
-
-	} else if ($method === "POST") {
-
-		// process the POST request  here
-
-	}
-
-
-	// if the above requests are neither a PUT or POST delete below
-} else if($method === "DELETE") {
-
-	// process DELETE requests here
-
+//verify session, start if not active
+if (session_status() !== PHP_SESSION_ACTIVE) {
+	session_start();
 }
+
+$reply = new stdClass();
+$reply->status = 200;
+$reply->data = null;
+
+try {
+	//grab mySQL connection
+	$pdo = connectToEncryptedMySQL("/etc/apache/capstone-mysql/beer-app.ini");
+
+	//determine which HTTP method is being used
+	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
+
+	//sanitize input
+	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING,FILTER_FLAG_NO_ENCODE_QUOTES);
+	$beerProfileId === filter_input(INPUT_GET, "beerProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	// TODO get more information on what inputs are requisite for API calls
+
+
+
+
+} catch(\Exception | \TypeError $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+}
+
+//encode and return replay to front end caller
+header("Content-type: application/json");
+echo json_encode($reply);
+
