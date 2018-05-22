@@ -8,13 +8,13 @@ require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
 use Ramsey\Uuid\Uuid;
 
 /**
-* Class Beer
+* Beer Class
 * This is the data stored when a profile creates a beer. This sets tha name for a specific beer(one).
 *
 *@author Carlos Marquez <carl.marq95@gmail.com>
 *@author
 *
- **/
+**/
 
 class Beer implements \JsonSerializable {
 	use ValidateUuid;
