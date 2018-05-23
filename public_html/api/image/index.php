@@ -44,4 +44,8 @@ try {
 			$cloudinary = json_decode($config["cloudinary"]);
 			\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
 
+			// make sure the id is valid for methods that require it
+			if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
+				throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+			}
 }
