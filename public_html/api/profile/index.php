@@ -24,7 +24,7 @@ $reply->status = 200;
 $reply->data = null;
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/beer-app.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/beer.ini");
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	// sanitize input
@@ -73,6 +73,10 @@ try {
 		//profile about | if null use the profile about that is in the database
 		if(empty($requestObject->profileAbout) === true) {
 			$requestObject->profileAbout = $profile->getProfileAbout();
+		}
+		//profile activation token | if null use the activation token that is in the database
+		if(empty($requestObject->profileActivationToken) === true) {
+			$requestObject->profileActivationToken = $profile->getProfileActivationToken();
 		}
 		//profile address line 1 | if null use the profile address that is in the database
 		if(empty($requestObject->profileAddressLine1) === true) {
