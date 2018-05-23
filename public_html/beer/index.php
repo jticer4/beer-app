@@ -150,7 +150,17 @@ try {
 		}
 
 		//enforce the user is signed in and only trying to edit their own beer
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getBeerProfileId() !== $beer->getBeerProfileId
+			()) {
+			throw(new \InvalidArgumentException("You are not allowed to delete this beer.", 403));
+		}
 
+		//delete beer
+		$beer->delete($pdo);
+		//update reply
+		$reply->message = "Beer succesfully deleted";
+	} else {
+		throw(new \InvalidArgumentException("Invalid HTTP request"));
 	}
 
 } catch(\Exception | \TypeError $exception) {
