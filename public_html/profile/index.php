@@ -29,9 +29,9 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 	// sanitize input
 	$profileId = filter_input(INPUT_GET, "profileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileUsername = filter_input(INPUT_GET, "profileUsername", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	//TODO SHOULD I ADD GET PROFILE BY PROFILE ACTIVATION TOKEN?
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true )) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
@@ -39,23 +39,35 @@ try {
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
-		//gets a post by content
+		//gets a profile
 		if(empty($profileId) === false) {
 			$profile = Profile::getProfileByProfileId($pdo, $profileId);
 			if($profile !== null) {
 				$reply->data = $profile;
 			}
-		} else if(empty($profileEmail) === false) {
-			$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
-			if($profile !== null) {
-				$reply->data = $profile;
-			}
-		} else if(empty($profileUsername) === false) {
-			$profile = Profile::getProfileByProfileUsername($pdo, $profileUsername);
-			if($profile !== null) {
-				$reply->data = $profile;
-			}
 		}
+			else if(empty($profileActivationToken) === false) {
+				$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
+				if($profile !== null) {
+					$reply->data = $profile;
+				}
+
+		} else if(empty($profileEmail) === false) {
+		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+		if($profile !== null) {
+			$reply->data = $profile;
+		}
+
+		} else if(empty($profileUsername) === false) {
+				$profile = Profile::getProfileByProfileUsername($pdo, $profileUsername);
+				if($profile !== null) {
+					$reply->data = $profile;
+				}} else {
+					$reply->data = Profile::getAllProfiles($pdo)->toArray();
+				}
+
+
+
 
 	} elseif($method === "PUT") {
 		//enforce that the XSRF token is present in the header
