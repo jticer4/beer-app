@@ -133,8 +133,7 @@ try {
 		$profile->update($pdo);
 		// update reply
 		$reply->message = "Profile information updated";
-	}
-	else {
+	} else {
 		throw (new InvalidArgumentException("Invalid HTTP request", 400));
 	}
 	// catch any exceptions that were thrown and update the status and message state variable fields
