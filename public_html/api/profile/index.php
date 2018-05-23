@@ -66,7 +66,6 @@ try {
 		$requestObject = json_decode($requestContent);
 		//retrieve the profile to be updated
 		$profile = Profile::getProfileByProfileId($pdo, $profileId);
-		//TODO DO I NEED TO ADD ACTIVATION TOKEN BELOW?YES
 		if($profile === null) {
 			throw(new RuntimeException("Profile does not exist", 404));
 		}
