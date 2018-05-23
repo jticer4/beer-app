@@ -93,17 +93,11 @@ try {
 		if(empty($requestObject->beerIbu) === true) {
 			$requestObject->beerIbu = null;
 		}
-	}
 
-	// make sure profileId and beerId are available
-	if(empty($requestObject->beerProfileId) === true) {
-		throw(new \InvalidArgumentException("No Profile ID.", 405));
+		if(empty($requestObject->beerId) === true) {
+			throw(new\InvalidArgumentException("No beer ID.", 405));
+		}
 	}
-
-	if(empty($requestObject->beerId) === true) {
-		throw(new\InvalidArgumentException("No beer ID.",405));
-	}
-
 	//execute the actual PUT or POST
 	if($method === "PUT") {
 
@@ -114,6 +108,7 @@ try {
 		}
 
 		//enforce user signed in and only editing their own beer
+		//TODO ADD TO STRING
 		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId () !== $beer->getBeerProfileId()) {
 			throw(new \InvalidArgumentException("You are not allowed to edit this beer", 403));
 		}
