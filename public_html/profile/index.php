@@ -53,16 +53,18 @@ try {
 				}
 
 		} else if(empty($profileEmail) === false) {
-		$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
-		if($profile !== null) {
-			$reply->data = $profile;
-		}
+			$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+			if($profile !== null) {
+				$reply->data = $profile;
+			}
 
 		} else if(empty($profileUsername) === false) {
 				$profile = Profile::getProfileByProfileUsername($pdo, $profileUsername);
 				if($profile !== null) {
 					$reply->data = $profile;
-				}} else {
+				}
+			}
+				else {
 					$reply->data = Profile::getAllProfiles($pdo)->toArray();
 				}
 
@@ -87,7 +89,6 @@ try {
 		if($profile === null) {
 			throw(new RuntimeException("Profile does not exist", 404));
 		}
-		//TODO FIGURE OUT IF THESE SHOULD BE IN A CERTAIN ORDER
 		//profile email is a required field
 		if(empty($requestObject->profileEmail) === true) {
 			throw(new \InvalidArgumentException ("No profile email present", 405));
@@ -96,14 +97,53 @@ try {
 		if(empty($requestObject->profileUsername) === true) {
 			throw(new \InvalidArgumentException ("Profile username does not exist", 405));
 		}
-		//TODO REPLACE PHONE WITH ATTRIBUTES OF THE PROFILE ENTITY
+
 		//profile about | if null use the profile about that is in the database
 		if(empty($requestObject->profileAbout) === true) {
 			$requestObject->profileAbout = $profile->getProfileAbout();
 		}
+
+		//profile address line 1 | if null use the profile address that is in the database
+		if(empty($requestObject->profileAddressLine1) === true) {
+			$requestObject->profileAddressLine1 = $profile->getProfileAddressLine1();
+		}
+
+		//profile address line 2 | if null use the profile address that is in the database
+		if(empty($requestObject->profileAddressLine2) === true) {
+			$requestObject->profileAddressLine2 = $profile->getProfileAddressLine2();
+		}
+
+		//profile city | if null use the profile city that is in the database
+		if(empty($requestObject->profileCity) === true) {
+			$requestObject->profileCity = $profile->getProfileCity();
+		}
+
+		//profile name | if null use the profile name that is in the database
+		if(empty($requestObject->profileName) === true) {
+			$requestObject->profileName = $profile->getProfileName();
+		}
+
+		//profile state | if null use the profile state that is in the database
+		if(empty($requestObject->profileState) === true) {
+			$requestObject->profileState = $profile->getProfileState();
+		}
+
+		//profile zip | if null use the profile zip that is in the database
+		if(empty($requestObject->profileZip) === true) {
+			$requestObject->profileZip = $profile->getProfileZip();
+		}
+
+
+
 		$profile->setProfileEmail($requestObject->profileEmail);
 		$profile->setProfileUsername($requestObject->profileUsername);
 		$profile->setProfileAbout($requestObject->profileAbout);
+		$profile->setProfileAddressLine1($requestObject->profileAddressLine1);
+		$profile->setProfileAddressLine2($requestObject->profileAddressLine2);
+		$profile->setProfileCity($requestObject->profileCity);
+		$profile->setProfileName($requestObject->profileName);
+		$profile->setProfileState($requestObject->profileState);
+		$profile->setProfileZip($requestObject->profileZip);
 		$profile->update($pdo);
 		// update reply
 		$reply->message = "Profile information updated";
