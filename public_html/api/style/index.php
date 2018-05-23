@@ -33,17 +33,12 @@ try {
 	// sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-	}
-
 	// handle GET request - if id is present that style is returned, otherwise all styles are returned
 	if($method === "GET") {
 		// set XSRF cookie
 		setXsrfCookie();
 
-		// get a specific tweet or all tweets and update reply
+		// get a specific style or all styles and update reply
 		if(empty($id) === false) {
 			$reply->data = Style::getStyleByStyleId($pdo, $id);
 		} else {
