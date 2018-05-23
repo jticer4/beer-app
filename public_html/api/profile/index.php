@@ -41,28 +41,14 @@ try {
 		setXsrfCookie();
 		//gets a profile
 		if(empty($profileId) === false) {
-			$profile = Profile::getProfileByProfileId($pdo, $profileId);
-			if($profile !== null) {
-				$reply->data = $profile;
-			} else if(empty($profileActivationToken) === false) {
-				$profile = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
-				if($profile !== null) {
-					$reply->data = $profile;
-				}
-
+			$reply->data = Profile::getProfileByProfileId($pdo, $profileId);
+		} else if(empty($profileActivationToken) === false) {
+			$reply->data = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
 			} else if(empty($profileEmail) === false) {
-				$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
-				if($profile !== null) {
-					$reply->data = $profile;
-				}
-
+			$reply->data = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 			} else if(empty($profileUsername) === false) {
-				$profile = Profile::getProfileByProfileUsername($pdo, $profileUsername);
-				if($profile !== null) {
-					$reply->data = $profile;
-				}
+			$reply->data = Profile::getProfileByProfileUsername($pdo, $profileUsername);
 			}
-		}
 
 
 	} elseif($method === "PUT") {
