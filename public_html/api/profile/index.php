@@ -66,7 +66,7 @@ try {
 		$requestObject = json_decode($requestContent);
 		//retrieve the profile to be updated
 		$profile = Profile::getProfileByProfileId($pdo, $profileId);
-		//TODO DO I NEED TO ADD ACTIVATION TOKEN BELOW?
+		//TODO DO I NEED TO ADD ACTIVATION TOKEN BELOW?YES
 		if($profile === null) {
 			throw(new RuntimeException("Profile does not exist", 404));
 		}
@@ -100,7 +100,7 @@ try {
 		}
 		//profile username is a required field
 		if(empty($requestObject->profileUsername) === true) {
-			throw(new \InvalidArgumentException ("Profile username does not exist", 405));
+			$requestObject->profileUsername = $profile->getProfileUsername();
 		}
 		//profile zip | if null use the profile zip that is in the database
 		if(empty($requestObject->profileZip) === true) {
