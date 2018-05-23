@@ -79,14 +79,18 @@ try {
 		//check that required fields are available
 		if(empty($requestObject->beerAbv) === true) {
 			throw (new \InvalidArgumentException("One too many? Your beer has no Abv!.", 405));
-		} else if(empty($requestObject->beerName) === true) {
+		}
+
+		if(empty($requestObject->beerName) === true) {
 			throw (new \InvalidArgumentException("Every brew needs a name!"));
 		}
 
 		//check optional params, if empty set to null
 		if(empty($requestObject->beerDescription) === true) {
 			$requestObject->beerDescription = null;
-		} else if(empty($requestObject->beerIbu) === true) {
+		}
+
+		if(empty($requestObject->beerIbu) === true) {
 			$requestObject->beerIbu = null;
 		}
 	}
