@@ -34,8 +34,8 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 
-	if (($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
-				throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
+		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
 	// handle GET request - if id is present that style is returned, otherwise all styles are returned
@@ -45,9 +45,17 @@ try {
 
 		// get a specific tweet or all tweets and update reply
 		if(empty($id) === false) {
-					$reply->data = Style::getStyleByStyleId($pdo, $id);
+			$reply->data = Style::getStyleByStyleId($pdo, $id);
 		} else {
-					$reply->data = Style::getAllStyles($pdo)->toArray();
+			$reply->data = Style::getAllStyles($pdo)->toArray();
 		}
 	}
+} catch(\Exception | \TypeError $exception) {
+			$reply->status = $exception->getCode();
+			$reply->message = $exception->getMessage();
 }
+
+// encode and return reply to the front end caller
+header("Content-type: application/json");
+echo json_decode($reply);
+
