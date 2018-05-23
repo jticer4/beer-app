@@ -46,7 +46,7 @@ try {
 		(new InvalidArgumentException("id cannot be empty", 405));
 	}
 
-	// handle GET request - if id is present, that beer is returned, otherwise all tweets are returned
+	// handle GET request - if id is present, that beer is returned, otherwise all beers are returned
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie();
@@ -145,7 +145,7 @@ try {
 
 		//retrieve the beer to be deleted
 		$beer = Beer::getBeerbyBeerId($pdo, $id);
-		if($tweet === null) {
+		if($beer === null) {
 			throw(new RuntimeException("That beer doesn't exist", 404));
 		}
 
@@ -168,7 +168,7 @@ try {
 	$reply->message = $exception->getMessage();
 }
 
-//encode and return replay to front end caller
+//encode and return reply to front end caller
 header("Content-type: application/json");
 echo json_encode($reply);
 
