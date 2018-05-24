@@ -45,7 +45,24 @@ try {
 			\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
 
 			// make sure the id is valid for methods that require it
-			if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
-				throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+			if($method === "POST") {
+
+				// verify that the end user has XSRF token.
+				verifyXsrf();
+				if(empty($_SESSION["profile"]) === true) {
+					throw (new \InvalidArgumentException("You must be logged in to upload images", 401));
+
+					// verify user is logged into the profile before uploading an image
+				} elseif($_SESSION["profile"])->getProfileId()) {
+					throw(new \InvalidArgumentException("You are not allowed to upload an image if you're not logged in", 403));
+				}
+
+				// assigning variable to the user profile, add image extension
+				$tempUserFileName = $_FILES["image"]["tmp_name"];
+
+				// upload image to Cloudinary and get public id
+				$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, array("width" => 500, "crop"=> "scale"));
+
+				// after sending the image to Cloudinary, get the image.
 			}
 }
