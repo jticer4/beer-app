@@ -52,7 +52,7 @@ try {
 		//verify that the confirm password is present
 		if(empty($requestObject->profilePasswordConfirm) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
-	}
+		}
 
 		//if the profile activation is not null throw an error
 		if($profile->getProfileActivationToken() !== null) {
@@ -63,11 +63,11 @@ try {
 
 		$profileActivationToken = bin2hex(random_bytes(32));
 
-			// create the profile object and prepare to insert into the database
-			$profile = new Profile(generateUuidV4(), $requestObject->profileAbout, $profileActivationToken, $requestObject->profileAddressLine1, $requestObject->profileAddresLine2, $requestObject->profileCity, $requestObject ->profileEmail, $hash, $requestObject->profileImage, $requestObject->profileName, $requestObject->profileState, $requestObject ->profileUsername, $requestObject->profileUsertype, $requestObject->profileZip);
+		// create the profile object and prepare to insert into the database
+		$profile = new Profile(generateUuidV4(), $requestObject->profileAbout, $profileActivationToken, $requestObject->profileAddressLine1, $requestObject->profileAddresLine2, $requestObject->profileCity, $requestObject ->profileEmail, $hash, $requestObject->profileImage, $requestObject->profileName, $requestObject->profileState, $requestObject ->profileUsername, $requestObject->profileUsertype, $requestObject->profileZip);
 
-			//insert the profile into the database
-			$profile->insert($pdo);
+		//insert the profile into the database
+		$profile->insert($pdo);
 
 		//compose the email message to send with th activation token
 		$messageSubject = "One step closer -- Account Activation";
@@ -88,57 +88,57 @@ try {
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
 
-			//create swift email
-			$swiftMessage = new Swift_Message();
+		//create swift email
+		$swiftMessage = new Swift_Message();
 
-			//attach the sender to the message
-			//this takes the form of an associative array where the email is the key to a real name
-			$swiftMessage->setFrom(["cmarquez69@cnm.edu" => "cmarquez"]);
+		//attach the sender to the message
+		//this takes the form of an associative array where the email is the key to a real name
+		$swiftMessage->setFrom(["cmarquez69@cnm.edu" => "cmarquez"]);
 
-			/**
-			 *attach recipients to the message
-			 **/
-			//define who the recipient is
-			$recipients = [$requectObject->profileEmail];
+		/**
+		*attach recipients to the message
+		**/
+		//define who the recipient is
+		$recipients = [$requectObject->profileEmail];
 
-			//set the recipient to the swift message
-			$swiftMessage->setTo($recipients);
+		//set the recipient to the swift message
+		$swiftMessage->setTo($recipients);
 
-			//attach the subject line to the email message
-			$swiftMessage->setSubject($messageSubject);
+		//attach the subject line to the email message
+		$swiftMessage->setSubject($messageSubject);
 
-			/**
-			 *attach the message to the email
-			 **/
-			//attach the html version of the message
-			$swiftMessage->setBody($message, "text/html");
-			//attach the plain text version of the message
-			$swiftMessage->addPart(html_entity_decode($message), "text/plain");
-			/**
-			 *send the email via SMTP;
-			 * @see http://swiftmailer.org/docs/sending.html Sending Messages - Documentation - SwitftMailer
-			 **/
+		/**
+		*attach the message to the email
+		**/
+		//attach the html version of the message
+		$swiftMessage->setBody($message, "text/html");
+		//attach the plain text version of the message
+		$swiftMessage->addPart(html_entity_decode($message), "text/plain");
+		/**
+		 *send the email via SMTP;
+		 * @see http://swiftmailer.org/docs/sending.html Sending Messages - Documentation - SwitftMailer
+		 **/
 
-			//setup smtp
-			$smtp = new Swift_SmtpTransport(
-				"localhost", 25);
-			$mailer = new Swift_Mailer($smtp);
+		//setup smtp
+		$smtp = new Swift_SmtpTransport(
+			"localhost", 25);
+		$mailer = new Swift_Mailer($smtp);
 
-			//send the message
-			$numSent = $mailer->send($swiftMessage, $failedRecipients);
+		//send the message
+		$numSent = $mailer->send($swiftMessage, $failedRecipients);
 
-			/**
-			 *the send method returns the number of recipients that accepted the email
-			 * if the number of attempted sign ups is not the number accepted its an exception
-			 **/
-			if($numSent !== count($recipients)) {
+		/**
+		 *the send method returns the number of recipients that accepted the email
+		 * if the number of attempted sign ups is not the number accepted its an exception
+		 **/
+		if($numSent !== count($recipients)) {
 
-				//the $failedRecipients parameter passed in the send() method now contains an array of the emails that failed to pass
-				throw(new RuntimeException("Unable to send email", 400));
-			}
+		//the $failedRecipients parameter passed in the send() method now contains an array of the emails that failed to pass
+		throw(new RuntimeException("Unable to send email", 400));
+		}
 
-			//update reply
-			$reply->message = "Thank you for creating an account with !!!";
+		//update reply
+		$reply->message = "Thank you for creating an account with !!!";
 		} else {
 		throw (new \InvalidArgumentException("invalid http request"));
 		}
@@ -148,6 +148,6 @@ EOF;
 		$reply->trace = $exception->getTraceAsString();
 }
 
-	header("Content-type: application/json");
-	echo json_encode($reply);
+header("Content-type: application/json");
+echo json_encode($reply);
 
