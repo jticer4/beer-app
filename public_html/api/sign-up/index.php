@@ -11,6 +11,7 @@ use Edu\Cnm\Beer\Profile;
 /**
 * api for handling sign-in
 * @author Carlos Marquez
+* @author James Ticer
 **/
 
 //verify the session, start if not active
@@ -85,6 +86,7 @@ try {
 
 		//compose the message to send with email
 		$message = <<< EOF
+
 <h2>Welcome to "name of app".</h2>
 <p>In order to use the app, please confirm your account</p>
 <p><a href="$confirmLink">$confirmLink</a></p>
