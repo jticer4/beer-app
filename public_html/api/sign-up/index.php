@@ -102,6 +102,7 @@ EOF;
 		/**
 		*attach recipients to the message
 		**/
+
 		//define who the recipient is
 		$recipients = [$requectObject->profileEmail];
 
@@ -114,10 +115,13 @@ EOF;
 		/**
 		*attach the message to the email
 		**/
+
 		//attach the html version of the message
 		$swiftMessage->setBody($message, "text/html");
+
 		//attach the plain text version of the message
 		$swiftMessage->addPart(html_entity_decode($message), "text/plain");
+
 		/**
 		*send the email via SMTP;
 		* @see http://swiftmailer.org/docs/sending.html Sending Messages - Documentation - SwitftMailer
@@ -132,9 +136,9 @@ EOF;
 		$numSent = $mailer->send($swiftMessage, $failedRecipients);
 
 		/**
-		 *the send method returns the number of recipients that accepted the email
-		 * if the number of attempted sign ups is not the number accepted its an exception
-		 **/
+		*the send method returns the number of recipients that accepted the email
+		* if the number of attempted sign ups is not the number accepted its an exception
+		**/
 		if($numSent !== count($recipients)) {
 
 		//the $failedRecipients parameter passed in the send() method now contains an array of the emails that failed to pass
