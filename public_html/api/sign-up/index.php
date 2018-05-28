@@ -82,7 +82,7 @@ try {
 		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
 
 		//compose the message to send with email
-			$message = <<< EOF
+		$message = <<< EOF
 <h2>Welcome to "name of app".</h2>
 <p>In order to use the app, please confirm your account</p>
 <p><a href="$confirmLink">$confirmLink</a></p>
@@ -115,9 +115,9 @@ EOF;
 		//attach the plain text version of the message
 		$swiftMessage->addPart(html_entity_decode($message), "text/plain");
 		/**
-		 *send the email via SMTP;
-		 * @see http://swiftmailer.org/docs/sending.html Sending Messages - Documentation - SwitftMailer
-		 **/
+		*send the email via SMTP;
+		* @see http://swiftmailer.org/docs/sending.html Sending Messages - Documentation - SwitftMailer
+		**/
 
 		//setup smtp
 		$smtp = new Swift_SmtpTransport(
