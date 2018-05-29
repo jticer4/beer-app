@@ -26,7 +26,7 @@ $reply->data = null;
 
 try {
 	//grab the mySQL statement
-	$pdo = connectToEncryptedMySQL("/etc/apace2/capstone-mysql/beer-app.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apace2/capstone-mysql/beer.ini");
 
 	//determine which HTTP method is being used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_METHOD"] : $_SERVER["REQUEST_METHOD"];
