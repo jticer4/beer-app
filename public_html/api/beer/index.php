@@ -44,8 +44,7 @@ try {
 
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
-		throw
-		(new InvalidArgumentException("id cannot be empty", 405));
+		throw(new InvalidArgumentException("id cannot be empty", 402));
 	}
 
 	// handle GET request - if id is present, that beer is returned, otherwise all beers are returned
@@ -124,7 +123,7 @@ try {
 
 		//update reply
 		$reply->message = "Beer updated OK";
-	} else if(method === "POST") {
+	} else if($method === "POST") {
 
 		//enforce the user sign in
 		if(empty($_SESSION["profile"]) === true) {
@@ -151,8 +150,7 @@ try {
 		}
 
 		//enforce the user is signed in and only trying to edit their own beer
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getBeerProfileId() !== $beer->getBeerProfileId
-			()) {
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getBeerProfileId() !== $beer->getBeerProfileId()) {
 			throw(new \InvalidArgumentException("You are not allowed to delete this beer.", 403));
 		}
 
