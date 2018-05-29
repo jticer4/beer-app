@@ -73,7 +73,7 @@ try {
 		// create the profile object and prepare to insert into the database
 		$profile = new Profile(generateUuidV4(), $requestObject->profileAbout, $profileActivationToken, "null",
 		"null", "null", $requestObject ->profileEmail, $hash, "null",
-		$requestObject->profileName, "null", $requestObject ->profileUsername, $requestObject->profileUsertype, "null");
+		$requestObject->profileName, "null", $requestObject ->profileUsername, $requestObject->profileUserType, "null");
 
 		//insert the profile into the database
 		$profile->insert($pdo);
