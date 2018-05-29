@@ -48,8 +48,8 @@ try {
 		}
 
 		//confirm usertype
-		if(empty($requestObject->profileUsertype) === true) {
-			throw(new \InvalidArgumentException("No usertype selected", 405));
+		if(empty($requestObject->profileUserType) === true) {
+			throw(new \InvalidArgumentException("No user Type selected", 405));
 		}
 		//verify that profile password is present
 		if(empty($requestObject->profilePassword) === true) {
