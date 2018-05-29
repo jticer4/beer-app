@@ -25,7 +25,7 @@ if(session_status() !==PHP_SESSION_ACTIVE) {
 
 // prepare an empty reply
 $reply = new StdClass();
-$status->status = 200;
+$reply->status = 200;
 $reply->data = null;
 
 try {
