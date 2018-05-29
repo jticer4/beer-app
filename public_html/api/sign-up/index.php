@@ -9,7 +9,7 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 use Edu\Cnm\Beer\Profile;
 
 /**
-* api for handling sign-in
+* api for handling sign-up
 * @author Carlos Marquez
 * @author James Ticer
 **/
@@ -26,7 +26,7 @@ $reply->data = null;
 
 try {
 	//grab the mySQL statement
-	$pdo = connectToEncryptedMySQL("/etc/apace2/capstone-mysql/beer.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/beer.ini");
 
 	//determine which HTTP method is being used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_METHOD"] : $_SERVER["REQUEST_METHOD"];
