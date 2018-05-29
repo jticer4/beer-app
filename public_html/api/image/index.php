@@ -1,6 +1,5 @@
 <?php
 
-
 require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
 require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
 require_once ("/etc/apache2/capstone-mysql/encrypted-config.php");
@@ -32,7 +31,7 @@ $reply->data = null;
 try {
 
 			// Grab the mySQL Connection
-			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/???.ini");
+			$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/beer-app.ini");
 
 			// determine which HTTP method is being used
 			$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -40,7 +39,7 @@ try {
 			$profileId = filter_input(INPUT_GET, "profileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 			$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-			$config = readConfig("/etc/apache2/capstone-mysql/???.ini");
+			$config = readConfig("/etc/apache2/capstone-mysql/beer-app.ini");
 			$cloudinary = json_decode($config["cloudinary"]);
 			\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
 
@@ -49,12 +48,9 @@ try {
 
 				// verify that the end user has XSRF token.
 				verifyXsrf();
+
 				if(empty($_SESSION["profile"]) === true) {
 					throw (new \InvalidArgumentException("You must be logged in to upload images", 401));
-
-					// verify user is logged into the profile before uploading an image
-				} elseif($_SESSION["profile"])->getProfileId()) {
-					throw(new \InvalidArgumentException("You are not allowed to upload an image if you're not logged in", 403));
 				}
 
 				// assigning variable to the user profile, add image extension
@@ -64,5 +60,19 @@ try {
 				$cloudinaryResult = \Cloudinary\Uploader::upload($tempUserFileName, array("width" => 500, "crop"=> "scale"));
 
 				// after sending the image to Cloudinary, get the image.
+				$profile = Profile::getProfileByProfileId($pdo,$_SESSION["profile"]->getProfileId());
+				if($profile === null) {
+					throw(new RuntimeException("Profile not found", 404));
+				}
+
+				$profile->setProfileImage($cloudinaryResult["secure_url"]);
+				$profile->update($pdo);
+				$reply->message = "Image uploaded ok";
 			}
+} catch(Exception $exception) {
+			$reply->status = $exception->getCode();
+			$reply->message = $exception->getMessage();
 }
+
+header("Content-Type: application/json");
+echo json_encode($reply);
