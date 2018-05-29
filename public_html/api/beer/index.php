@@ -30,15 +30,15 @@ $reply->data = null;
 
 try {
 	//grab mySQL connection
-	$pdo = connectToEncryptedMySQL("/etc/apache/capstone-mysql/beer-app.ini");
+	$pdo = connectToEncryptedMySQL("/etc/apache/capstone-mysql/beer.ini");
 
 	//determine which HTTP method is being used
 	$method = $_SERVER["HTTP_X_HTTP_METHOD"] ?? $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$beerProfileId === filter_input(INPUT_GET, "beerProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	// TODO get more information on what inputs are requisite for API calls
+	$beerProfileId = filter_input(INPUT_GET, "beerProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
 
 	//make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
@@ -108,8 +108,8 @@ try {
 		}
 
 		//enforce user signed in and only editing their own beer
-		//TODO ADD TO STRING
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId () !== $beer->getBeerProfileId()) {
+
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $beer) {
 			throw(new \InvalidArgumentException("You are not allowed to edit this beer", 403));
 		}
 
