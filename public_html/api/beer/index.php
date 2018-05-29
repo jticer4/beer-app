@@ -8,9 +8,9 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 
 use Edu\Cnm\Beer\{
-	Beer,
+	Beer, Profile
 	// we only use the profile class for testing purposes
-	Profile
+
 };
 
 /**
