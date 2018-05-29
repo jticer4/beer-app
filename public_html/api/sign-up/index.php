@@ -33,18 +33,24 @@ try {
 
 	if($method === "POST") {
 
-		//make sure the XSRF Token is valid
-		verifyXsrf();
-
 		//process the request content and decode the json object into a php object
 		$requestContent = file_get_contents("php://input");
 		$requestObject = json_decode($requestContent);
 
 		//check to make sure the password and email field is not empty
 		if(empty($requestObject->profileEmail) === true) {
-			throw(new \InvalidArgumentException("No email address present", 405));
+			throw(new \InvalidArgumentException("No email address given", 405));
 		}
 
+		//verify that username is present
+		if(empty($requestObject->profileUsername) === true) {
+			throw(new \InvalidArgumentException("No username given",405));
+		}
+
+		//confirm usertype
+		if(empty($requestObject->profileUsertype) === true) {
+			throw(new \InvalidArgumentException("No usertype selected", 405));
+		}
 		//verify that profile password is present
 		if(empty($requestObject->profilePassword) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
@@ -55,9 +61,9 @@ try {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
 		}
 
-		//if the profile activation is not null throw an error
-		if($profile->getProfileActivationToken() !== null) {
-			throw (new \InvalidArgumentException("you are not allowed to sign in unless you have activated your account", 403));
+		//make sure the password and confirm password match
+		if ($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
+			throw(new \InvalidArgumentException("passwords do not match"));
 		}
 
 		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 384]);
@@ -65,17 +71,17 @@ try {
 		$profileActivationToken = bin2hex(random_bytes(32));
 
 		// create the profile object and prepare to insert into the database
-		$profile = new Profile(generateUuidV4(), $requestObject->profileAbout, $profileActivationToken, $requestObject->profileAddressLine1,
-		$requestObject->profileAddresLine2, $requestObject->profileCity, $requestObject ->profileEmail, $hash, $requestObject->profileImage,
-		$requestObject->profileName, $requestObject->profileState, $requestObject ->profileUsername, $requestObject->profileUsertype, $requestObject->profileZip);
+		$profile = new Profile(generateUuidV4(), $requestObject->profileAbout, $profileActivationToken, "null",
+		"null", "null", $requestObject ->profileEmail, $hash, "null",
+		$requestObject->profileName, "null", $requestObject ->profileUsername, $requestObject->profileUsertype, "null");
 
 		//insert the profile into the database
 		$profile->insert($pdo);
 
-		//compose the email message to send with th activation token
+		//compose the email message to send with the activation token
 		$messageSubject = "One step closer -- Account Activation";
 
-		//building the activation link that can travel to another server and still work . this is the link that will be clicked to confirm the account
+		//building the activation link that can travel to another server and still work. this is the link that will be clicked to confirm the account
 		$basePath = dirname($_SERVER["SCRIPT_NAME"], 3);
 
 		//create the path
@@ -86,7 +92,6 @@ try {
 
 		//compose the message to send with email
 		$message = <<< EOF
-
 <h2>Welcome to "name of app".</h2>
 <p>In order to use the app, please confirm your account</p>
 <p><a href="$confirmLink">$confirmLink</a></p>
@@ -97,14 +102,14 @@ EOF;
 
 		//attach the sender to the message
 		//this takes the form of an associative array where the email is the key to a real name
-		$swiftMessage->setFrom(["cmarquez69@cnm.edu" => "cmarquez"]);
+		$swiftMessage->setFrom(["carl.marq95@gmail.com" => "cmarquez69"]);
 
 		/**
 		*attach recipients to the message
 		**/
 
 		//define who the recipient is
-		$recipients = [$requectObject->profileEmail];
+		$recipients = [$requestObject->profileEmail];
 
 		//set the recipient to the swift message
 		$swiftMessage->setTo($recipients);
@@ -148,11 +153,11 @@ EOF;
 		//update reply
 		$reply->message = "Thank you for creating an account with !!!";
 		} else {
-		throw (new \InvalidArgumentException("invalid http request"));
+		throw (new InvalidArgumentException("invalid http request"));
 		}
-} catch(\TypeError $typeError) {
-		$reply->status = $typeError->getCode();
-		$reply->message = $typeError->getMessage();
+} catch(\Exception |\TypeError $exception) {
+		$reply->status = $exception->getCode();
+		$reply->message = $exception->getMessage();
 		$reply->trace = $exception->getTraceAsString();
 }
 
