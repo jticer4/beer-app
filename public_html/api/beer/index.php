@@ -68,76 +68,76 @@ try {
 		}
 	} else if($method === "PUT" || $method === "POST") {
 
-		//enforce that the user has an XSRF token
-		verifyXsrf();
+			//enforce that the user has an XSRF token
+			verifyXsrf();
 
-		//Retrieves and stores the JSON package from the front end.
-		$requestContent = file_get_contents("php://input");
+			//Retrieves and stores the JSON package from the front end.
+			$requestContent = file_get_contents("php://input");
 
-		//decode JSON package
-		$requestObject = json_decode($requestContent);
+			//decode JSON package
+			$requestObject = json_decode($requestContent);
 
-		//check that required fields are available
-		if(empty($requestObject->beerAbv) === true) {
-			throw (new \InvalidArgumentException("One too many? Your beer has no Abv!.", 405));
+			//check that required fields are available
+			if(empty($requestObject->beerAbv) === true) {
+				throw (new \InvalidArgumentException("One too many? Your beer has no Abv!.", 405));
+			}
+
+			if(empty($requestObject->beerName) === true) {
+				throw (new \InvalidArgumentException("Every brew needs a name!"));
+			}
+
+			//check optional params, if empty set to null
+			if(empty($requestObject->beerDescription) === true) {
+				$requestObject->beerDescription = null;
+			}
+
+			if(empty($requestObject->beerIbu) === true) {
+				$requestObject->beerIbu = null;
+			}
+
+			if(empty($requestObject->beerId) === true) {
+				throw(new\InvalidArgumentException("No beer ID.", 405));
+			}
+
+		//execute the actual PUT or POST
+		if($method === "PUT") {
+
+			//retrieve the beer to update
+			$beer = Beer::getBeerbyBeerId($pdo, $id);
+			if($beer === null) {
+				throw(new RuntimeException("Beer does not exist", 404));
+			}
+
+			//enforce user signed in and only editing their own beer
+
+			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $beer) {
+				throw(new \InvalidArgumentException("You are not allowed to edit this beer", 403));
+			}
+
+			//update all attributes
+			$beer->setBeerAbv($requestObject->beerAbv);
+			$beer->setBeerDescription($requestObject->beerDescription);
+			$beer->setBeerIbu($requestObject->beerIbu);
+			$beer->setBeerName($requestObject->beerName);
+			$beer->update($pdo);
+
+			//update reply
+			$reply->message = "Beer updated OK";
+		} else if($method === "POST") {
+
+			//enforce the user sign in
+			if(empty($_SESSION["profile"]) === true) {
+				throw(new \InvalidArgumentException("you must be logged in to do that", 403));
+			}
+
+			//create new beer and insert it into the database
+			$beer = new Beer(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $requestObject->beerAbv,
+				$requestObject->beerDescription, $requestObject->beerIbu, $requestObject->beerName);
+			$beer->insert($pdo);
+
+			// update reply
+			$reply->message = "Beer created successfully";
 		}
-
-		if(empty($requestObject->beerName) === true) {
-			throw (new \InvalidArgumentException("Every brew needs a name!"));
-		}
-
-		//check optional params, if empty set to null
-		if(empty($requestObject->beerDescription) === true) {
-			$requestObject->beerDescription = null;
-		}
-
-		if(empty($requestObject->beerIbu) === true) {
-			$requestObject->beerIbu = null;
-		}
-
-		if(empty($requestObject->beerId) === true) {
-			throw(new\InvalidArgumentException("No beer ID.", 405));
-		}
-	}
-	//execute the actual PUT or POST
-	if($method === "PUT") {
-
-		//retrieve the beer to update
-		$beer = Beer::getBeerbyBeerId($pdo, $id);
-		if($beer === null) {
-			throw(new RuntimeException("Beer does not exist", 404));
-		}
-
-		//enforce user signed in and only editing their own beer
-
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $beer) {
-			throw(new \InvalidArgumentException("You are not allowed to edit this beer", 403));
-		}
-
-		//update all attributes
-		$beer->setBeerAbv($requestObject->beerAbv);
-		$beer->setBeerDescription($requestObject->beerDescription);
-		$beer->setBeerIbu($requestObject->beerIbu);
-		$beer->setBeerName($requestObject->beerName);
-		$beer->update($pdo);
-
-		//update reply
-		$reply->message = "Beer updated OK";
-	} else if($method === "POST") {
-
-		//enforce the user sign in
-		if(empty($_SESSION["profile"]) === true) {
-			throw(new \InvalidArgumentException("you must be logged in to do that", 403));
-		}
-
-		//create new beer and insert it into the database
-		$beer = new Beer(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $requestObject->beerAbv,
-			$requestObject->beerDescription, $requestObject->beerIbu, $requestObject->beerName);
-		$beer->insert($pdo);
-
-		// update reply
-		$reply->message = "Beer created successfully";
-
 	} else if($method === "DELETE") {
 
 		//enforce that the end user has an XSRF token.
@@ -150,7 +150,8 @@ try {
 		}
 
 		//enforce the user is signed in and only trying to edit their own beer
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getBeerProfileId() !== $beer->getBeerProfileId()) {
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getBeerProfileId() !== $beer->getBeerProfileId
+			()) {
 			throw(new \InvalidArgumentException("You are not allowed to delete this beer.", 403));
 		}
 
