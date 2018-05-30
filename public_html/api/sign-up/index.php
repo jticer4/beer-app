@@ -38,7 +38,7 @@ try {
 		$requestObject = json_decode($requestContent);
 
 		//check to make sure the password and email field is not empty
-		if(empty($requestObject->profileEmail) === true) {
+		if(empty($requestObject->profileEmail)) {
 			throw(new \InvalidArgumentException("No email address given", 405));
 		}
 
@@ -68,10 +68,10 @@ try {
 
 		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 384]);
 
-		$profileActivationToken = bin2hex(random_bytes(32));
+		$profileActivationToken = bin2hex(random_bytes(16));
 
 		// create the profile object and prepare to insert into the database
-		$profile = new Profile(generateUuidV4(), "null", $profileActivationToken, "null", "null", "null", $requestObject ->profileEmail, $hash, "null",$requestObject->profileName, "null", $requestObject ->profileUsername, $requestObject->profileUserType, "null");
+		$profile = new Profile(generateUuidV4(), "null", $profileActivationToken, "null", "null", "null", $requestObject ->profileEmail, $hash, "null","null", "null", $requestObject ->profileUsername, $requestObject->profileUserType, "null");
 
 		//insert the profile into the database
 		$profile->insert($pdo);
