@@ -5,6 +5,7 @@
     "phpdocumentor/reflection-docblock": "@stable",
     "phpunit/dbunit": "@stable",
     "phpunit/phpunit": "@stable",
+    "swiftmailer/swiftmailer": "@stable",
     "roave/better-reflection": "dev-master#a402048"
   },
 
