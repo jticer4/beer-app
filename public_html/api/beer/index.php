@@ -95,9 +95,7 @@ try {
 				$requestObject->beerIbu = null;
 			}
 
-			if(empty($requestObject->beerId) === true) {
-				throw(new\InvalidArgumentException("No beer ID.", 405));
-			}
+
 
 		//execute the actual PUT or POST
 		if($method === "PUT") {
@@ -110,7 +108,7 @@ try {
 
 			//enforce user signed in and only editing their own beer
 
-			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $beer) {
+			if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $beer->getBeerProfileId()->toString()) {
 				throw(new \InvalidArgumentException("You are not allowed to edit this beer", 403));
 			}
 
@@ -130,9 +128,10 @@ try {
 				throw(new \InvalidArgumentException("you must be logged in to do that", 403));
 			}
 
+			validateJwtHeader();
+
 			//create new beer and insert it into the database
-			$beer = new Beer(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $requestObject->beerAbv,
-				$requestObject->beerDescription, $requestObject->beerIbu, $requestObject->beerName);
+			$beer = new Beer(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $requestObject->beerAbv, $requestObject->beerDescription, $requestObject->beerIbu, $requestObject->beerName);
 			$beer->insert($pdo);
 
 			// update reply
@@ -150,8 +149,8 @@ try {
 		}
 
 		//enforce the user is signed in and only trying to edit their own beer
-		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getBeerProfileId() !== $beer->getBeerProfileId
-			()) {
+		if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !==
+			$beer->getBeerProfileId()->toString()) {
 			throw(new \InvalidArgumentException("You are not allowed to delete this beer.", 403));
 		}
 
