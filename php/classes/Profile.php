@@ -100,7 +100,7 @@ class Profile implements \JsonSerializable {
 	private $profileZip;
 
 	/**
-	 * constructor for this Profile
+	 * Constructor for this Profile
 	 *
 	 * @param string|Uuid $newProfileId id for this profile or null if a new profile
 	 * @param string $newProfileAbout string containing the profile about me content
