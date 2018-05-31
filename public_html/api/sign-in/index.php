@@ -8,7 +8,7 @@ use Edu\Cnm\Beer\Profile;
 /**
  * api for handling sign-in
  *
- * @author Gkephart
+ * @author James Ticer
  **/
 //prepare an empty reply
 $reply = new stdClass();

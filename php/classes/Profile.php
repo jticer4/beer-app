@@ -117,7 +117,7 @@ class Profile implements \JsonSerializable {
 	 * @param string $newProfileUserType string containing the user type of the profile
 	 * @param string $newProfileZip string containing the zip code of the profile
 	 **/
-	public function __construct( $newProfileId, string $newProfileAbout, string $newProfileActivationToken, string $newProfileAddressLine1, string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
+	public function __construct( $newProfileId, string $newProfileAbout, ?string $newProfileActivationToken, string $newProfileAddressLine1, string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileAbout($newProfileAbout);
