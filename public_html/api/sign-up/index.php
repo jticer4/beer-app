@@ -47,10 +47,6 @@ try {
 			throw(new \InvalidArgumentException("No username given",405));
 		}
 
-		//confirm user type
-		if(empty($requestObject->profileUserType) === true) {
-			throw(new \InvalidArgumentException("No user Type selected", 405));
-		}
 		//verify that profile password is present
 		if(empty($requestObject->profilePassword) === true) {
 			throw(new \InvalidArgumentException ("Must input valid password", 405));
@@ -71,7 +67,7 @@ try {
 		$profileActivationToken = bin2hex(random_bytes(16));
 
 		// create the profile object and prepare to insert into the database
-		$profile = new Profile(generateUuidV4(), "null", $profileActivationToken, "null", "null", "null", $requestObject ->profileEmail, $hash, "null","null", "nm", $requestObject ->profileUsername, $requestObject->profileUserType, "null");
+		$profile = new Profile(generateUuidV4(), "null", $profileActivationToken, "null", "null", "null", $requestObject ->profileEmail, $hash, "null","null", "nm", $requestObject ->profileUsername, 1, "null");
 
 		//insert the profile into the database
 		$profile->insert($pdo);
