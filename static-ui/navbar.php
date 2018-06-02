@@ -1,3 +1,21 @@
+<?php
+	require_once ("head-utils.php");
+?>
+
+<div class="container smallHide animated fadeInDown">
+	<ul class="nav justify-content-center">
+		<li id="portfolioLink" class="nav-item">
+			<a class="navbar-brand" href="#"><img src="" alt=""></a>
+		</li>
+		<li class="nav-item">
+			<a id="" class="nav-link" href="#">Sign In</a>
+		</li>
+		<li class="nav-item">
+			<a id="" class="nav-link" href="#">Sign Up</a>
+		</li>
+	</ul>
+</div>
+
 <div class="container bigHide fixed-bottom">
 	<div class="collapse " id="btmNavToggle">
 		<div class="d-flex flex-row mb-3 justify-content-around" aria-label="navigation">
@@ -12,3 +30,4 @@
 		</button>
 	</nav>
 </div>
+
