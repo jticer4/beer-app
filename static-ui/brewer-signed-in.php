@@ -11,6 +11,10 @@
 			<div class="col-sm-8">
 				<h1>Brewer Name</h1>
 				<h4>Total &#35; of brews</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
 				<div class="list-group">
 					<button type="button" class="list-group-item list-group-item-action active">
 						Cras justo odio
