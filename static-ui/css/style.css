@@ -1,6 +1,15 @@
+body{
+	font-family: 'Ubuntu', sans-serif;
+}
+
 @media screen and (max-width: 993px) {
 	.smallHide {
 		display: none;
+	}
+
+	#brandIcon {
+		height: 2em;
+		width: auto;
 	}
 }
 
@@ -8,4 +17,9 @@
 	.bigHide {
 		display: none;
 	}
+
+	#brandIcon {
+		display: none;
+	}
+
 }

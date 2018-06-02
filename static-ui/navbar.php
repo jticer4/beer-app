@@ -5,7 +5,7 @@
 <div class="container smallHide animated fadeInDown">
 	<ul class="nav justify-content-center">
 		<li id="portfolioLink" class="nav-item">
-			<a class="navbar-brand" href="#"><img src="" alt=""></a>
+			<a class="navbar-brand" href="#"><img id="brandIcon" src="/src/app/images/on-tap-balloon.svg" alt=""></a>
 		</li>
 		<li class="nav-item">
 			<a id="" class="nav-link" href="#">Sign In</a>
