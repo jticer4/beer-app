@@ -10,7 +10,7 @@ require_once dirname(__DIR__, 3) . "/php/lib/jwt.php";
 
 
 use Edu\Cnm\Beer\{
-	Beer, Profile
+	Beer, BeerStyle, Profile
 	// we only use the profile class for testing purposes
 
 };
@@ -38,8 +38,14 @@ try {
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
+
+	//TODO ask Dylan about where these inputs are being sanitized.....again.... :/
+
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$beerProfileId = filter_input(INPUT_GET, "beerProfileId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$beerAbv = filter_input(INPUT_GET,);
+
+
 
 
 	//make sure the id is valid for methods that require it
@@ -63,7 +69,11 @@ try {
 			$reply->data = Beer::getBeerByBeerIbu($pdo, $beerIbu);
 		} else if(empty($beerName) === false) {
 			$reply->data = Beer::getBeerByBeerName($pdo, $beerName);
-		} else {
+		} else if(empty($beerStyleBeerId) === false) {
+			$reply->data = BeerStyle::getBeerStyleByBeerStyleBeerId($pdo, $beerStyleBeerId);
+		} else if(empty($beerStyleStyleId) === false) {
+			$reply->data = BeerStyle::getBeerStyleByBeerStyleStyleId($pdo, $beerStyleStyleId);
+		}	else {
 			$reply->data = Beer::getAllBeers($pdo)->toArray();
 		}
 	} else if($method === "PUT" || $method === "POST") {
