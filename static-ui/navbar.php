@@ -2,11 +2,11 @@
 	require_once ("head-utils.php");
 ?>
 
-<div class="container smallHide animated fadeInDown">
+<div class="container smallHide">
 	<ul class="nav justify-content-center">
-		<li id="portfolioLink" class="nav-item">
-			<a class="navbar-brand" href="#"><img id="brandIcon" src="/src/app/images/on-tap-balloon.svg" alt=""></a>
-		</li>
+		<a class="navbar-brand" href="#">
+			<img src="/src/app/images/on-tap-balloon.svg" alt="onTap icon">
+		</a>
 		<li class="nav-item">
 			<a id="" class="nav-link" href="#">Sign In</a>
 		</li>
@@ -17,6 +17,9 @@
 </div>
 
 <div class="container bigHide fixed-bottom">
+	<div class="row">
+		<div id="nameBar" class="col-12 text-center fixed-top mt-3">onTap</div>
+	</div>
 	<div class="collapse " id="btmNavToggle">
 		<div class="d-flex flex-row mb-3 justify-content-around" aria-label="navigation">
 			<a href="#" role="button" class="btn" >Sign Up</a>
@@ -30,4 +33,5 @@
 		</button>
 	</nav>
 </div>
+
 

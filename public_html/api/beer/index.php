@@ -72,7 +72,7 @@ try {
 			$reply->data = BeerStyle::getBeerStyleByBeerStyleBeerId($pdo, $beerStyleBeerId);
 		} else if(empty($beerStyleStyleId) === false) {
 			$reply->data = BeerStyle::getBeerStyleByBeerStyleStyleId($pdo, $beerStyleStyleId);
-		}	else {
+		} else {
 			$reply->data = Beer::getAllBeers($pdo)->toArray();
 		}
 	} else if($method === "PUT" || $method === "POST") {

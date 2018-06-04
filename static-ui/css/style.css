@@ -7,9 +7,9 @@ body{
 		display: none;
 	}
 
-	#brandIcon {
+	#on-tap-icon {
 		height: 2em;
-		width: auto;
+		width: 2em;
 	}
 }
 
@@ -18,8 +18,10 @@ body{
 		display: none;
 	}
 
-	#brandIcon {
-		display: none;
+	#nameBar {
+		height: 10vh;
+		font-weight:700;
+		font-size: 1.8em;
 	}
 
 }
