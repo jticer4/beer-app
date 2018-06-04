@@ -98,7 +98,7 @@ class Style implements \JsonSerializable {
 		}
 
 		//verifies if the style type is less than 48 characters
-		if(strlen($newStyleType) > 48)
+		if(strlen($newStyleType) > 64)
 			throw(new \RangeException("style type is too long, try again"));
 
 		//store the new style type
