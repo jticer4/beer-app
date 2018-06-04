@@ -7,7 +7,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>onTap Sign Up</title>
+		<title>onTap Sign In</title>
 	</head>
 	<body>
 		<form class="form-horizontal " role="form">
@@ -18,26 +18,14 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="inputUsername" class="col-sm-2 control-label">Username</label>
-				<div class="col-sm-4">
-					<input class="form-control" id="inputUsername" placeholder="Username" ngModel="formInfo.Username">
-				</div>
-			</div>
-			<div class="form-group">
 				<label for="inputPassword" class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-4">
 					<input class="form-control" id="inputPassword" placeholder="Password" ngModel="formInfo.Password">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="inputConfirmPassword" class="col-sm-2 control-label">Confirm Password</label>
-				<div class="col-sm-4">
-					<input class="form-control" id="inputConfirmPassword" placeholder="ConfirmPassword" ngModel="formInfo.ConfirmPassword">
-				</div>
-			</div>
-			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-success">Sign up</button>
+					<button type="submit" class="btn btn-success">Sign in</button>
 				</div>
 			</div>
 		</form>
