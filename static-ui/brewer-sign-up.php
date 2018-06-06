@@ -14,25 +14,25 @@
 			<div class="form-group">
 				<label for="inputEmail" class="col-sm-2 control-label">Email</label>
 				<div class="col-sm-4">
-					<input class="form-control" id="inputEmail" placeholder="Email" ngModel="formInfo.Email">
+					<input maxlength="128" class="form-control" id="inputEmail" placeholder="Email" ngModel required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="inputUsername" class="col-sm-2 control-label">Username</label>
 				<div class="col-sm-4">
-					<input class="form-control" id="inputUsername" placeholder="Username" ngModel="formInfo.Username">
+					<input class="form-control" id="inputUsername" placeholder="Username" ngModel required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="inputPassword" class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-4">
-					<input class="form-control" id="inputPassword" placeholder="Password" ngModel="formInfo.Password">
+					<input class="form-control" id="inputPassword" placeholder="Password" ngModel required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="inputConfirmPassword" class="col-sm-2 control-label">Confirm Password</label>
 				<div class="col-sm-4">
-					<input class="form-control" id="inputConfirmPassword" placeholder="ConfirmPassword" ngModel="formInfo.ConfirmPassword">
+					<input class="form-control" id="inputConfirmPassword" placeholder="ConfirmPassword" ngModel required>
 				</div>
 			</div>
 			<div class="form-group">

@@ -10,17 +10,17 @@
 		<title>onTap Sign In</title>
 	</head>
 	<body>
-		<form class="form-horizontal " role="form">
+		<form class="form-horizontal" role="form">
 			<div class="form-group">
 				<label for="inputEmail" class="col-sm-2 control-label">Email</label>
 				<div class="col-sm-4">
-					<input class="form-control" id="inputEmail" placeholder="Email" ngModel="formInfo.Email">
+					<input maxlength="128" class="form-control" id="inputEmail" placeholder="Email" ngModel required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="inputPassword" class="col-sm-2 control-label">Password</label>
 				<div class="col-sm-4">
-					<input class="form-control" id="inputPassword" placeholder="Password" ngModel="formInfo.Password">
+					<input type="password" class="form-control" id="inputPassword" placeholder="Password" ngModel required>
 				</div>
 			</div>
 			<div class="form-group">
