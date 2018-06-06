@@ -5,6 +5,9 @@
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 
 <section id="splash" class="splash">
+	<div class="bgImage">
+
+	</div>
 	<div class="container">
 
 		<div class="row justify-content-center">

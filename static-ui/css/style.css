@@ -2,6 +2,9 @@ body{
 	font-family: 'Ubuntu', sans-serif;
 }
 
+
+
+
 @media screen and (max-width: 993px) {
 	.smallHide {
 		display: none;
@@ -30,4 +33,13 @@ body{
 	background-color: #111;
 	height: 60vh;
 	width: 60vw;
+}
+
+
+/* Splash */
+
+.bgImage {
+	height:60vh;
+	width: 100vw;
+	background-image: url("");
 }
