@@ -27,7 +27,7 @@
 		</div>
 	</div>
 	<nav class="navbar navbar-light justify-content-center">
-		<button class="navbar-toggler backWhite" type="button" data-toggle="collapse" data-target="#btmNavToggle"
+		<button class="navbar-toggler btn-btn-primary" type="button" data-toggle="collapse" data-target="#btmNavToggle"
 				  aria-controls="btmNavToggle" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>

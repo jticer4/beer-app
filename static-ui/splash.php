@@ -5,7 +5,8 @@
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 
 <section id="splash" class="splash">
-	<div class="bgImage">
+	<div class="bgImage position-absolute">
+		<img src="" alt="onTap background image">
 
 	</div>
 	<div class="container">
