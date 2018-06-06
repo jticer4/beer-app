@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
-import {User} from "../shared/classes/user";
-import {UserService} from "../shared/services/user.service";
+import {User} from "../shared/classes/profile";
+import {ProfileService} from "../shared/services/profile.service";
 
 @Component({
 	template: require("./splash.component.html")
@@ -9,7 +9,7 @@ import {UserService} from "../shared/services/user.service";
 export class SplashComponent implements OnInit{
 	users: User[] = [];
 
-	constructor(protected userService: UserService) {}
+	constructor(protected userService: ProfileService) {}
 
 
 	ngOnInit():void {
