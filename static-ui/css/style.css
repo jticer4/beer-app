@@ -25,3 +25,9 @@ body{
 	}
 
 }
+
+.box {
+	background-color: #111;
+	height: 60vh;
+	width: 60vw;
+}
