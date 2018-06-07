@@ -13,8 +13,7 @@ export class SplashComponent implements OnInit{
 
 
 	ngOnInit():void {
-		this.profileService.getProfile()
-			.subscribe(profile => this.profile = profile);
+
 	}
 
 }

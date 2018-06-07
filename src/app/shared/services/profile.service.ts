@@ -15,8 +15,8 @@ export class ProfileService {
 	private profileUrl = "api/profile/";
 
 	//call to the Profile API and get a Profile object by its id
-	getProfile(id: string) :Observable<Profile> {
-			return(this.http.get<Profile>(this.profileUrl + id));
+	getProfile(profileId: string) :Observable<Profile> {
+			return(this.http.get<Profile>(this.profileUrl + profileId));
 	}
 
 	//call to the Profile API and get a Profile object by its email
