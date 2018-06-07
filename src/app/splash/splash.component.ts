@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {User} from "../shared/classes/profile";
+import {Profile} from "../shared/classes/profile";
 import {ProfileService} from "../shared/services/profile.service";
 
 @Component({
@@ -7,14 +7,14 @@ import {ProfileService} from "../shared/services/profile.service";
 })
 
 export class SplashComponent implements OnInit{
-	users: User[] = [];
+	profile: Profile[] = [];
 
-	constructor(protected userService: ProfileService) {}
+	constructor(protected profileService: ProfileService) {}
 
 
 	ngOnInit():void {
-		this.userService.getAllUsers()
-			.subscribe(users => this.users = users);
+		this.profileService.getProfile()
+			.subscribe(profile => this.profile = profile);
 	}
 
 }

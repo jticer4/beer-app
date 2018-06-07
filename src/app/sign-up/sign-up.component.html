@@ -21,7 +21,7 @@
 				<!--profilePassword-->
 				<input class="form-control" id="profilePassword" type="password" name="password" placeholder=" Password" formControlName="profilePassword">
 				<div class="alert alert-danger" *ngIf="signUpForm.controls.profilePassword?.invalid && signUpForm.controls.profilePassword?.touched">
-					<p *ngIf="signUpForm.controls.profilepassword?.errors.maxlength">Password is too long</p>
+					<p *ngIf="signUpForm.controls.profilePassword?.errors.maxlength">Password is too long</p>
 					<p *ngIf="signUpForm.controls.profilePassword?.errors.required">Valid password required</p>
 				</div>
 
