@@ -1,18 +1,35 @@
-<h4>SUP GEORGE</h4>
-<p>-go4</p>
+<section id="splash" class="splash">
+	<div class="bgImage position-absolute">
+		<img src="ot-big-background.jpg" alt="onTap background image">
 
+	</div>
+	<div class="container">
 
-<table class="table table-bordered table-responsive">
-	<tr>
-		<th>User Id</th>
-		<th>Name</th>
-		<th>Email</th>
-		<th>Phone</th>
-	</tr>
-	<tr *ngFor="let user of users">
-		<td>{{user.id}}</td>
-		<td>{{user.name}}</td>
-		<td><a [href]="'mailto:' + user.email">{{user.email}}</a></td>
-		<td>{{user.phone}}</td>
-	</tr>
-</table>
+		<div class="row justify-content-center">
+			<div class="box col-sm-8 mt-3">
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-sm-4 mt-4">
+
+				<select class="form-control">
+					<option>Type</option>
+				</select>
+
+				<select class="form-control mt-2">
+					<option>Abv</option>
+				</select>
+
+				<select class="form-control mt-2">
+					<option>IBU</option>
+				</select>
+
+				<select class="form-control mt-2">
+					<option>Distance</option>
+				</select>
+				<button class="my-4 col-sm-12 justify-content-center" (click)="onClickMe()">Submit</button>
+			</div>
+		</div>
+	</div>
+
+</section>

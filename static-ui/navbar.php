@@ -4,9 +4,7 @@
 
 <div class="container smallHide">
 	<ul class="nav justify-content-center">
-		<a class="navbar-brand" href="#">
-			<img src="/src/app/images/on-tap-balloon.svg" alt="onTap icon">
-		</a>
+		<a class="navbar-brand" href="#"><img src="" alt="onTap icon"></a>
 		<li class="nav-item">
 			<a id="" class="nav-link" href="#">Sign In</a>
 		</li>
