@@ -3,11 +3,11 @@ import {Router} from "@angular/router";
 import {setTimeout} from "timers";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
-import {Status} from "../classes/status";
-import {SignIn} from "../classes/sign.in";
+import {Status} from "../../classes/status";
+import {SignIn} from "../../classes/sign.in";
 
-import {SignInService} from "../services/sign.in.service";
-import {SessionService} from "../services/session.service";
+import {SignInService} from "../../services/sign.in.service";
+import {SessionService} from "../../services/session.service";
 
 
 declare let $: any;
