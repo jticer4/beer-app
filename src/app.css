@@ -1,8 +1,5 @@
-.bgImage {
+main {
 	background-image: url("app/images/ot-big-background.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: 60vh;
-	width: 100vw;
-
 }
