@@ -7,10 +7,9 @@
 
 
 
-body > * {
+body {
 
-	background: #fff url("app/images/ot-big-background.jpg") no-repeat center center fixed;
-	position: relative;
+	background: no-repeat #fff url("./app/images/ot-big-background.jpg");
+	background-size: cover;
 	font-family: 'Ubuntu', sans-serif;
 }
-

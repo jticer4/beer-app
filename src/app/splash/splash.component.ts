@@ -9,7 +9,9 @@ import {ProfileService} from "../shared/services/profile.service";
 export class SplashComponent implements OnInit{
 	profile: Profile[] = [];
 
-	constructor(protected profileService: ProfileService) {}
+
+	constructor(protected profileService: ProfileService) {
+		}
 
 
 	ngOnInit():void {
