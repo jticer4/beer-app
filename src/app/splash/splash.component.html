@@ -1,37 +1,31 @@
-<section id="splash" class="splash">
-	<div class="bgImage position-absolute">
-	</div>
+<section id="splash" class="splash mt-4">
 	<div class="container">
-
 		<div class="row justify-content-center">
-			<div class="box col-sm-8 mt-3">
+			<div id="userInput" class="col-3 align-content-center">
+				<div class="form-group align-self-center">
+					<select class="form-control">
+						<option>Type</option>
+					</select>
+
+					<select class="form-control mt-2">
+						<option>Abv</option>
+					</select>
+
+					<select class="form-control mt-2">
+						<option>IBU</option>
+					</select>
+
+					<select class="form-control mt-2">
+						<option>Distance</option>
+					</select>
+					<button class="my-4 col-sm-12 justify-content-center" (click)="onClickMe()">Submit</button>
+				</div>
 			</div>
-		</div>
-		<div class="row justify-content-center">
-			<div class="form-group col-sm-4 mt-4">
+			<div id="map" class="col-9 align-content-center">
+				<ngui-map class="h-100 w-100 align-self-center">
 
-				<select class="form-control">
-					<option>Type</option>
-				</select>
-
-				<select class="form-control mt-2">
-					<option>Abv</option>
-				</select>
-
-				<select class="form-control mt-2">
-					<option>IBU</option>
-				</select>
-
-				<select class="form-control mt-2">
-					<option>Distance</option>
-				</select>
-				<button class="my-4 col-sm-12 justify-content-center" (click)="onClickMe()">Submit</button>
+				</ngui-map>
 			</div>
-		</div>
-		<div class="map">
-			<ngui-map>
-
-			</ngui-map>
 		</div>
 	</div>
 

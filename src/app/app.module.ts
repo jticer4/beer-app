@@ -4,6 +4,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
 import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
 import {NguiMapModule} from "@ngui/map";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 const moduleDeclarations = [AppComponent];
 
@@ -11,6 +12,8 @@ const moduleDeclarations = [AppComponent];
 	imports:[
 		BrowserModule,
 		HttpClientModule,
+		FormsModule,
+		ReactiveFormsModule,
 		routing,
 		NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyBIv8OMsp0GR-DxUfJybsqiCi0Zvt2K4VM'})
 	],

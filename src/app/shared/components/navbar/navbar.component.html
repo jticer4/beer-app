@@ -1,33 +1,29 @@
-<header>
-	<div class="container-fluid p-0 black">
-		<nav class="navbar navbar-expand-lg ">
-			<a routerLink=""><img src="on-tap-balloon.svg" alt="logo" class="navbar-brand logo"></a>
-			<button class="navbar-toggler navbar-toggler-right navbar-dark" type="button" data-toggle="collapse"
-					  data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-					  aria-label="Toggle Navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse text-right" id="navbarSupportedContent">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item">
-						<a routerLink="sign-up" class="nav-link">Sign Up</a>
-					</li>
-					<li class="nav-item">
-						<!-- link trigger modal -->
-						<a href="#" class="nav-link" data-toggle="modal" data-target="#signInModal">Sign In</a>
-					</li>
-					<li class="nav-item dropdown">
-						<a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Brewer Profile</a>
-						<div class="dropdown-menu black " aria-labelledby="navbarDropdown">
-							<a routerLink="signed-in-homeview" class="dropdown-item yellow">My Beers</a>
-							<a routerLink="update-profile" class="dropdown-item yellow">Update Profile</a>
-						</div>
-					</li>
-					<li class="nav-item ">
-						<a routerLink="" class="nav-link" (click)="signOut();">Sign Out</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
+<div class="container smallHide">
+	<ul class="nav justify-content-center">
+		<a class="navbar-brand" href="#"><img src="on-tap-balloon.svg" alt="onTap icon"></a>
+		<li class="nav-item">
+			<a id="signIn" class="nav-link" href="#">Sign In</a>
+		</li>
+		<li class="nav-item">
+			<a id="signUp" class="nav-link" href="#">Sign Up</a>
+		</li>
+	</ul>
+</div>
+
+<div class="container bigHide fixed-bottom">
+	<div class="row">
+		<div id="nameBar" class="col-12 text-center fixed-top mt-3">onTap</div>
 	</div>
-</header>
+	<div class="collapse " id="btmNavToggle">
+		<div class="d-flex flex-row mb-3 justify-content-around" aria-label="navigation">
+			<a href="#" role="button" class="btn" >Sign Up</a>
+			<a href="#" role="button" class="btn" >Sign In</a>
+		</div>
+	</div>
+	<nav class="navbar navbar-light justify-content-center">
+		<button class="navbar-toggler btn-btn-primary" type="button" data-toggle="collapse" data-target="#btmNavToggle"
+				  aria-controls="btmNavToggle" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</nav>
+</div>

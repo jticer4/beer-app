@@ -8,9 +8,20 @@ import {BeerService} from "./shared/services/beer.service";
 import {SignInService} from "./shared/services/sign.in.service";
 import {SignUpService} from "./shared/services/sign.up.service";
 import {StyleService} from "./shared/services/style.service";
+import {NavbarComponent} from "./shared/components/navbar/navbar.component";
+import {SignInComponent} from "./shared/components/sign-in/sign-in.component";
+import {SignUpComponent} from "./sign-up/sign-up.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 
-export const allAppComponents = [SplashComponent];
+export const allAppComponents = [
+	SplashComponent,
+	NavbarComponent,
+	SignInComponent,
+	SignUpComponent,
+	ProfileComponent,
+
+];
 
 export const routes: Routes = [
 	{path: "", component: SplashComponent}

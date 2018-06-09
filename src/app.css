@@ -9,7 +9,23 @@
 
 body {
 
-	background: no-repeat #fff url("./app/images/ot-big-background.jpg");
-	background-size: cover;
+	background: no-repeat #fff url("./app/images/ot-big-background.jpg") center center fixed;
 	font-family: 'Ubuntu', sans-serif;
+}
+
+
+
+#splash {
+	max-height: 100vh;
+	max-width: 100vw;
+	height: 100%;
+	width: 100%;
+}
+#userInput {
+	max-height: 60vh;
+}
+
+#map {
+	max-height: 60vh;
+	height: 80vh;
 }

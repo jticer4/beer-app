@@ -14,11 +14,11 @@ declare let $: any;
 
 
 @Component({
-	template: require("./sign-in-modal.component.html"),
-	selector: "sign-in"
+	template: require("./sign-in.component.html"),
+	selector: 'sign-in'
 })
 
-export class SignInModalComponent implements OnInit {
+export class SignInComponent implements OnInit {
 
 	signInForm: FormGroup;
 
@@ -75,4 +75,3 @@ export class SignInModalComponent implements OnInit {
 		this.signInService.getSignOut();
 	}
 }
-

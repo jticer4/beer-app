@@ -1,1 +1,13 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="logo"><defs><style>.cls-1{fill:#2869a0;}.cls-2{fill:#fff;}</style></defs><title>on-tap-balloon</title><path class="cls-1" d="M89.24,325c0-133,115.76-243.67,152-278a12.35,12.35,0,0,1,17.5,0c24.92,23.67,152,144,152,278a160.76,160.76,0,0,1-321.52,0Z"/><circle class="cls-2" cx="250" cy="325" r="106"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 44 60" style="enable-background:new 0 0 44 60;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#276AA0;}
+	.st1{fill:#FFFFFF;}
+</style>
+<title>on-tap-balloon</title>
+<path class="st0" d="M0.6,38C0.6,20.3,16,5.6,20.8,1c0.7-0.6,1.6-0.6,2.3,0c3.3,3.1,20.2,19.1,20.2,37c0,11.8-9.6,21.4-21.4,21.4
+	S0.6,49.8,0.6,38z"/>
+<circle class="st1" cx="22" cy="38.1" r="14.1"/>
+</svg>
