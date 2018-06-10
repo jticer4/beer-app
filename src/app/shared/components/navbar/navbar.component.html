@@ -4,7 +4,7 @@
 	"><img src="../../../images/on-tap-balloon.svg" alt="onTap icon" id="on-tap-icon"></a>
 		<ul class="nav">
 			<li class="nav-item">
-				<a class="nav-link" role="button" routerLink="sign-in" id="signInBtn">Sign In</a>
+				<a class="nav-link" role="button" data-toggle="modal" data-target="#signInModal" id="signInBtn">Sign In</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" role="button" id="signUpBtn" routerLink="sign-up">Sign Up</a>
@@ -26,4 +26,40 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 	</nav>
+</div>
+<div id="signInModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="signIn" aria-hidden="true"
+	  id="signInModal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content gray">
+			<div class="modal-header gray">
+				<h5 class="modal-title">Sign In</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body gray">
+				<form [formGroup]="signInForm" class="form-control-lg" name="signInForm" id="signInForm" method="post" (submit)="createSignIn();" novalidate>
+					<div class="info">
+
+						<!--profileEmail-->
+						<input class="form-control" id="profileEmail" type="email" name="email" placeholder=" Email" formControlName="profileEmail"/>
+
+						<div class="alert alert-danger" *ngIf="signInForm.controls.profileEmail?.invalid && signInForm.controls.profileEmail?.touched">
+							<p *ngIf="signInForm.controls.profileEmail?.errors.required">Email or password is incorrect</p>
+						</div>
+
+						<!--profilePassword-->
+						<input class="form-control" id="profilePassword" type="password" name="profilePassword" placeholder=" Password" formControlName="profilePassword">
+
+						<div class="alert alert-danger" *ngIf="signInForm.controls.profilePassword?.invalid && signInForm.controls.profilePassword?.touched">
+							<p *ngIf="signInForm.controls.profilePassword?.errors.required">Email or password incorrect</p>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input class="btn" type="submit" value="Sign In!">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
