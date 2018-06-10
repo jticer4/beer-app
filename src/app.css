@@ -45,6 +45,12 @@ body {
 	height: 40vh;
 }
 
+/*------ SIGN UP ------*/
+#signUp {
+	height: 60vh;
+}
+
+
 /* Extra small devices (portrait phones, less than 576px) === default */
 /* Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
@@ -68,14 +74,14 @@ body {
 
 
 
-@media screen and (max-width: 993px) {
+@media screen and (max-width: 766px) {
 	.smallHide {
 		display: none;
 	}
 
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 765px) {
 	.bigHide {
 		display: none;
 		background-color: ;
