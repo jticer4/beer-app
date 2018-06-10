@@ -10,7 +10,10 @@ import {Router} from "@angular/router";
 
 export class NavbarComponent {
 
+	btnText: string = 'Brewer Sign Up';
 	status: Status;
+
+
 
 	constructor(
 		private signInService: SignInService,
