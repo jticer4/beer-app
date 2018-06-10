@@ -19,6 +19,11 @@ $profile = new Profile(generateUuidV4(),null, null, "8900 San Mateo Blvd. NE", "
 $profile->insert($pdo);
 echo "Bosque Brewing Co.";
 var_dump($profile->getProfileId()->toString());
+// Elephants on Parade
+$beer = new Beer(generateUuidV4(), $profile->getProfileId(), 0.055, null, 12, "Elephants on Parade");
+$beer->insert($pdo);
+echo "first beer";
+var_dump($beer->getBeerId()->toString());
 
 //Profile 2 - Bow & Arrow Brewing Co.
 $password2 = "OhYEAH!";
@@ -100,3 +105,9 @@ $profile10 = new Profile(generateUuidV4(), null, null, "1800 4th St NW", null, "
 $profile10->insert($pdo);
 echo "Tractor Brewing Company";
 var_dump($profile10->getProfileId()->toString());
+
+$beer = new Beer(generateUuidV4(), $profile->getProfileId(), 0.055, null, 12, "Elephants on Parade");
+$beer->insert($pdo);
+echo "first beer";
+var_dump($beer->getBeerId()->toString());
+
