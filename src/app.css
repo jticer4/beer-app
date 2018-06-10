@@ -15,7 +15,6 @@ body {
 /*----- NAVBAR -----*/
 .smallHide{
 	background-color: transparent;
-	position: absolute;
 }
 
 /*----- SPLASH -----*/
@@ -49,9 +48,7 @@ body {
 }
 
 /*------ SIGN UP ------*/
-#signUp {
-	height: 60vh;
-}
+
 
 
 /* Extra small devices (portrait phones, less than 576px) === default */

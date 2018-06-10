@@ -26,6 +26,8 @@ export const allAppComponents = [
 export const routes: Routes = [
 	{path: "", component: SplashComponent},
 	{path: "sign-up", component: SignUpComponent},
+	{path: "sign-in", component: SignInComponent},
+
 
 ];
 
