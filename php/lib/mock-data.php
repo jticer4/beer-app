@@ -15,7 +15,7 @@ $SALT = bin2hex(random_bytes(32));
 $password = "fucking work";
 $HASH = password_hash($password, PASSWORD_ARGON2I, ["time_cost" => 384]);
 
-$profile = new Profile(generateUuidV4(),null, null, "8900 San Mateo Blvd. NE", "Suite I", "Albuquerque", "ross@bosquebrewing.com", $HASH, null, "Ross", "NM", "Bosque Brewing Brewing & Taproom", "1", "87113");
+$profile = new Profile(generateUuidV4(),"jdjdjd", null, "8900 San Mateo Blvd. NE", "Suite I", "Albuquerque", "ross1@bosquebrewing.com", $HASH, null, "Ross", "NM", "Bosque Brewing & Taproom", "1", "87113");
 $profile->insert($pdo);
 echo "Bosque Brewing Co.";
 var_dump($profile->getProfileId()->toString());
@@ -25,6 +25,7 @@ $beer->insert($pdo);
 echo "first beer";
 var_dump($beer->getBeerId()->toString());
 
+
 //Profile 2 - Bow & Arrow Brewing Co.
 $password2 = "OhYEAH!";
 $HASH2 = password_hash($password2, PASSWORD_ARGON2I, ["time_cost" => 384]);
@@ -33,6 +34,12 @@ $profile2 = new Profile(generateUuidV4(),null, null, "608 McKnight Ave. NW", nul
 $profile2->insert($pdo);
 echo "Bow & Arrow Brewing Co.";
 var_dump($profile2->getProfileId()->toString());
+//Visionland Amber Ale
+$beer2 = new Beer(generateUuidV4(),$profile2->getProfileId(), 0.054, null, 34, "Visionland Amber Ale");
+$beer2->insert($pdo);
+echo "Visionland Amber Ale";
+var_dump($beer2->getBeerId()->toString());
+
 
 //Profile 3 - Hops Brewery
 $password3 = "HoppinOff123";
@@ -42,6 +49,12 @@ $profile3 = new Profile(generateUuidV4(),null, null, "3507 Central Avenue NE", n
 $profile3->insert($pdo);
 echo "Hops Brewery";
 var_dump($profile3->getProfileId()->toString());
+//An Irish Tan
+$beer3 = new Beer(generateUuidV4(), $profile3->getProfileId(), 0.047, null, 27, "An Irish Tan");
+$beer3->insert($pdo);
+echo "An Irish Tan";
+var_dump($beer3->getBeerId()->toString());
+
 
 //Profile 4 - La Cumbre
 $password4 = "Elevated505";
@@ -51,6 +64,12 @@ $profile4 = new Profile(generateUuidV4(),null, null, "3313 Girard Blvd. NE", nul
 $profile4->insert($pdo);
 echo "La Cumbre Brewing Company";
 var_dump($profile4->getProfileId()->toString());
+//Elevated IPA
+$beer4 = new Beer(generateUuidV4(), $profile4->getProfileId(), 0.072, null, 100, "Elevated IPA");
+$beer4->insert($pdo);
+echo "Elevated IPA";
+var_dump($beer4->getBeerId()->toString());
+
 
 //Profile 5 - Marbles
 $password5 = "1st&Marble1802";
@@ -60,6 +79,12 @@ $profile5 = new Profile(generateUuidV4(),null, null, "111 Marble Ave NW", null, 
 $profile5->insert($pdo);
 echo "Marble Brewery";
 var_dump($profile5->getProfileId()->toString());
+//Double White Ale
+$beer5 = new Beer(generateUuidV4(), $profile5->getProfileId(), 0.070, null, 8, "Double White Ale");
+$beer5->insert($pdo);
+echo "Double White IPA";
+var_dump($beer5->getBeerId()->toString());
+
 
 //Profile 6  - Monk's
 $password6 = "BowDown575";
@@ -69,6 +94,12 @@ $profile6 = new Profile(generateUuidV4(),null, null, "205 Silver Ave SW", "Suite
 $profile6->insert($pdo);
 echo "Monk's Corner Taproom";
 var_dump($profile6->getProfileId()->toString());
+//Monk's Tripel Ale
+$beer6 = new Beer(generateUuidV4(), $profile6->getProfileId(), 0.092, null, 19, "Monk's Tripel Ale");
+$beer6->insert($pdo);
+echo "Monk's Tripel Ale";
+var_dump($beer6->getBeerId()->toString());
+
 
 //Profile 7 - Nexus
 $password7 = "DatFlightTho505";
@@ -78,6 +109,12 @@ $profile7 = new Profile(generateUuidV4(),null, null, "4730 Pan American Fwy East
 $profile7->insert($pdo);
 echo "Nexus Brewery & Restaurant";
 var_dump($profile7->getProfileId()->toString());
+//Imperial Cream Ale
+$beer7 = new Beer(generateUuidV4(), $profile7->getProfileId(), 0.093, null, 16, "Imperial Cream Ale");
+$beer7->insert($pdo);
+echo "Imperial Cream Ale";
+var_dump($beer7->getBeerId()->toString());
+
 
 //Profile 8 - Red Door
 $password8 = "BeersAndBrews505";
@@ -87,6 +124,12 @@ $profile8 = new Profile(generateUuidV4(),null,null, "1001 Candelaria Rd NE", nul
 $profile8->insert($pdo);
 echo "Red Door Brewing Company";
 var_dump($profile8->getProfileId()->toString());
+//Roamer Red Ale
+$beer8 = new Beer(generateUuidV4(), $profile8->getProfileId(), 0.062, null, 36, "Roamer Red Ale");
+$beer8->insert($pdo);
+echo "Roamer Red Ale";
+var_dump($beer8->getBeerId()->toString());
+
 
 //Profile 9 - Santa Fe
 $password9 = "NorthSide575";
@@ -96,6 +139,12 @@ $profile9 = new Profile(generateUuidV4(), null,null,"3600 Cutler Ave NE", "#1", 
 $profile9->insert($pdo);
 echo "Santa Fe Brewing Company";
 var_dump($profile9->getProfileId()->toString());
+//Chicken Killer Barley Wine
+$beer9 = new Beer(generateUuidV4(), $profile9->getProfileId(), 0.10, null, 68, "Chicken Killer Barley Wine Ale");
+$beer9->insert($pdo);
+echo "Chicken Killer Barley Wine";
+var_dump($beer9->getBeerId()->toString());
+
 
 //Profile 10 - Tractor
 $password10 = "GetPlowedABQ";
@@ -105,9 +154,10 @@ $profile10 = new Profile(generateUuidV4(), null, null, "1800 4th St NW", null, "
 $profile10->insert($pdo);
 echo "Tractor Brewing Company";
 var_dump($profile10->getProfileId()->toString());
+//Milk Mustachio Stout
+$beer10 = new Beer(generateUuidV4(), $profile10->getProfileId(), 0.051, null, 26, "Milk Mustachio Stout");
+$beer10->insert($pdo);
+echo "Milk Mustachio Stout";
+var_dump($beer10->getBeerId()->toString());
 
-$beer = new Beer(generateUuidV4(), $profile->getProfileId(), 0.055, null, 12, "Elephants on Parade");
-$beer->insert($pdo);
-echo "first beer";
-var_dump($beer->getBeerId()->toString());
 

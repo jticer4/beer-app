@@ -117,7 +117,7 @@ class Profile implements \JsonSerializable {
 	 * @param string $newProfileUserType string containing the user type of the profile
 	 * @param string $newProfileZip string containing the zip code of the profile
 	 **/
-	public function __construct( $newProfileId, string $newProfileAbout, ?string $newProfileActivationToken, string $newProfileAddressLine1, string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
+	public function __construct( $newProfileId, ?string $newProfileAbout, ?string $newProfileActivationToken, string $newProfileAddressLine1, ?string $newProfileAddressLine2, string $newProfileCity, string $newProfileEmail, string $newProfileHash, ?string $newProfileImage, string $newProfileName, string $newProfileState, string $newProfileUsername, string $newProfileUserType, string $newProfileZip) {
 		try {
 			$this->setProfileId($newProfileId);
 			$this->setProfileAbout($newProfileAbout);
@@ -183,7 +183,12 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileAbout is > 140 characters
 	 * @throws \TypeError if $newProfileAbout is not a string
 	 **/
-	public function setProfileAbout(string $newProfileAbout): void {
+	public function setProfileAbout(?string $newProfileAbout): void {
+		if($newProfileAbout === null) {
+			$this->profileAbout = null;
+		}
+
+
 		// verify the profile about content is secure
 		$newProfileAbout = trim($newProfileAbout);
 		$newProfileAbout = filter_var($newProfileAbout, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -272,7 +277,10 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileAddressLine2 is > 96 characters
 	 * @throws \TypeError if $newProfileAddressLine2 is not a string
 	 **/
-	public function setProfileAddressLine2(string $newProfileAddressLine2): void {
+	public function setProfileAddressLine2(?string $newProfileAddressLine2): void {
+		if($newProfileAddressLine2 === null) {
+			$this->profileAddressLine2 = null;
+		}
 		// verify the profile address line 2 content is secure
 		$newProfileAddressLine2 = trim($newProfileAddressLine2);
 		$newProfileAddressLine2 = filter_var($newProfileAddressLine2, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -397,7 +405,11 @@ class Profile implements \JsonSerializable {
 	 * @throws \RangeException if $newProfileImage is > 255 characters
 	 * @throws \TypeError if $newProfileImage is not a string
 	 **/
-	public function setProfileImage(string $newProfileImage): void {
+	public function setProfileImage(?string $newProfileImage): void {
+		if ($newProfileImage === null) {
+			$this->profileImage = null;
+		}
+
 		// verify the profile image content is secure
 		$newProfileImage = trim($newProfileImage);
 		$newProfileImage = filter_var($newProfileImage, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);

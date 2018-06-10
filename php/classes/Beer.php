@@ -65,7 +65,7 @@ class Beer implements \JsonSerializable {
 	* @throws \TypeError if data types violate type hints
 	* @documentation https://php.net/manual/en/language.oop5.decon.php
 	**/
-	public function __construct($newBeerId, $newBeerProfileId, float $newBeerAbv, string $newBeerDescription, int $newBeerIbu, string $newBeerName) {
+	public function __construct($newBeerId, $newBeerProfileId, float $newBeerAbv, ?string $newBeerDescription, int $newBeerIbu, string $newBeerName) {
 		try {
 			$this->setBeerId($newBeerId);
 			$this->setBeerProfileId($newBeerProfileId);
@@ -174,7 +174,11 @@ class Beer implements \JsonSerializable {
 	 * @param string $newBeerDescription
 	 * @throws \InvalidArgumentException when beer description is too big
 	 **/
-	public function setBeerDescription(string $newBeerDescription): void {
+	public function setBeerDescription(?string $newBeerDescription): void {
+		if($newBeerDescription === null) {
+			$this->beerDescription = null;
+		}
+
 		$newBeerDescription = trim($newBeerDescription);
 		$newBeerDescription = filter_var($newBeerDescription, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
