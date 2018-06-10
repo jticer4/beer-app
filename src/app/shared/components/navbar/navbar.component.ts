@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 
 @Component({
 	template: require("./navbar.component.html"),
-	selector: 'navbar'
+	selector: 'navbar',
 })
 
 export class NavbarComponent {

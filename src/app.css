@@ -3,29 +3,85 @@
  * @author Gang of Four, CNM Full Stack Deep Dive, Cohort 20
  **/
 
-/* GLOBAL */
+/*----- GLOBAL ------*/
 
 
 
 body {
-
 	background: no-repeat #fff url("./app/images/ot-big-background.jpg") center center fixed;
 	font-family: 'Ubuntu', sans-serif;
 }
 
+/*----- NAVBAR -----*/
+.smallHide{
+	background-color: transparent;
+	position: absolute;
+}
 
+/*----- SPLASH -----*/
 
 #splash {
 	max-height: 100vh;
 	max-width: 100vw;
-	height: 100%;
-	width: 100%;
+	height: 100vh;
+	width: 100vw;
+	background-color: #afc8ce;
 }
+
+#hero {
+	max-height: 100vh;
+	max-width: 100vw;
+	height: 100vh;
+	width: 100vw;
+}
+
 #userInput {
 	max-height: 60vh;
+	height: 50vh;
 }
 
 #map {
 	max-height: 60vh;
-	height: 80vh;
+	height: 40vh;
+}
+
+/* Extra small devices (portrait phones, less than 576px) === default */
+/* Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+
+}
+
+
+
+@media screen and (max-width: 993px) {
+	.smallHide {
+		display: none;
+	}
+
+}
+
+@media screen and (min-width: 992px) {
+	.bigHide {
+		display: none;
+		background-color: ;
+	}
+	#on-tap-icon {
+		height: 2em;
+		width: 2em;
+	}
 }

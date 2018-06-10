@@ -1,27 +1,26 @@
 <div class="container smallHide">
-	<ul class="nav justify-content-center">
-		<a class="navbar-brand" href="#"><img src="on-tap-balloon.svg" alt="onTap icon"></a>
-		<li class="nav-item">
-			<a id="signIn" class="nav-link" href="#">Sign In</a>
-		</li>
-		<li class="nav-item">
-			<a id="signUp" class="nav-link" href="#">Sign Up</a>
-		</li>
-	</ul>
-</div>
-
-<div class="container bigHide fixed-bottom">
-	<div class="row">
-		<div id="nameBar" class="col-12 text-center fixed-top mt-3">onTap</div>
+	<div class="navbar">
+		<ul class="nav">
+			<li class="nav-item">
+				<a class="nav-link" href="#" id="signIn">Sign In</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" id="signUp" routerlink="sign-up" ng-reflect-router-link="sign-up" href="/sign-up">Sign Up</a>
+			</li>
+		</ul>
 	</div>
+	<a class="navbar-brand position-absolute fixed-top mx-auto d-block text-center
+	"><img src="../../../images/on-tap-balloon.svg" alt="onTap icon" id="on-tap-icon"></a>
+</div>
+<div class="container bigHide fixed-bottom ">
 	<div class="collapse " id="btmNavToggle">
 		<div class="d-flex flex-row mb-3 justify-content-around" aria-label="navigation">
-			<a href="#" role="button" class="btn" >Sign Up</a>
-			<a href="#" role="button" class="btn" >Sign In</a>
+			<a routerLink="sign-up" role="button" class="btn btn-light" >Sign Up</a>
+			<a href="#" role="button" class="btn btn-light" >Sign In</a>
 		</div>
 	</div>
 	<nav class="navbar navbar-light justify-content-center">
-		<button class="navbar-toggler btn-btn-primary" type="button" data-toggle="collapse" data-target="#btmNavToggle"
+		<button class="btn navbar-toggler btn-light" type="button" data-toggle="collapse" data-target="#btmNavToggle"
 				  aria-controls="btmNavToggle" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
