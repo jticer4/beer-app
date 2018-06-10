@@ -25,7 +25,10 @@ body {
 	max-width: 100vw;
 	height: 100vh;
 	width: 100vw;
-	background-color: #afc8ce;
+	background:
+		radial-gradient(circle at 50% 0,
+		rgba(175,200,206,.00),
+		rgba(66,107,128,.6) 70.71%)
 }
 
 #hero {
@@ -59,7 +62,14 @@ body {
 
 /* Medium devices (tablets, 768px and up)*/
 @media (min-width: 768px) {
-
+	#sepBlock{
+		height:100vh;
+		width: 100vw;
+		background-color: white;
+	}
+	#splash {
+		background-color: rgba(175,200,206, .5);
+	}
 }
 
 /* Large devices (desktops, 992px and up) */
@@ -84,7 +94,6 @@ body {
 @media screen and (min-width: 765px) {
 	.bigHide {
 		display: none;
-		background-color: ;
 	}
 	#on-tap-icon {
 		height: 2em;
