@@ -4,14 +4,18 @@ import {Profile} from "../shared/classes/profile";
 import {ProfileService} from "../shared/services/profile.service";
 
 @Component({
-	template: `
-	<h1>Hello World</h1>
-	`
+	template: require("./profile.component.html")
 })
 
 export class ProfileComponent implements OnInit{
 
-	profile: Profile = new Profile(null, null, null, null,null);
+	profile: Profile = new Profile(
+		null,
+		null,
+		null,
+		null,
+		null
+	);
 	status: Status = null;
 
 	constructor(private  profileService: ProfileService) {}

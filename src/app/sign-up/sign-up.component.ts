@@ -24,7 +24,12 @@ export class SignUpComponent implements OnInit{
 
 	signUpForm : FormGroup;
 
-	signUp: SignUp = new SignUp(null, null, null, null);
+	signUp: SignUp = new SignUp(
+		null,
+		null,
+		null,
+		null
+	);
 	status: Status = null;
 
 
