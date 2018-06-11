@@ -32,11 +32,11 @@
 					</div>
 
 					<!--profilePasswordConfirm-->
-					<input class="form-control mt-2" id="profilePasswordConfirm" type="password" name="password-confirm"
+					<input class="form-control mt-2" id="profilePasswordConfirm" type="password" name="profilePasswordConfirm"
 							 placeholder=" Re-enter Password" formControlName="profilePasswordConfirm">
 					<div class="alert alert-danger" *ngIf="signUpForm.controls.profilePasswordConfirm?.invalid && signUpForm.controls.profilePasswordConfirm?.touched">
 						<p *ngIf="signUpForm.controls.profilePasswordConfirm?.errors.maxlength">Password is too long</p>
-						<p *ngIf="signUpForm.controls.email?.errors.required">Valid password required</p>
+						<p *ngIf="signUpForm.controls.profilePasswordConfirm?.errors.required">But you have to enter it twice</p>
 					</div>
 
 
