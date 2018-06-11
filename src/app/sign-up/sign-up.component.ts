@@ -56,10 +56,10 @@ export class SignUpComponent implements OnInit{
 
 				if(this.status.status === 200) {
 					alert(status.message);
+					let self = this;
 					setTimeout(function() {
-						$("#signUpForm").modal('hide');
+						self.router.navigate([""]);
 					}, 500);
-					this.router.navigate([""]);
 				}
 			});
 	}

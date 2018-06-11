@@ -3,6 +3,8 @@ import {Profile} from "../shared/classes/profile";
 import {ProfileService} from "../shared/services/profile.service";
 import {BeerService} from "../shared/services/beer.service";
 import {Beer} from "../shared/classes/beer";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+
 
 @Component({
 	selector:'splash',

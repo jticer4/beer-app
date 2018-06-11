@@ -44,7 +44,7 @@
 				</div>
 				<div id="map" class="col-12 col-lg-9 align-content-center order-first">
 					<ngui-map zoom="13" center="Albuquerque, New Mexico" class="align-self-center">
-						<!--<marker *ngFor="let beer of beers" [position]="[art.artLat, art.artLong]" (click)="clicked($event)" (click)="displayArt(art)"></marker>-->
+						<marker *ngFor="let beer of beers" [position]="[beer.beerLat, beer.beerLong]" (click)="clicked($event)" (click)="displayBeer(beer)"></marker>
 					</ngui-map>
 				</div>
 			</div>
