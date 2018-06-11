@@ -53,10 +53,19 @@ try {
 				$guzzle = new Client();
 				$google = new GoogleMaps($guzzle);
 				$geocoder = new StatefulGeocoder($google, "en");
+				$profile = Profile::getProfileByProfileId($pdo, $id);
+
+				//get profile address information
+				$brewery->profileAddressLine1 = $profile->getProfileAddressLine1();
+				$brewery->profileAddressLine2 = $profile->getProfileAddressLine1();
+				$brewery->profileCity = $profile->getProfileCity();
+				$brewery->profileState = $profile->getProfileState();
+				$brewery->profileZip = $profile->getProfileZip();
+
 
 
 				//TODO grab city state zip from known breweries
-				$result = $geocoder->geocodeQuery(GeocodeQuery::create("301 San Mateo Blvd NE, Albuquerque, NM 87108"));
+				$result = $geocoder->geocodeQuery(GeocodeQuery::create());
 
 
 
