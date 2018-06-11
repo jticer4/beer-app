@@ -25,13 +25,21 @@
 				</div>
 				<div class="modal-body">
 					<form action="">
-						<  <div class="form-group">
-							<label for="formGroupExampleInput">Example label</label>
-							<input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+							<div class="form-group">
+							<label for="formGroupExampleInput">Beer Name</label>
+							<input type="text" class="form-control" id="formGroupExampleInput" placeholder="Beer Name">
 						</div>
 						<div class="form-group">
-							<label for="formGroupExampleInput2">Another label</label>
-							<input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+							<label for="formGroupExampleInput2">Beer Description</label>
+							<input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Write a description...">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput3">ABV</label>
+							<input type="text" class="form-control" id="formGroupExampleInput3" placeholder="ABV">
+						</div>
+						<div class="form-group">
+							<label for="formGroupExampleInput4">IBU</label>
+							<input type="text" class="form-control" id="formGroupExampleInput4" placeholder="IBU 0-120">
 						</div>
 					</form>
 				</div>
