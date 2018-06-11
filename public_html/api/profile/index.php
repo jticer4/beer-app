@@ -5,6 +5,7 @@ require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+
 use Edu\Cnm\Beer\ {
 	Profile
 };
@@ -38,10 +39,10 @@ try {
 	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileUsername = filter_input(INPUT_GET, "profileUsername", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$profileLocation = filter_input(INPUT_GET,"profileLocation", FILTER_VALIDATE_BOOLEAN);
+	$profileLocation = filter_input(INPUT_GET, "profileLocation", FILTER_VALIDATE_BOOLEAN);
 
 	// make sure the id is valid for methods that require it
-	if(($method === "PUT") && (empty($id) === true )) {
+	if(($method === "PUT") && (empty($id) === true)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	if($method === "GET") {
@@ -49,43 +50,45 @@ try {
 		setXsrfCookie();
 		//gets a profile
 		if(empty($id) === false) {
-			if($profileLocation === true) {
-				$config = readConfig("/etc/apache2/capstone-mysql/beer.ini");
-				$api = $config["google"];
-				$guzzle = new Client();
-				$google = new GoogleMaps($guzzle, "en", $api);
-				$geocoder = new StatefulGeocoder($google);
-				$profile = Profile::getProfileByProfileId($pdo, $id);
+			$reply->data = Profile::getProfileByProfileId($pdo, $id);
+		} else if(empty($profileActivationToken) === false) {
+			$reply->data = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
+		} else if(empty($profileEmail) === false) {
+			$reply->data = Profile::getProfileByProfileEmail($pdo, $profileEmail);
+		} else if(empty($profileUsername) === false) {
+			$reply->data = Profile::getProfileByProfileUsername($pdo, $profileUsername);
+		} else if($profileLocation === true) {
+			$config = readConfig("/etc/apache2/capstone-mysql/beer.ini");
+			$api = $config["google"];
+			$guzzle = new Client();
+			$google = new GoogleMaps($guzzle, "en", $api);
+			$geocoder = new StatefulGeocoder($google);
+
+			$reply->data = [];
+			$profiles = Profile::getAllProfiles($pdo);
+			foreach($profiles as $profile) {
+				$profileId = $profile->getProfileId()->toString();
+//				$profile = Profile::getProfileByProfileId($pdo, $id);
 
 				//get profile address information
 				$cat1 = $profile->getProfileAddressLine1();
 				$cat2 = $profile->getProfileCity();
 				$cat3 = $profile->getProfileState();
 				$cat4 = $profile->getProfileZip();
-				$finalFuzzy = $cat1 . " " . $cat2  . " " . $cat3  . " " . $cat4;
+				$finalFuzzy = $cat1 . " " . $cat2 . " " . $cat3 . " " . $cat4;
 
-				//TODO grab city state zip from known breweries
 				$result = $geocoder->geocodeQuery(GeocodeQuery::create($finalFuzzy));
-
 
 
 				// $result = $geocoder->geocodeQuery(GeocodeQuery::create("Donald Trump's Competent Cabinet"));
 				if(count($result) > 0) {
 					$coordinates = $result->first()->getCoordinates();
-					$reply->data = new stdClass();
-					$reply->data->latitude = $coordinates->getLatitude();
-					$reply->data->longitude = $coordinates->getLongitude();
+					$reply->data[$profileId] = new stdClass();
+					$reply->data[$profileId]->latitude = $coordinates->getLatitude();
+					$reply->data[$profileId]->longitude = $coordinates->getLongitude();
 				}
-			} else {
-				$reply->data = Profile::getProfileByProfileId($pdo, $id);
 			}
-		} else if(empty($profileActivationToken) === false) {
-			$reply->data = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
-			} else if(empty($profileEmail) === false) {
-			$reply->data = Profile::getProfileByProfileEmail($pdo, $profileEmail);
-			} else if(empty($profileUsername) === false) {
-			$reply->data = Profile::getProfileByProfileUsername($pdo, $profileUsername);
-			}
+		}
 
 
 	} elseif($method === "PUT") {
