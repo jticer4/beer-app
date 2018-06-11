@@ -4,6 +4,7 @@ import {Profile} from "../shared/classes/profile";
 import {ProfileService} from "../shared/services/profile.service";
 
 @Component({
+	selector: 'profile-component',
 	template: require("./profile.component.html")
 })
 
