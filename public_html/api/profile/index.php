@@ -56,16 +56,15 @@ try {
 				$profile = Profile::getProfileByProfileId($pdo, $id);
 
 				//get profile address information
-				$brewery->profileAddressLine1 = $profile->getProfileAddressLine1();
-				$brewery->profileAddressLine2 = $profile->getProfileAddressLine1();
-				$brewery->profileCity = $profile->getProfileCity();
-				$brewery->profileState = $profile->getProfileState();
-				$brewery->profileZip = $profile->getProfileZip();
-
-
+				$cat1 = ($brewery->profileAddressLine1 = $profile->getProfileAddressLine1());
+				$cat2 = ($brewery->profileAddressLine2 = $profile->getProfileAddressLine1());
+				$cat3 = ($brewery->profileCity = $profile->getProfileCity());
+				$cat4 = ($brewery->profileState = $profile->getProfileState());
+				$cat5 = ($brewery->profileZip = $profile->getProfileZip());
+				$finalFuzzy = $cat1 . $cat2 . $cat3 . $cat4 . $cat5;
 
 				//TODO grab city state zip from known breweries
-				$result = $geocoder->geocodeQuery(GeocodeQuery::create());
+				$result = $geocoder->geocodeQuery(GeocodeQuery::create($finalFuzzy));
 
 
 
