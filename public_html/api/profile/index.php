@@ -50,18 +50,19 @@ try {
 		//gets a profile
 		if(empty($id) === false) {
 			if($profileLocation === true) {
+				$config = readConfig("/etc/apache2/capstone-mysql/beer.ini");
+				$api = $config["google"];
 				$guzzle = new Client();
-				$google = new GoogleMaps($guzzle);
-				$geocoder = new StatefulGeocoder($google, "en");
+				$google = new GoogleMaps($guzzle, "en", $api);
+				$geocoder = new StatefulGeocoder($google);
 				$profile = Profile::getProfileByProfileId($pdo, $id);
 
 				//get profile address information
-				$cat1 = ($brewery->profileAddressLine1 = $profile->getProfileAddressLine1());
-				$cat2 = ($brewery->profileAddressLine2 = $profile->getProfileAddressLine1());
-				$cat3 = ($brewery->profileCity = $profile->getProfileCity());
-				$cat4 = ($brewery->profileState = $profile->getProfileState());
-				$cat5 = ($brewery->profileZip = $profile->getProfileZip());
-				$finalFuzzy = $cat1 . $cat2 . $cat3 . $cat4 . $cat5;
+				$cat1 = $profile->getProfileAddressLine1();
+				$cat2 = $profile->getProfileCity();
+				$cat3 = $profile->getProfileState();
+				$cat4 = $profile->getProfileZip();
+				$finalFuzzy = $cat1 . " " . $cat2  . " " . $cat3  . " " . $cat4;
 
 				//TODO grab city state zip from known breweries
 				$result = $geocoder->geocodeQuery(GeocodeQuery::create($finalFuzzy));
