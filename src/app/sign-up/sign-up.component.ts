@@ -33,7 +33,7 @@ export class SignUpComponent implements OnInit{
 	ngOnInit()  : void {
 		this.signUpForm = this.formBuilder.group({
 			profileEmail: ["", [Validators.maxLength(128), Validators.required]],
-			profileUserName: ["", [Validators.maxLength(48), Validators.required]],
+			profileUsername: ["", [Validators.maxLength(48), Validators.required]],
 			profilePassword:["", [Validators.maxLength(48), Validators.required]],
 			profilePasswordConfirm:["", [Validators.maxLength(48), Validators.required]]
 
@@ -43,7 +43,7 @@ export class SignUpComponent implements OnInit{
 
 	createSignUp(): void {
 
-		let signUp =  new SignUp(this.signUpForm.value.profileEmail, this.signUpForm.value.profileUserName, this.signUpForm.value.profilePassword, this.signUpForm.value.profilePasswordConfirm);
+		let signUp =  new SignUp(this.signUpForm.value.profileEmail, this.signUpForm.value.profileUsername, this.signUpForm.value.profilePassword, this.signUpForm.value.profilePasswordConfirm);
 
 		this.signUpService.createProfile(signUp)
 			.subscribe(status => {

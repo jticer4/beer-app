@@ -18,7 +18,7 @@
 					<!--profileUserName-->
 					<input class="form-control mt-2" id="profileUsername" type="text" name="name" placeholder=" User Name"
 							 formControlName="profileUsername"/>
-					<div class="alert alert-danger" *ngIf="signUpForm.controls.atHandle?.invalid && signUpForm.controls.profileUsername?.touched">
+					<div class="alert alert-danger" *ngIf="signUpForm.controls.profileUsername?.invalid && signUpForm.controls.profileUsername?.touched">
 						<p *ngIf="signUpForm.controls.profileUsername?.errors.maxlength">Username is too long</p>
 						<p *ngIf="signUpForm.controls.profileUsername?.errors.required">Username required</p>
 					</div>
