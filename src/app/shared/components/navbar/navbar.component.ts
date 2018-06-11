@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {SignInService} from "../../services/sign.in.service";
 import {Status} from "../../classes/status";
 import {Router} from "@angular/router";
+import {FormGroup} from "@angular/forms";
 
 @Component({
 	template: require("./navbar.component.html"),

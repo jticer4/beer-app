@@ -7,7 +7,9 @@
     "phpunit/phpunit": "@stable",
     "swiftmailer/swiftmailer": "@stable",
     "lcobucci/jwt": "3.2",
-    "roave/better-reflection": "dev-master#a402048"
+    "roave/better-reflection": "dev-master#a402048",
+    "geocoder-php/common-http": "@stable",
+    "geocoder-php/google-maps-provider": "@stable"
   },
 
   "scripts": {

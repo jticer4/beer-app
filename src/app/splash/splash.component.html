@@ -10,11 +10,10 @@
 	</div>
 </section>
 <section id="splash" class="splash">
-	<div id="sepBlock z-index-modal-backdrop"></div>
 		<div class="container pt-5">
 			<div class="row justify-content-center mt-5">
 				<div id="userInput" class="col-12 col-lg-3 align-content-center order-last order-lg-first">
-					<form>
+					<!--<form>-->
 						<div class="form-group mt-2">
 							<input type="text" class="form-control" id="beerStyleInput" aria-describedby="beerStyle"
 									 placeholder="IPA, Pilsner...">
@@ -41,13 +40,14 @@
 								<button class="btn btn-outline-light align-self-start" (click)="onClickMe()">Clear</button>
 							</div>
 						</div>
-					</form>
+					<!--</form> -->
 				</div>
 				<div id="map" class="col-12 col-lg-9 align-content-center order-first">
 					<ngui-map zoom="13" center="Albuquerque, New Mexico" class="align-self-center">
-
+						<marker *ngFor="let beer of beers" [position]="[art.artLat, art.artLong]" (click)="clicked($event)" (click)="displayArt(art)"></marker>
 					</ngui-map>
 				</div>
 			</div>
 		</div>
 </section>
+
