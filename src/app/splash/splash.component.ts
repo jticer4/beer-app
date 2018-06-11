@@ -20,7 +20,7 @@ export class SplashComponent implements OnInit{
 
 
 	ngOnInit():void {
-		this.beerService.getAllBeers().subscribe(beers => this.beers = beers);
+		this.beerService.beerObserver.subscribe(beers => this.beers = beers);
 
 	}
 

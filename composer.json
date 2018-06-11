@@ -9,7 +9,9 @@
     "lcobucci/jwt": "3.2",
     "roave/better-reflection": "dev-master#a402048",
     "geocoder-php/common-http": "@stable",
-    "geocoder-php/google-maps-provider": "@stable"
+    "geocoder-php/google-maps-provider": "@stable",
+    "php-http/guzzle6-adapter": "@stable",
+    "php-http/message": "@stable"
   },
 
   "scripts": {
