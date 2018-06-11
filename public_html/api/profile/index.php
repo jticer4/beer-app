@@ -8,6 +8,12 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 use Edu\Cnm\Beer\ {
 	Profile
 };
+
+use Geocoder\StatefulGeocoder;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Provider\GoogleMaps\GoogleMaps;
+use Http\Adapter\Guzzle6\Client;
+
 /**
  * API for Profile
  *
@@ -32,6 +38,8 @@ try {
 	$profileActivationToken = filter_input(INPUT_GET, "profileActivationToken", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileUsername = filter_input(INPUT_GET, "profileUsername", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$profileLocation = filter_input(INPUT_GET,"profileLocation", FILTER_VALIDATE_BOOLEAN);
+
 	// make sure the id is valid for methods that require it
 	if(($method === "PUT") && (empty($id) === true )) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
@@ -41,7 +49,27 @@ try {
 		setXsrfCookie();
 		//gets a profile
 		if(empty($id) === false) {
-			$reply->data = Profile::getProfileByProfileId($pdo, $id);
+			if($profileLocation === true) {
+				$guzzle = new Client();
+				$google = new GoogleMaps($guzzle);
+				$geocoder = new StatefulGeocoder($google, "en");
+
+
+				//TODO grab city state zip from known breweries
+				$result = $geocoder->geocodeQuery(GeocodeQuery::create("301 San Mateo Blvd NE, Albuquerque, NM 87108"));
+
+
+
+				// $result = $geocoder->geocodeQuery(GeocodeQuery::create("Donald Trump's Competent Cabinet"));
+				if(count($result) > 0) {
+					$coordinates = $result->first()->getCoordinates();
+					$reply->data = new stdClass();
+					$reply->data->latitude = $coordinates->getLatitude();
+					$reply->data->longitude = $coordinates->getLongitude();
+				}
+			} else {
+				$reply->data = Profile::getProfileByProfileId($pdo, $id);
+			}
 		} else if(empty($profileActivationToken) === false) {
 			$reply->data = Profile::getProfileByProfileActivationToken($pdo, $profileActivationToken);
 			} else if(empty($profileEmail) === false) {
