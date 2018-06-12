@@ -41,6 +41,7 @@ export class SplashComponent implements OnInit{
 	//
 	 displayLocation(profile: Profile) {
 	 	this.location = profile;
+	 	this.pourBeer = true;
 	 }
 
 
