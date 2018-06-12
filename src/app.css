@@ -17,6 +17,16 @@ body {
 	background-color: transparent;
 }
 
+#topNav{
+	background-color: rgba(255,255,255,.7);
+	height: 10vh;
+	width: 100vw;
+}
+
+#onTapIcon{
+
+}
+
 /*----- SPLASH -----*/
 
 #splash {
@@ -91,7 +101,7 @@ body {
 		display: none;
 	}
 	#on-tap-icon {
-		height: 2em;
+		height: 3em;
 		width: 2em;
 	}
 }

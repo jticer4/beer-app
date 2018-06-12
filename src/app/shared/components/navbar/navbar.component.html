@@ -1,15 +1,17 @@
-<div class="container smallHide">
-	<div class="navbar">
-		<a routerLink="" class="navbar-brand position-absolute fixed-top mx-auto d-block text-center w-25
-	"><img src="../../../images/on-tap-balloon.svg" alt="onTap icon" id="on-tap-icon"></a>
-		<ul class="nav">
-			<li class="nav-item">
-				<a class="nav-link" role="button" data-toggle="modal" data-target="#signInModal" id="signInBtn">Sign In</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" role="button" id="signUpBtn" routerLink="sign-up">Sign Up</a>
-			</li>
-		</ul>
+<div id="topNav" class="smallHide fixed-top">
+	<a id="onTapIcon" routerLink=""
+		class="navbar-brand position-absolute fixed-top mt-1 mx-auto d-block text-center w-25"><img src="../../../images/on-tap-balloon.svg" alt="onTap icon" id="on-tap-icon"></a>
+	<div class="container fixed-top">
+		<div  class="navbar mt-md-2">
+			<ul class="nav">
+				<li class="nav-item">
+					<a class="nav-link" role="button" data-toggle="modal" data-target="#signInModal" id="signInBtn">Sign In</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" role="button" id="signUpBtn" routerLink="sign-up">Sign Up</a>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
 <div class="container bigHide fixed-bottom">
@@ -27,5 +29,3 @@
 		</button>
 	</nav>
 </div>
-
-
