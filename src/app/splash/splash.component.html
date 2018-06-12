@@ -44,7 +44,9 @@
 			<div *ngIf="pourBeer" class="row mt-sm-1 mt-lg-5">
 				<div class="col-12 align-self-center mt-sm-1">
 					<div class="card" >
-						<div class="card-header"><h5 class="card-title">{{location.profileUsername}}</h5></div>
+						<div class="card-header">
+							<h5 class="card-title">{{location.profileUsername}} <span class="float-right" (click)="hideCard()"><i class="fas fa-times" aria-label= "close"></i></span></h5>
+						</div>
 						<div class="card-body text-center">
 							<div class="d-inline-block col">
 								<h6 class="card-subtitle mb-2 text-muted">Beer Name</h6>

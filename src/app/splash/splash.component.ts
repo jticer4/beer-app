@@ -44,5 +44,8 @@ export class SplashComponent implements OnInit{
 	 	this.pourBeer = true;
 	 }
 
+	 hideCard() {
+		this.pourBeer = false;
+	 }
 
 }
