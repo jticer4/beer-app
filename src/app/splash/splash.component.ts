@@ -15,6 +15,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class SplashComponent implements OnInit{
 	profile: Profile[] = [];
 	beers: Beer[] = [];
+	locations: any[] = [];
 
 
 	constructor(protected profileService: ProfileService, protected beerService: BeerService) {}
@@ -22,10 +23,11 @@ export class SplashComponent implements OnInit{
 
 
 	ngOnInit():void {
-		this.beerService.beerObserver.subscribe(beers => {
-			console.log(beers);
+		this.profileService.locationObserver.subscribe(locations => {
+			console.log(locations);
+			this.locations = locations;
+			this.beerService.beerObserver.subscribe(beers => this.beers = beers);
 		});
-
 	}
 
 }
