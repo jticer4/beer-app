@@ -68,7 +68,7 @@ try {
 			$profiles = Profile::getAllProfiles($pdo);
 			foreach($profiles as $profile) {
 				$profileId = $profile->getProfileId()->toString();
-//				$profile = Profile::getProfileByProfileId($pdo, $id);
+
 
 				//get profile address information
 				$cat1 = $profile->getProfileAddressLine1();

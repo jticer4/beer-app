@@ -9,32 +9,11 @@
 		</div>
 	</div>
 </section>
-<section id="splash" class="splash">
-		<div class="container pt-sm-1">
+<section id="splash" class="splash pt-2">
+		<div class="container">
 			<div class="row justify-content-center mt-1">
 				<div id="userInput" class="col-12 col-lg-3 mt-sm-1
 				 align-content-center order-last order-lg-first">
-
-					<div class="col-12 align-self-center mt-sm-1">
-						<div class="card" >
-							<div class="card-header"><h5 class="card-title">Brewery Name</h5></div>
-							<div class="card-body text-center">
-								<div class="d-inline-block col">
-									<h6 class="card-subtitle mb-2 text-muted">Beer Name</h6>
-									<p class="card-text">Description of le beer</p>
-								</div>
-								<div class="d-inline-block col">
-									<ul>
-										<li>Beer ABV</li>
-										<li>Beer IBu</li>
-									</ul>
-								</div>
-								<a href="#" class="card-link">Card link</a>
-								<a href="#" class="card-link">Another link</a>
-							</div>
-						</div>
-					</div>
-
 					<!--<form>-->
 
 					<div class="form-row form-group mt-2 ">
@@ -46,11 +25,11 @@
 								 placeholder="IBU 0-120">
 					</div>
 					<div class="form-row form-group mt-2">
-						<div class="col-3 offset-3 d-inline-block">
+						<div class="col offset-3 d-inline-block">
 							<button class="btn btn-light" (click)="onClickMe()">Submit</button>
 						</div>
-						<div class="col-3 d-inline-block">
-							<button class="btn btn-outline-light align-self-start" (click)="onClickMe()">Clear</button>
+						<div class="col d-inline-block">
+							<button class="btn btn-outline-light align-self-start">Clear</button>
 						</div>
 					</div>
 
@@ -58,9 +37,29 @@
 				</div>
 				<div id="map" class="col-12 col-lg-9 order-first mt-lg-2">
 					<ngui-map zoom="12" center="Albuquerque, New Mexico" class="align-self-center my-sm-auto">
-						<marker *ngFor="let beer of beers"
-								  [position]="[locations[beer.beerProfileId].latitude, locations[beer.beerProfileId].longitude]" (click)="clicked($event)" (click)="displayBeer(beer)"></marker>
+						<marker *ngFor="let beer of beers" [position]="[locations[beer.beerProfileId].latitude, locations[beer.beerProfileId].longitude]" (click)="clicked($event)" (click)="displayBeer(beer)"></marker>
 					</ngui-map>
+				</div>
+			</div>
+			<div class="row mt-sm-1 mt-lg-5">
+				<div class="col-12 align-self-center mt-sm-1">
+					<div class="card" >
+						<div class="card-header"><h5 class="card-title">Brewery Name</h5></div>
+						<div class="card-body text-center">
+							<div class="d-inline-block col">
+								<h6 class="card-subtitle mb-2 text-muted">Beer Name</h6>
+								<p class="card-text">Description of le beer</p>
+							</div>
+							<div class="d-inline-block col">
+								<ul>
+									<li>Beer ABV</li>
+									<li>Beer IBu</li>
+								</ul>
+							</div>
+							<a href="#" class="card-link">Card link</a>
+							<a href="#" class="card-link">Another link</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
