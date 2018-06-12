@@ -18,21 +18,20 @@
 		</div>
 	</div>
 
-
-
-	<!-- username group -->
+	<!-- profile username group -->
 	<div class="row align-items-center justify-content-center mx-2">
 		<div class="form-group col-12">
-			<label for="profileName" class="sr-only">Username</label>
+			<label for="profileUsername" class="sr-only">Profile User Name</label>
 			<div class="input-group">
-				<input type="email" class="form-control rounded-0" id="profileName" name="profileName" formControlName="profileName" placeholder="profileName">
+				<input type="email" class="form-control rounded-0" id="profileUsername" name="profileUsername" formControlName="profileUsername" placeholder="profileUsername">
 			</div>
-			<div *ngIf="signUpForm.controls.profileName?.invalid && signUpForm.controls.profileName?.touched" class="alert alert-danger" role="alert">
-				<div *ngIf="signUpForm.controls.profileName?.errors.required">Username is required.</div>
-				<div *ngIf="signUpForm.controls.profileName?.errors.maxlength">Username is too long. {{signUpForm.controls.profileUserName?.errors.maxlength.actualLength - signUpForm.controls.profileName?.errors.maxlength.requiredLength}} too many characters.</div>
+			<div *ngIf="signUpForm.controls.profileUsername?.invalid && signUpForm.controls.profileUsername?.touched" class="alert alert-danger" role="alert">
+				<div *ngIf="signUpForm.controls.profileUsername?.errors.required">Username is required.</div>
+				<div *ngIf="signUpForm.controls.profileUsername?.errors.maxlength">Username is too long. {{signUpForm.controls.profileUsername?.errors.maxlength.actualLength - signUpForm.controls.profileUsername?.errors.maxlength.requiredLength}} too many characters.</div>
 			</div>
 		</div>
 	</div>
+
 
 
 	<!-- password group -->
@@ -63,18 +62,6 @@
 			</div>
 		</div>
 	</div>
-
-
-	<!-- confirm pass group -->
-	<div class="row align-items-center justify-content-center mx-2">
-		<div class="form-group col-12">
-			<label for="profileUserName" class="sr-only">Profile User Name</label>
-			<div class="input-group">
-				<input type="email" class="form-control rounded-0" id="profileUserName" name="profileUserName" formControlName="profileUserName" placeholder="profileUserName">
-			</div>
-		</div>
-	</div>
-
 
 
 	<!-- submit form -->
