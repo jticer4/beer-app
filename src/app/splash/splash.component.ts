@@ -29,4 +29,16 @@ export class SplashComponent implements OnInit{
 		});
 	}
 
+	// clicked({target: marker} : any, beer : Beer) {
+	// 	this.art = marker;
+	// 	marker.nguiMapComponent.openInfoWindow('beer-details', marker);
+	// }
+	// hideMarkerInfo() {
+	// 	this.point.display = !this.point.display;
+	// }
+	//
+	// displayArt(beer: Beer) {
+	// 	this.beer = beer;
+	// }
+
 }
