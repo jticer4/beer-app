@@ -3,6 +3,8 @@ export class Profile {
 					public profileUsername: string,
 					public profileEmail: string,
 					public profilePassword: string,
-					public profilePasswordConfirm: string
+					public profilePasswordConfirm: string,
+					public latitude?: number,
+					public longitude?: number
 	) {}
 }
