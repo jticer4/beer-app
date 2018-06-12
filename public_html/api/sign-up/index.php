@@ -59,7 +59,7 @@ try {
 
 		//make sure the password and confirm password match
 		if ($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
-			throw(new \InvalidArgumentException("passwords do not match"));
+			throw(new \InvalidArgumentException("Passwords do not match"));
 		}
 
 		$hash = password_hash($requestObject->profilePassword, PASSWORD_ARGON2I, ["time_cost" => 384]);
@@ -86,8 +86,8 @@ try {
 
 		//compose the message to send with email
 		$message = <<< EOF
-<h2>Welcome to "name of app".</h2>
-<p>In order to use the app, please confirm your account</p>
+<h2>Welcome to onTap.</h2>
+<p>In order to use onTap, please confirm your account</p>
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
 
@@ -145,7 +145,7 @@ EOF;
 		}
 
 		//update reply
-		$reply->message = "Thank you for creating an account with !!!";
+		$reply->message = "Thank you for creating an account with onTap. You'll receive a message shortly.";
 		} else {
 		throw (new InvalidArgumentException("invalid http request"));
 		}
