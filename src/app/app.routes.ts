@@ -12,6 +12,8 @@ import {NavbarComponent} from "./shared/components/navbar/navbar.component";
 import {SignInComponent} from "./shared/components/sign-in/sign-in.component";
 import {SignUpComponent} from "./sign-up/sign-up.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {DeepDiveInterceptor} from "./shared/interceptors/deep.dive.interceptor";
 
 
 export const allAppComponents = [
@@ -33,6 +35,7 @@ export const routes: Routes = [
 
 export const appRoutingProviders: any[] = [
 	{provide: APP_BASE_HREF, useValue: window["_base_href"]},
+	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
 	ProfileService,
 	SessionService,
 	AuthService,

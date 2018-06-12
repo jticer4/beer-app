@@ -1,3 +1,13 @@
+<ul>
+	<li *ngFor="let beer of beers">
+		<ul>
+			<li>name: {{ beer.beerName }}</li>
+			<li>lat: {{ locations[beer.beerProfileId].latitude }}</li>
+			<li>long: {{ locations[beer.beerProfileId].longitude }}</li>
+		</ul>
+	</li>
+</ul>
+
 <section id="hero" class="">
 	<div class="container mt-5">
 		<div class="row justify-content-center text-center text-light mt-5">
@@ -13,21 +23,24 @@
 		<div class="container pt-5">
 			<div class="row justify-content-center mt-5">
 				<div id="userInput" class="col-12 col-lg-3 align-content-center order-last order-lg-first">
-
 					<!--<form>-->
-
-					<form [formGroup]="userForm" (submit)="" novalidate>
-						<div class="form-row">
-							<input name="beerStyle" ngModel type="text" class="form-control mt-2" id="beerStyleInput"
-									 aria-describedby="beerStyle"
+						<div class="form-group mt-2">
+							<input type="text" class="form-control" id="beerStyleInput" aria-describedby="beerStyle"
 									 placeholder="IPA, Pilsner...">
-
-							<input name="ABV" ngModel type="text" class="form-control mt-2" id="abvInput" aria-describedby="ABV"
-									  placeholder="ABV">
-
-							<input name="IBU" ngModel type="text" class="form-control mt-2" id="ibuInput"
-									 aria-describedby="IBU"
-									 placeholder="IBU 0-120">
+						</div>
+						<div class="form-group mt-2">
+							<input type="text" class="form-control" id="abvInput" aria-describedby="ABV" placeholder="ABV">
+						</div>
+						<div class="form-group mt-2">
+							<input type="text" class="form-control" id="ibuInput" aria-describedby="IBU" placeholder="IBU 0-120">
+						</div>
+						<div class="form-group mt-2">
+							<select class="form-control" id="distanceInput" aria-describedby="Distance">
+								<option value="any">Any</option>
+								<option value="5">5 mile radius</option>
+								<option value="10">10 mile radius</option>
+								<option value="20">20 mile radius</option>
+							</select>
 						</div>
 						<div class="form-row mt-2">
 							<div class="col-6">
@@ -37,17 +50,13 @@
 								<button class="btn btn-outline-light align-self-start" (click)="onClickMe()">Clear</button>
 							</div>
 						</div>
-					</form>
-
 					<!--</form> -->
-
 				</div>
-				<div id="map" class="col-12 col-lg-9 align-content-center order-first">
-					<ngui-map zoom="13" center="Albuquerque, New Mexico" class="align-self-center">
-						<marker *ngFor="let beer of beers" [position]="[beer.beerLat, beer.beerLong]" (click)="clicked($event)"
-								  (click)="displayBeer(beer)"></marker>
-					</ngui-map>
-				</div>
+				<!--<div id="map" class="col-12 col-lg-9 align-content-center order-first">-->
+					<!--<ngui-map zoom="13" center="Albuquerque, New Mexico" class="align-self-center">-->
+						<!--<marker *ngFor="let beer of beers" [position]="[beer.beerLat, beer.beerLong]" (click)="clicked($event)" (click)="displayBeer(beer)"></marker>-->
+					<!--</ngui-map>-->
+				<!--</div>-->
 			</div>
 		</div>
 </section>
