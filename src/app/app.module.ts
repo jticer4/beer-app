@@ -9,6 +9,8 @@ import {SignIn} from "./shared/classes/sign.in";
 import {SignInService} from "./shared/services/sign.in.service";
 import {CookieService} from "ng2-cookies";
 import {SessionService} from "./shared/services/session.service";
+import {SignUpService} from "./shared/services/sign.up.service";
+import {SignUp} from "./shared/classes/sign.up";
 
 const moduleDeclarations = [AppComponent];
 

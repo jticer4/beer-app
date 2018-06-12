@@ -2,6 +2,6 @@ export class SignUp {
 	constructor(public profileEmail: string,
 					public profileUsername: string,
 					public profilePassword: string,
-					public profileConfirmPassword: string) {
+					public profilePasswordConfirm: string) {
 	}
 }

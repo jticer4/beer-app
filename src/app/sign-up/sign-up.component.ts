@@ -40,7 +40,7 @@ export class SignUpComponent implements OnInit{
 			profileEmail: ["", [Validators.maxLength(128), Validators.required]],
 			profileUsername: ["", [Validators.maxLength(48), Validators.required]],
 			profilePassword:["", [Validators.maxLength(48), Validators.required]],
-			profileConfirmPassword:["", [Validators.maxLength(48), Validators.required]]
+			profilePasswordConfirm:["", [Validators.maxLength(48), Validators.required]]
 
 		});
 
@@ -48,7 +48,7 @@ export class SignUpComponent implements OnInit{
 
 	createSignUp(): void {
 
-		let profile: SignUp =  new SignUp(this.signUpForm.value.profileEmail, this.signUpForm.value.profileUsername, this.signUpForm.value.profilePassword, this.signUpForm.value.profileConfirmPassword);
+		let profile: SignUp =  new SignUp(this.signUpForm.value.profileEmail, this.signUpForm.value.profileUsername, this.signUpForm.value.profilePassword, this.signUpForm.value.profilePasswordConfirm);
 
 		this.signUpService.createProfile(profile)
 			.subscribe(status => {
