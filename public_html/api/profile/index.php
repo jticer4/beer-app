@@ -83,7 +83,7 @@ try {
 				// $result = $geocoder->geocodeQuery(GeocodeQuery::create("Donald Trump's Competent Cabinet"));
 				if(count($result) > 0) {
 					$coordinates = $result->first()->getCoordinates();
-					$reply->data[$profileId] = new stdClass();
+					$reply->data[$profileId] = (object)$profile->jsonSerialize();
 					$reply->data[$profileId]->latitude = $coordinates->getLatitude();
 					$reply->data[$profileId]->longitude = $coordinates->getLongitude();
 				}
