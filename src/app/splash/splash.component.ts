@@ -15,7 +15,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class SplashComponent implements OnInit{
 	beers: Beer[] = [];
 	locations: any = {};
-	cerveza: Beer = new Beer(null, null,null,null,null,null);
 	location: Profile = new Profile(null, null,null,null,null,null, null);
 	pourBeer: boolean = false;
 
@@ -48,4 +47,7 @@ export class SplashComponent implements OnInit{
 		this.pourBeer = false;
 	 }
 
+	 filterByBrewery(): Beer[] {
+		return(this.beers.filter(beer => beer.beerProfileId === this.location.profileId));
+	 }
 }
