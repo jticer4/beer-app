@@ -54,12 +54,12 @@
 						<div *ngFor="let cerveza of filterByBrewery()">
 							<div class="d-inline-block col">
 								<h6 class="card-subtitle mb-2 text-muted">{{cerveza.beerName}}</h6>
-								<p class="card-text">Description of le beer</p>
+								<p class="card-text">{{cerveza.beerDescription}}</p>
 							</div>
 							<div class="d-inline-block col">
 								<ul>
-									<li>Beer ABV</li>
-									<li>Beer IBu</li>
+									<li>Beer Abv: {{cerveza.beerAbv}}</li>
+									<li>Beer Ibu: {{cerveza.beerIbu}}</li>
 								</ul>
 							</div>
 						</div>
