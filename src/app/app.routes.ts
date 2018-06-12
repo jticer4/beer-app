@@ -14,6 +14,7 @@ import {SignUpComponent} from "./sign-up/sign-up.component";
 import {ProfileComponent} from "./profile/profile.component";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {DeepDiveInterceptor} from "./shared/interceptors/deep.dive.interceptor";
+import {MapToIterable} from "./shared/pipes/map.to.iteratable";
 
 
 export const allAppComponents = [
@@ -22,7 +23,7 @@ export const allAppComponents = [
 	SignInComponent,
 	SignUpComponent,
 	ProfileComponent,
-
+	MapToIterable
 ];
 
 export const routes: Routes = [
