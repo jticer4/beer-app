@@ -58,13 +58,14 @@
 			<!-- confirm password group -->
 			<div class="row align-items-center justify-content-center mx-2">
 				<div class="form-group col-12">
-					<label for="profileConfirmPassword" class="sr-only">Confirm Password</label>
+					<label for="profilePasswordConfirm" class="sr-only">Confirm Password</label>
 					<div class="input-group">
-						<input type="password" class="form-control rounded-0" id="profileConfirmPassword" name="profileConfirmPassword" formControlName="profileConfirmPassword" placeholder="Confirm Password">
+						<input type="password" class="form-control rounded-0" id="profilePasswordConfirm" name="profilePasswordConfirm" formControlName="profilePasswordConfirm" placeholder="Confirm Password">
 					</div>
-					<div *ngIf="signUpForm.controls.profileConfirmPassword?.invalid && signUpForm.controls.profileConfirmPassword?.touched" class="alert alert-danger" role="alert">
-						<div *ngIf="signUpForm.controls.profileConfirmPassword?.errors.required">Password confirmation is required.</div>
-						<div *ngIf="signUpForm.controls.profileConfirmPassword?.errors.maxlength">Password is too long. {{signUpForm.controls.profileConfirmPassword?.errors.maxlength.actualLength - signUpForm.controls.profileConfirmPassword?.errors.maxlength.requiredLength}} too many characters.</div>
+					<div
+						*ngIf="signUpForm.controls.profilePasswordConfirm?.invalid && signUpForm.controls.profilePasswordConfirm?.touched" class="alert alert-danger" role="alert">
+						<div *ngIf="signUpForm.controls.profilePasswordConfirm?.errors.required">Password confirmation is required.</div>
+						<div *ngIf="signUpForm.controls.profilePasswordConfirm?.errors.maxlength">Password is too long. {{signUpForm.controls.profilePasswordConfirm?.errors.maxlength.actualLength - signUpForm.controls.profilePasswordConfirm?.errors.maxlength.requiredLength}} too many characters.</div>
 					</div>
 				</div>
 			</div>
