@@ -1,52 +1,88 @@
-<div id="signUp" class="container fixed-bottom">
-	 <div class="card">
-		<div class="card-header">
-			Brewer Sign Up
-		</div>
-		<div class="card-body">
-			<form [formGroup]="signUpForm" class="form-control-lg" id="form" action="" method="post" (submit)="createSignUp();" novalidate>
-				<div class="info">
-
-					<!--profileEmail-->
-					<input class="form-control mt-2" id="profileEmail" type="email" name="email" placeholder=" Email"
-							 formControlName="profileEmail"/>
-					<div class="alert alert-danger" *ngIf="signUpForm.controls.profileEmail?.invalid && signUpForm.controls.profileEmail?.touched">
-						<p *ngIf="signUpForm.controls.profileEmail?.errors.maxlength">email is too long</p>
-						<p *ngIf="signUpForm.controls.profileEmail?.errors.required">valid email address is required</p>
-					</div>
-
-					<!--profileUserName-->
-					<input class="form-control mt-2" id="profileUsername" type="text" name="name" placeholder=" User Name"
-							 formControlName="profileUsername"/>
-					<div class="alert alert-danger" *ngIf="signUpForm.controls.profileUsername?.invalid && signUpForm.controls.profileUsername?.touched">
-						<p *ngIf="signUpForm.controls.profileUsername?.errors.maxlength">Username is too long</p>
-						<p *ngIf="signUpForm.controls.profileUsername?.errors.required">Username required</p>
-					</div>
-
-					<!--profilePassword-->
-					<input class="form-control mt-2" id="profilePassword" type="password" name="password"
-							 placeholder=" Password" formControlName="profilePassword">
-					<div class="alert alert-danger" *ngIf="signUpForm.controls.profilePassword?.invalid && signUpForm.controls.profilePassword?.touched">
-						<p *ngIf="signUpForm.controls.profilePassword?.errors.maxlength">Password is too long</p>
-						<p *ngIf="signUpForm.controls.profilePassword?.errors.required">Valid password required</p>
-					</div>
-
-					<!--profilePasswordConfirm-->
-					<input class="form-control mt-2" id="profilePasswordConfirm" type="password" name="profilePasswordConfirm"
-							 placeholder=" Re-enter Password" formControlName="profilePasswordConfirm">
-					<div class="alert alert-danger" *ngIf="signUpForm.controls.profilePasswordConfirm?.invalid && signUpForm.controls.profilePasswordConfirm?.touched">
-						<p *ngIf="signUpForm.controls.profilePasswordConfirm?.errors.maxlength">Password is too long</p>
-						<p *ngIf="signUpForm.controls.profilePasswordConfirm?.errors.required">But you have to enter it twice</p>
-					</div>
 
 
-					<input class="btn bt-2 mt-2" type="submit" value="Sign Up!">
-					<div *ngIf="status !== null" class="alert alert-secondary alert-dismissible" [ngClass]="status.type" role="alert">
-						<button type="button" class="close" aria-label="Close" (click)="status = null;"><span aria-hidden="true">&times;</span></button>
-						{{ status.message }}
-					</div>
-				</div>
-			</form>
+
+
+<form name="signUpForm" id="signUpForm" [formGroup]="signUpForm" (submit)="signUp()">
+
+	<!-- email group -->
+	<div class="row align-items-center justify-content-center mx-2">
+		<div class="form-group col-12">
+			<label for="profileEmail" class="sr-only">Email</label>
+			<div class="input-group">
+				<input type="email" class="form-control rounded-0" id="profileEmail" name="profileEmail" formControlName="profileEmail" placeholder="Email">
+			</div>
+			<div *ngIf="signUpForm.controls.profileEmail?.invalid && signUpForm.controls.profileEmail?.touched" class="alert alert-danger" role="alert">
+				<div *ngIf="signUpForm.controls.profileEmail?.errors.required">Email is required.</div>
+				<div *ngIf="signUpForm.controls.profileEmail?.errors.maxlength">Email is too long. {{signUpForm.controls.profileEmail?.errors.maxlength.actualLength - signUpForm.controls.profileEmail?.errors.maxlength.requiredLength}} too many characters.</div>
+			</div>
 		</div>
 	</div>
-</div>
+
+
+
+	<!-- username group -->
+	<div class="row align-items-center justify-content-center mx-2">
+		<div class="form-group col-12">
+			<label for="profileName" class="sr-only">Username</label>
+			<div class="input-group">
+				<input type="email" class="form-control rounded-0" id="profileName" name="profileName" formControlName="profileName" placeholder="profileName">
+			</div>
+			<div *ngIf="signUpForm.controls.profileName?.invalid && signUpForm.controls.profileName?.touched" class="alert alert-danger" role="alert">
+				<div *ngIf="signUpForm.controls.profileName?.errors.required">Username is required.</div>
+				<div *ngIf="signUpForm.controls.profileName?.errors.maxlength">Username is too long. {{signUpForm.controls.profileUserName?.errors.maxlength.actualLength - signUpForm.controls.profileName?.errors.maxlength.requiredLength}} too many characters.</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- password group -->
+	<div class="row align-items-center justify-content-center mx-2">
+		<div class="form-group col-12">
+			<label for="profilePassword" class="sr-only">Password</label>
+			<div class="input-group">
+				<input type="password" class="form-control rounded-0" id="profilePassword" name="profilePassword" formControlName="profilePassword" placeholder="Password">
+			</div>
+			<div *ngIf="signUpForm.controls.profilePassword?.invalid && signUpForm.controls.profilePassword?.touched" class="alert alert-danger" role="alert">
+				<div *ngIf="signUpForm.controls.profilePassword?.errors.required">Password is required.</div>
+				<div *ngIf="signUpForm.controls.profilePassword?.errors.maxlength">Password is too long. {{signUpForm.controls.profilePassword?.errors.maxlength.actualLength - signUpForm.controls.profilePassword?.errors.maxlength.requiredLength}} too many characters.</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- confirm password group -->
+	<div class="row align-items-center justify-content-center mx-2">
+		<div class="form-group col-12">
+			<label for="profileConfirmPassword" class="sr-only">Confirm Password</label>
+			<div class="input-group">
+				<input type="password" class="form-control rounded-0" id="profileConfirmPassword" name="profileConfirmPassword" formControlName="profileConfirmPassword" placeholder="Confirm Password">
+			</div>
+			<div *ngIf="signUpForm.controls.profileConfirmPassword?.invalid && signUpForm.controls.profileConfirmPassword?.touched" class="alert alert-danger" role="alert">
+				<div *ngIf="signUpForm.controls.profileConfirmPassword?.errors.required">Password confirmation is required.</div>
+				<div *ngIf="signUpForm.controls.profileConfirmPassword?.errors.maxlength">Password is too long. {{signUpForm.controls.profileConfirmPassword?.errors.maxlength.actualLength - signUpForm.controls.profileConfirmPassword?.errors.maxlength.requiredLength}} too many characters.</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- confirm pass group -->
+	<div class="row align-items-center justify-content-center mx-2">
+		<div class="form-group col-12">
+			<label for="profileUserName" class="sr-only">Profile User Name</label>
+			<div class="input-group">
+				<input type="email" class="form-control rounded-0" id="profileUserName" name="profileUserName" formControlName="profileUserName" placeholder="profileUserName">
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- submit form -->
+	<div class="row align-items-center justify-content-center mx-2">
+		<div class="form-group  col-12">
+			<button type="submit" class="btn btn-primary border-0 rounded-0 py-3" id="signUpBtn">Sign Up</button>
+		</div>
+	</div>
+</form>
+
+
