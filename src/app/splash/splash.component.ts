@@ -22,6 +22,7 @@ export class SplashComponent implements OnInit{
 
 
 
+
 	ngOnInit():void {
 		this.profileService.locationObserver.subscribe(locations => {
 			this.locations = locations;
