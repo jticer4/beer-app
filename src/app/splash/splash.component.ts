@@ -13,10 +13,11 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 
 export class SplashComponent implements OnInit{
-	profile: Profile[] = [];
 	beers: Beer[] = [];
-	locations: any[] = [];
-
+	locations: any = {};
+	cerveza: Beer = new Beer(null, null,null,null,null,null);
+	location: Profile = new Profile(null, null,null,null,null,null, null);
+	pourBeer: boolean = false;
 
 	constructor(protected profileService: ProfileService, protected beerService: BeerService) {}
 
@@ -38,9 +39,9 @@ export class SplashComponent implements OnInit{
 	// 	this.point.display = !this.point.display;
 	// }
 	//
-	// displayBeer(beer: Beer) {
-	// 	this.beer = beer;
-	// }
+	 displayLocation(profile: Profile) {
+	 	this.location = profile;
+	 }
 
 
 }

@@ -37,17 +37,17 @@
 				</div>
 				<div id="map" class="col-12 col-lg-9 order-first mt-lg-2">
 					<ngui-map zoom="12" center="Albuquerque, New Mexico" class="align-self-center my-sm-auto">
-						<marker *ngFor="let beer of beers" [position]="[locations[beer.beerProfileId].latitude, locations[beer.beerProfileId].longitude]" (click)="clicked($event)" (click)="displayBeer(beer)"></marker>
+						<marker *ngFor="let location of locations" [position]="[location.latitude, location.longitude]" (click)="displayLocation(location)"></marker>
 					</ngui-map>
 				</div>
 			</div>
-			<div class="row mt-sm-1 mt-lg-5">
+			<div *ngIf="pourBeer" class="row mt-sm-1 mt-lg-5">
 				<div class="col-12 align-self-center mt-sm-1">
 					<div class="card" >
 						<div class="card-header"><h5 class="card-title">Brewery Name</h5></div>
 						<div class="card-body text-center">
 							<div class="d-inline-block col">
-								<h6 class="card-subtitle mb-2 text-muted">Beer Name</h6>
+								<h6 class="card-subtitle mb-2 text-muted">{{cerveza.beerName}}</h6>
 								<p class="card-text">Description of le beer</p>
 							</div>
 							<div class="d-inline-block col">
