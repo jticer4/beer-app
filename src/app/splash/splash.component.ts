@@ -57,6 +57,7 @@ export class SplashComponent implements OnInit{
 		if(this.pourBeer === true && this.searchAbv !== 0) {
 			let minAbv = Math.max(this.searchAbv - .01, 0);
 			let maxAbv = Math.min(this.searchAbv + .01, 1);
+			console.table({searchAbv: this.searchAbv, minAbv: minAbv, maxAbv: maxAbv});
 			return(this.filterByBrewery().filter(beer => beer.beerAbv >= minAbv && beer.beerAbv <= maxAbv));
 		} else {
 			return(this.filterByBrewery());
