@@ -4,9 +4,6 @@
  **/
 
 /*----- GLOBAL ------*/
-
-
-
 body {
 	background: no-repeat #fff url("./app/images/ot-big-background.jpg") center center fixed;
 	font-family: 'Ubuntu', sans-serif;
@@ -14,20 +11,24 @@ body {
 
 
 /*----- NAVBAR -----*/
-.smallHide{
-	background-color: transparent;
-}
-
-#topNav{
-	background-color: rgba(255,255,255,.7);
-	height: 10vh;
-	width: 100vw;
+.smallHide .navbar {
+	display: none;
 }
 
 .topItem{
 	font-size: 1.6em;
 	color: #416a80;
 	cursor: pointer;
+}
+
+@media only screen and (min-width: 576px) {
+	.smallHide .navbar {
+		display: block;
+		background-color: rgba(255,255,255,.7);
+	}
+	.bigHide {
+		display: none;
+	}
 }
 
 /*----- HERO -----*/
@@ -66,14 +67,15 @@ body {
 	height: 35vh;
 }
 
+#map .ngui-map {
+	height: 100% !important;
+}
+
 #mapCont {
 	padding-top: 10vh;
 }
 
 /*------ SIGN UP ------*/
-
-
-
 /* Extra small devices (portrait phones, less than 576px) === default */
 /* Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
@@ -91,34 +93,5 @@ body {
 	}
 	#splash {
 		background-color: rgba(175,200,206, .5);
-	}
-}
-
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-
-}
-
-/* Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) {
-
-}
-
-
-
-@media screen and (max-width: 766px) {
-	.smallHide {
-		display: none;
-	}
-
-}
-
-@media screen and (min-width: 765px) {
-	.bigHide {
-		display: none;
-	}
-	#on-tap-icon {
-		height: 3em;
-		width: 2em;
 	}
 }

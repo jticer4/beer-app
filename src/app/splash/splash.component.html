@@ -40,7 +40,7 @@
 				<!--</form> -->
 			</div>
 			<div id="map" class="col-12 col-lg-9 order-first mt-lg-2">
-				<ngui-map zoom="12" center="Albuquerque, New Mexico" class="align-self-center my-sm-auto">
+				<ngui-map zoom="12" center="Albuquerque, New Mexico" class="align-self-center my-sm-auto ngui-map">
 					<marker *ngFor="let locationMap of locations | mapToIterable"
 							  [position]="[locationMap.val.latitude, locationMap.val.longitude]"
 							  (click)="displayLocation(locationMap.val)"></marker>
