@@ -12,6 +12,11 @@ body {
 	font-family: 'Ubuntu', sans-serif;
 }
 
+li a {
+	font-size: 1.6em;
+	color: #416a80;
+}
+
 /*----- NAVBAR -----*/
 .smallHide{
 	background-color: transparent;
@@ -23,8 +28,19 @@ body {
 	width: 100vw;
 }
 
-#onTapIcon{
+/*----- HERO -----*/
 
+#hero {
+	max-height: 100vh;
+	max-width: 100vw;
+	height: 100vh;
+	width: 100vw;
+	padding-top: 10vh;
+}
+
+#heroText {
+	background-color: rgba(56,50,50,.7);
+	border: white 5px solid;
 }
 
 /*----- SPLASH -----*/
@@ -40,19 +56,16 @@ body {
 		rgba(66,107,128,.6) 70.71%)
 }
 
-#hero {
-	max-height: 100vh;
-	max-width: 100vw;
-	height: 100vh;
-	width: 100vw;
-}
-
 #userInput {
 	max-height: 30vh;
 }
 
 #map {
 	height: 35vh;
+}
+
+#mapCont {
+	padding-top: 5vh;
 }
 
 /*------ SIGN UP ------*/
@@ -62,7 +75,9 @@ body {
 /* Extra small devices (portrait phones, less than 576px) === default */
 /* Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
-
+#brewerSignUp{
+	padding-top: 5vh;
+	}
 }
 
 /* Medium devices (tablets, 768px and up)*/

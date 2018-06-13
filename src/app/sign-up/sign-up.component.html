@@ -1,7 +1,7 @@
 
 
 
-<div class="container">
+<div id="brewerSignUp" class="container">
 	<div class="row">
 		<div class="text-center col-12 h-50 mt-5 text-light">
 			<h2>Brewery Sign Up</h2>
@@ -29,7 +29,8 @@
 				<div class="form-group col-12">
 					<label for="profileUsername" class="sr-only">Profile User Name</label>
 					<div class="input-group">
-						<input type="email" class="form-control rounded-0" id="profileUsername" name="profileUsername" formControlName="profileUsername" placeholder="Username">
+						<input type="email" class="form-control rounded-0" id="profileUsername" name="profileUsername"
+								 formControlName="profileUsername" placeholder="Brewery">
 					</div>
 					<div *ngIf="signUpForm.controls.profileUsername?.invalid && signUpForm.controls.profileUsername?.touched" class="alert alert-danger" role="alert">
 						<div *ngIf="signUpForm.controls.profileUsername?.errors.required">Username is required.</div>
@@ -74,7 +75,7 @@
 			<!-- submit form -->
 			<div class="row align-items-center justify-content-center mx-2">
 				<div class="form-group  col-12">
-					<button type="submit" class="btn btn-primary border-0 rounded-0 py-3" id="signUpBtn">Sign Up</button>
+					<button type="submit" class="btn btn-outline-light btn-lg mt-5 text-center" id="signUpBtn">Sign Up</button>
 				</div>
 			</div>
 		</form>
