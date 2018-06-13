@@ -5,9 +5,8 @@ import {ProfileService} from "../shared/services/profile.service";
 
 @Component({
 	selector: 'profile-component',
-	template:  `
-		require("./profile.component.html")
-`
+	template: require("./profile.component.html")
+
 	})
 
 export class ProfileComponent implements OnInit{
