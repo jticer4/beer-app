@@ -623,7 +623,22 @@ class Profile implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 
-		$parameters = ["profileId" => $this->profileId->getBytes(), "profileAbout" => $this->profileAbout, "profileActivationToken" => $this->profileActivationToken, "profileAddressLine1" => $this->profileAddressLine1, "profileAddressLine2" => $this->profileAddressLine2, "profileCity" => $this->profileCity, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileImage" => $this->profileImage, "profileName" => $this->profileName, "profileState" => $this->profileState, "profileUsername" => $this->profileUsername, "profileUserType" => $this->profileUserType, "profileZip" => $this->profileZip];
+		$parameters = [
+			"profileAbout" => $this->profileAbout,
+			"profileActivationToken" => $this->profileActivationToken,
+			"profileAddressLine1" => $this->profileAddressLine1,
+			"profileAddressLine2" => $this->profileAddressLine2,
+			"profileCity" => $this->profileCity,
+			"profileEmail" => $this->profileEmail,
+			"profileHash" => $this->profileHash,
+			"profileImage" => $this->profileImage,
+			"profileName" => $this->profileName,
+			"profileState" => $this->profileState,
+			"profileUsername" => $this->profileUsername,
+			"profileUserType" => $this->profileUserType,
+			"profileZip" => $this->profileZip,
+			"profileId" => $this->profileId->getBytes()
+		];
 		$statement->execute($parameters);
 	}
 
