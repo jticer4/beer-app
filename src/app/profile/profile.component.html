@@ -1,28 +1,113 @@
 <section id="" class="bg-white py-5">
 	<div class="container py-3">
 		<div class="row">
-			<div class="col-sm-4">
-				<img class="img-fluid mb-4 bw" src="" alt="">
-			</div>
-			<div class="col-sm-8">
-				<h1>Brewer Name</h1>
-				<h4>Total &#35; of brews</h4>
+
+			<div class="col-sm-12 pt-3 mt-2 text-center">
+				<h1>La Cumbre</h1>
+				<h4>Total of 6 brews</h4>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="list-group">
-					<button type="button" class="list-group-item list-group-item-action active">
-						Cras justo odio
-					</button>
-					<button type="button" class="list-group-item list-group-item-action" (click)="onClickMe()">Dapibus ac facilisis in</button>
-					<button type="button" class="list-group-item list-group-item-action" (click)="onClickMe()">Morbi leo risus</button>
-					<button type="button" class="list-group-item list-group-item-action" (click)="onClickMe()">Porta ac consectetur ac</button>
-					<button type="button" class="list-group-item list-group-item-action" (click)="onClickMe()">Vestibulum at</button>
+		<div class="col-12 align-self-center mt-sm-1">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="card-title text-center">A Slice of Hefen<span class="float-right" (click)="hideCard()"><i
+						class="fas fa-times" aria-label="close"></i></span></h5>
+				</div>
+				<div class="card-body text-center">
+					<div class="d-inline-block col">
+						<ul>
+							<li>Description: Poured into a 23 oz. Hefe glass, this beer is served mit hefe with a voluminous white head. The aroma is everything we love in the style; clove, banana and vanilla. The body is rich and creamy, yet finishes fairly dry and is as refreshing as any beer you’ll drink here or anywhere else. By popular demand, this beer is now a year-round offering.</li>
+							<li>Abv: 5.4% </li>
+							<li>Ibu: 15 </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 align-self-center mt-sm-1">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="card-title text-center">Pyramid Rock Amber<span class="float-right" (click)="hideCard()"><i
+						class="fas fa-times" aria-label="close"></i></span></h5>
+				</div>
+				<div class="card-body text-center">
+					<div class="d-inline-block col">
+						<ul>
+							<li>Description: Going back to our recipes developed in the shadow of this Western NM monolith, this is nothing like your standard Amber Ale. No American hops to be found in this gem. Lots of earthy, spicy Kent Goldings and premium English Crystal malts make this beer unique in a sea of ubiquity.</li>
+							<li>Abv: 5.8% </li>
+							<li>Ibu: 55 </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 align-self-center mt-sm-1">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="card-title text-center">Elevated Ipa<span class="float-right" (click)="hideCard()"><i
+						class="fas fa-times" aria-label="close"></i></span></h5>
+				</div>
+				<div class="card-body text-center">
+					<div class="d-inline-block col">
+						<ul>
+							<li>Description: did someone ask for hops? It’s pretty good. You should try it. Get Elevated!</li>
+							<li>Abv: 7.2% </li>
+							<li>Ibu: 100 </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 align-self-center mt-sm-1">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="card-title text-center">Malpais Stout<span class="float-right" (click)="hideCard()"><i
+						class="fas fa-times" aria-label="close"></i></span></h5>
+				</div>
+				<div class="card-body text-center">
+					<div class="d-inline-block col">
+						<ul>
+							<li>Description: a meal in a glass. Brewed with 7 different malts, you should be ready for a full onslaught of creamy stout intensity. Broadly in the style of a Foreign Extra Stout, this is our heaviest and most intense year-round offering.</li>
+							<li>Abv: 7.5% </li>
+							<li>Ibu: 60 </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 align-self-center mt-sm-1">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="card-title text-center">Red Ryot<span class="float-right" (click)="hideCard()"><i
+						class="fas fa-times" aria-label="close"></i></span></h5>
+				</div>
+				<div class="card-body text-center">
+					<div class="d-inline-block col">
+						<ul>
+							<li>Description: a malted magic hop bomb. Rich caramel and toasted malts team up with flaked rye and march to the beat of a big but balancing bitterness only to be overtaken by an onslaught of American hop aroma and flavor. You want a tame and subservient, spineless beer that takes orders well and doesn’t challenge anything or anyone? This ain’t it!</li>
+							<li>Abv: 6.5% </li>
+							<li>Ibu: 75 </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 align-self-center mt-sm-1">
+			<div class="card">
+				<div class="card-header">
+					<h5 class="card-title text-center">Project Dank<span class="float-right" (click)="hideCard()"><i
+						class="fas fa-times" aria-label="close"></i></span></h5>
+				</div>
+				<div class="card-body text-center">
+					<div class="d-inline-block col">
+						<ul>
+							<li>Description: releases from our hop laboratory. Project Dank is just that; a project. It’s an ever changing expression of our hoppiest endeavors. Each recipe is different, featuring different hops and hopping techniques. One thing will remain common…HOP INSANITY.</li>
+							<li>Abv: 7.5% </li>
+							<li>Ibu: "a lot" </li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
-
