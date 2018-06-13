@@ -18,6 +18,8 @@ export class SplashComponent implements OnInit{
 	location: Profile = new Profile(null, null,null,null,null,null, null);
 	pourBeer: boolean = false;
 
+	searchAbv: number = 0;
+
 	constructor(protected profileService: ProfileService, protected beerService: BeerService) {}
 
 
@@ -49,5 +51,20 @@ export class SplashComponent implements OnInit{
 
 	 filterByBrewery(): Beer[] {
 		return(this.beers.filter(beer => beer.beerProfileId === this.location.profileId));
+	 }
+
+	 filterByAbv(): Beer[] {
+		if(this.pourBeer === true && this.searchAbv !== 0) {
+			let minAbv = Math.max(this.searchAbv - .01, 0);
+			let maxAbv = Math.min(this.searchAbv + .01, 1);
+			console.table({searchAbv: this.searchAbv, minAbv: minAbv, maxAbv: maxAbv});
+			return(this.filterByBrewery().filter(beer => beer.beerAbv >= minAbv && beer.beerAbv <= maxAbv));
+		} else {
+			return(this.filterByBrewery());
+		}
+	 }
+
+	 searchByAbv(event: any): void {
+		 this.searchAbv = parseFloat(event.target.value);
 	 }
 }

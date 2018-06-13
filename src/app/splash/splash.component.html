@@ -19,8 +19,8 @@
 				<div class="form-row form-group mt-2 ">
 					<input type="text" class="col-12 form-control mt-2" id="beerStyleInput" aria-describedby="beerStyle"
 							 placeholder="IPA, Pilsner...">
-					<input type="text" class="col-12 form-control mt-2" id="abvInput" aria-describedby="ABV"
-							 placeholder="ABV">
+					<input type="number" class="col-12 form-control mt-2" id="abvInput" aria-describedby="ABV"
+							 placeholder="ABV" min="0" max="1" step=".0001" (keyup)="searchByAbv($event)">
 					<input type="text" class="col-12 form-control mt-2" id="ibuInput" aria-describedby="IBU"
 							 placeholder="IBU 0-120">
 				</div>
@@ -51,7 +51,7 @@
 							class="fas fa-times" aria-label="close"></i></span></h5>
 					</div>
 					<div class="card-body text-center">
-						<div *ngFor="let cerveza of filterByBrewery()">
+						<div *ngFor="let cerveza of filterByAbv()">
 							<div class="d-inline-block col">
 								<h6 class="card-subtitle mb-2 text-muted">{{cerveza.beerName}}</h6>
 								<p class="card-text">{{cerveza.beerDescription}}</p>
