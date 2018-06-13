@@ -12,10 +12,6 @@ body {
 	font-family: 'Ubuntu', sans-serif;
 }
 
-li a {
-	font-size: 1.6em;
-	color: #416a80;
-}
 
 /*----- NAVBAR -----*/
 .smallHide{
@@ -26,6 +22,12 @@ li a {
 	background-color: rgba(255,255,255,.7);
 	height: 10vh;
 	width: 100vw;
+}
+
+.topItem{
+	font-size: 1.6em;
+	color: #416a80;
+	cursor: pointer;
 }
 
 /*----- HERO -----*/
@@ -65,7 +67,7 @@ li a {
 }
 
 #mapCont {
-	padding-top: 5vh;
+	padding-top: 10vh;
 }
 
 /*------ SIGN UP ------*/
